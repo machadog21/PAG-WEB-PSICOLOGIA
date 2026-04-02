@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aviso Legal | [Tu Nombre] Psicología</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/legal.css" />
+</head>
+<body>
+  <header class="navbar scrolled" id="navbar">
+    <div class="navbar__logo">
+      <a href="index.html">
+        <span class="logo-name">[Tu Nombre]</span>
+        <span class="logo-sub">Psicología</span>
+      </a>
+    </div>
+    <nav class="navbar__links">
+      <a href="index.html">← Volver al inicio</a>
+    </nav>
+  </header>
+
+  <main class="legal-main">
+    <div class="container">
+      <div class="legal-content">
+        <h1>Aviso Legal</h1>
+        <p class="legal-updated">Última actualización: [Fecha]</p>
+
+        <h2>1. Datos identificativos</h2>
+        <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSICE), se informa:</p>
+        <ul style="list-style: disc; padding-left: 1.5rem; color: var(--color-muted); font-size: 0.95rem; line-height: 2;">
+          <li>Titular: [Nombre completo]</li>
+          <li>NIF: [Número]</li>
+          <li>Domicilio: [Dirección completa]</li>
+          <li>Correo electrónico: hola@tu-dominio.com</li>
+          <li>Número de colegiación: [Número]</li>
+        </ul>
+
+        <h2>2. Objeto</h2>
+        <p>Este sitio web tiene como finalidad informar sobre los servicios de psicología ofrecidos por el titular, así como proporcionar recursos de bienestar mental de acceso libre.</p>
+
+        <h2>3. Propiedad intelectual</h2>
+        <p>Todos los contenidos del sitio web (textos, imágenes, diseño gráfico, código fuente, audios) son propiedad del titular o cuenta con las licencias necesarias para su uso. Queda prohibida su reproducción, distribución o transformación sin autorización expresa.</p>
+
+        <h2>4. Exclusión de responsabilidad</h2>
+        <p>Los recursos gratuitos (podcasts, libros recomendados, descargables) tienen carácter divulgativo y no sustituyen en ningún caso la atención psicológica profesional individualizada.</p>
+
+        <h2>5. Legislación aplicable</h2>
+        <p>Este aviso legal se rige por la legislación española. Para cualquier disputa, las partes se someten a los Juzgados y Tribunales del domicilio del titular.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p style="text-align:center; color: rgba(232,239,238,0.4); font-size:0.8rem;">© <span id="year3"></span> [Tu Nombre]. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+  <script>document.getElementById('year3').textContent = new Date().getFullYear();</script>
+</body>
+</html>

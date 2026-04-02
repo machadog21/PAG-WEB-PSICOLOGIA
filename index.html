@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Consulta de psicología online y presencial. Terapia individual, de pareja y familiar. Recursos gratuitos, podcasts y apoyo profesional." />
+  <meta name="keywords" content="psicología, terapia, consulta psicológica, psicólogo, bienestar mental, terapia online" />
+  <meta name="author" content="[Nombre del Psicólogo/a]" />
+  <meta property="og:title" content="[Nombre] | Psicología" />
+  <meta property="og:description" content="Acompaño tu proceso de cambio con calidez y rigor científico." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.tu-dominio.com" />
+  <title>[Nombre] | Psicología y Bienestar</title>
+
+  <!-- Google Fonts: Libre Baskerville + complementaria -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+</head>
+<body>
+
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <header class="navbar" id="navbar">
+    <div class="navbar__logo">
+      <a href="#inicio">
+        <span class="logo-name">[Tu Nombre]</span>
+        <span class="logo-sub">Psicología</span>
+      </a>
+    </div>
+    <nav class="navbar__links" id="navLinks">
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#tarifas">Tarifas</a>
+      <a href="#proyeccion">Proyección</a>
+      <a href="#contacto" class="btn-nav">Contacto</a>
+    </nav>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main>
+
+    <!-- ══════════════ HERO ══════════════ -->
+    <section class="hero" id="inicio">
+      <div class="hero__bg-texture"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">Psicología · Bienestar · Transformación</p>
+        <h1 class="hero__title">
+          Cada historia<br />
+          <em>merece ser escuchada</em>
+        </h1>
+        <p class="hero__subtitle">
+          Acompaño tu proceso de cambio con calidez, presencia<br />
+          y rigor científico. Porque sanar es posible.
+        </p>
+        <div class="hero__cta">
+          <a href="#contacto" class="btn btn--primary">Primera consulta gratuita</a>
+          <a href="#sobre-mi" class="btn btn--ghost">Conoce mi enfoque</a>
+        </div>
+      </div>
+      <div class="hero__scroll-indicator">
+        <span>Descubre más</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ SOBRE MÍ ══════════════ -->
+    <section class="section sobre-mi" id="sobre-mi">
+      <div class="container">
+        <div class="sobre-mi__grid">
+          <div class="sobre-mi__image-col">
+            <div class="sobre-mi__photo-frame">
+              <div class="photo-placeholder">
+                <!-- Sustituye por <img src="assets/images/foto-perfil.jpg" alt="[Tu nombre]" /> -->
+                <div class="photo-initials">[Foto]</div>
+              </div>
+              <div class="sobre-mi__badge">
+                <span class="badge-num">+8</span>
+                <span class="badge-txt">años de<br/>experiencia</span>
+              </div>
+            </div>
+          </div>
+          <div class="sobre-mi__text-col">
+            <span class="section-label">Sobre mí</span>
+            <h2 class="section-title">Soy [Tu Nombre],<br /><em>psicóloga clínica</em></h2>
+            <p class="sobre-mi__lead">
+              Me gradué en Psicología por la Universidad de [Universidad] y me especialicé en Terapia Cognitivo-Conductual y Mindfulness. Desde entonces, he acompañado a cientos de personas en procesos de ansiedad, depresión, duelo y autoconocimiento.
+            </p>
+            <p>
+              Creo en una psicología cercana, basada en la evidencia y sin etiquetas. Mi objetivo es que salgas de cada sesión con herramientas reales para tu vida cotidiana.
+            </p>
+            <div class="sobre-mi__formacion">
+              <div class="formacion-item">
+                <span class="formacion-icon">✦</span>
+                <span>Colegiada nº [Número colegio]</span>
+              </div>
+              <div class="formacion-item">
+                <span class="formacion-icon">✦</span>
+                <span>Máster en Psicología Clínica y de la Salud</span>
+              </div>
+              <div class="formacion-item">
+                <span class="formacion-icon">✦</span>
+                <span>Especialista en Terapia de Aceptación y Compromiso (ACT)</span>
+              </div>
+              <div class="formacion-item">
+                <span class="formacion-icon">✦</span>
+                <span>Formación continua en Trauma y EMDR</span>
+              </div>
+            </div>
+            <a href="#contacto" class="btn btn--primary">Reserva tu cita</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ SERVICIOS ══════════════ -->
+    <section class="section servicios" id="servicios">
+      <div class="container">
+        <span class="section-label section-label--light">Lo que ofrezco</span>
+        <h2 class="section-title section-title--center">Servicios &amp; Terapias</h2>
+        <p class="section-subtitle">¿No sabes si la terapia es para ti? Estas preguntas pueden ayudarte a encontrar la respuesta.</p>
+
+        <div class="servicios__grid">
+
+          <div class="servicio-card">
+            <div class="servicio-card__icon">◈</div>
+            <h3>Terapia Individual</h3>
+            <p class="servicio-card__desc">Un espacio seguro y confidencial para explorar tus emociones, pensamientos y patrones de conducta.</p>
+            <div class="servicio-card__questions">
+              <p class="questions-label">¿Te identificas con alguna de estas situaciones?</p>
+              <ul>
+                <li>¿Sientes ansiedad o estrés que te impide vivir con normalidad?</li>
+                <li>¿Hay pensamientos que no puedes "apagar"?</li>
+                <li>¿Te cuesta gestionar tus emociones o relaciones?</li>
+              </ul>
+            </div>
+            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
+          </div>
+
+          <div class="servicio-card servicio-card--featured">
+            <div class="servicio-card__badge">Más solicitado</div>
+            <div class="servicio-card__icon">◇</div>
+            <h3>Terapia de Pareja</h3>
+            <p class="servicio-card__desc">Mejora la comunicación, gestiona conflictos y vuelve a conectar con tu pareja desde un lugar más honesto.</p>
+            <div class="servicio-card__questions">
+              <p class="questions-label">¿Te resulta familiar esto?</p>
+              <ul>
+                <li>¿Sientes que hablamos pero no nos entendemos?</li>
+                <li>¿Los mismos conflictos se repiten una y otra vez?</li>
+                <li>¿Ha habido una infidelidad o ruptura de confianza?</li>
+              </ul>
+            </div>
+            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
+          </div>
+
+          <div class="servicio-card">
+            <div class="servicio-card__icon">◉</div>
+            <h3>Terapia Familiar</h3>
+            <p class="servicio-card__desc">Trabajo con el sistema familiar para mejorar la dinámica, los vínculos y la comunicación entre sus miembros.</p>
+            <div class="servicio-card__questions">
+              <p class="questions-label">Quizás reconoces esto:</p>
+              <ul>
+                <li>¿Hay tensión constante en casa que nadie sabe cómo resolver?</li>
+                <li>¿Algún miembro de la familia está pasando un momento difícil?</li>
+                <li>¿Las discusiones son el pan de cada día?</li>
+              </ul>
+            </div>
+            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
+          </div>
+
+          <div class="servicio-card">
+            <div class="servicio-card__icon">◎</div>
+            <h3>Terapia Online</h3>
+            <p class="servicio-card__desc">La misma calidad terapéutica desde donde estés. Sesiones por videollamada, seguras y sin desplazamientos.</p>
+            <div class="servicio-card__questions">
+              <p class="questions-label">La terapia online es para ti si…</p>
+              <ul>
+                <li>¿Vives fuera de España o en una ciudad diferente?</li>
+                <li>¿Tu agenda no te permite desplazarte fácilmente?</li>
+                <li>¿Te sientes más cómodo/a desde casa?</li>
+              </ul>
+            </div>
+            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
+          </div>
+
+          <div class="servicio-card">
+            <div class="servicio-card__icon">◈</div>
+            <h3>Psicología Infantil y Adolescente</h3>
+            <p class="servicio-card__desc">Atención especializada para niños y jóvenes en etapas de desarrollo, adaptada a su edad y necesidades.</p>
+            <div class="servicio-card__questions">
+              <p class="questions-label">¿Has observado en tu hijo/a…?</p>
+              <ul>
+                <li>¿Cambios de humor, retraimiento o problemas en el colegio?</li>
+                <li>¿Miedos intensos, rabietas o dificultades de atención?</li>
+                <li>¿Una situación de acoso escolar o transición difícil?</li>
+              </ul>
+            </div>
+            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
+          </div>
+
+          <div class="servicio-card">
+            <div class="servicio-card__icon">✦</div>
+            <h3>Talleres &amp; Grupos</h3>
+            <p class="servicio-card__desc">Espacios colectivos de aprendizaje y crecimiento personal sobre gestión emocional, mindfulness y autoestima.</p>
+            <div class="servicio-card__questions">
+              <p class="questions-label">Ideal si…</p>
+              <ul>
+                <li>¿Quieres trabajar en ti mismo/a en un entorno grupal y seguro?</li>
+                <li>¿Buscas herramientas prácticas a un coste más accesible?</li>
+                <li>¿Te gusta compartir experiencias con otras personas?</li>
+              </ul>
+            </div>
+            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ RECURSOS ══════════════ -->
+    <section class="section recursos" id="recursos">
+      <div class="container">
+        <span class="section-label">Recursos gratuitos</span>
+        <h2 class="section-title">Para tu bienestar,<br /><em>sin coste alguno</em></h2>
+        <p class="section-subtitle">Materiales que puedes usar hoy mismo para cuidarte un poco más.</p>
+
+        <!-- PODCASTS -->
+        <div class="recursos__block">
+          <h3 class="recursos__block-title">
+            <span class="recursos-icon">♪</span> Episodios del Podcast
+          </h3>
+          <div class="podcast-grid" id="podcastGrid">
+
+            <article class="podcast-card">
+              <div class="podcast-card__header">
+                <div class="podcast-card__num">01</div>
+                <div class="podcast-card__meta">
+                  <h4>Cómo gestionar la ansiedad en el día a día</h4>
+                  <span class="podcast-duration">18 min</span>
+                </div>
+              </div>
+              <p class="podcast-card__desc">Herramientas sencillas y efectivas para reducir la activación ansiosa cuando más lo necesitas.</p>
+              <div class="audio-player">
+                <audio id="audio1" src="assets/audio/episodio-01.mp3" preload="metadata"></audio>
+                <button class="audio-play-btn" data-audio="audio1" aria-label="Reproducir episodio 1">
+                  <span class="play-icon">▶</span>
+                </button>
+                <div class="audio-progress-wrap">
+                  <div class="audio-progress" id="progress1"></div>
+                </div>
+                <span class="audio-time" id="time1">0:00</span>
+              </div>
+            </article>
+
+            <article class="podcast-card">
+              <div class="podcast-card__header">
+                <div class="podcast-card__num">02</div>
+                <div class="podcast-card__meta">
+                  <h4>Autoestima: el viaje hacia quererse</h4>
+                  <span class="podcast-duration">22 min</span>
+                </div>
+              </div>
+              <p class="podcast-card__desc">Exploramos las raíces de la autoestima y cómo construir una relación más amable contigo mismo/a.</p>
+              <div class="audio-player">
+                <audio id="audio2" src="assets/audio/episodio-02.mp3" preload="metadata"></audio>
+                <button class="audio-play-btn" data-audio="audio2" aria-label="Reproducir episodio 2">
+                  <span class="play-icon">▶</span>
+                </button>
+                <div class="audio-progress-wrap">
+                  <div class="audio-progress" id="progress2"></div>
+                </div>
+                <span class="audio-time" id="time2">0:00</span>
+              </div>
+            </article>
+
+            <article class="podcast-card">
+              <div class="podcast-card__header">
+                <div class="podcast-card__num">03</div>
+                <div class="podcast-card__meta">
+                  <h4>Duelo: atravesar la pérdida con presencia</h4>
+                  <span class="podcast-duration">25 min</span>
+                </div>
+              </div>
+              <p class="podcast-card__desc">Una guía compasiva para transitar el dolor de la pérdida, sin atajos pero con acompañamiento.</p>
+              <div class="audio-player">
+                <audio id="audio3" src="assets/audio/episodio-03.mp3" preload="metadata"></audio>
+                <button class="audio-play-btn" data-audio="audio3" aria-label="Reproducir episodio 3">
+                  <span class="play-icon">▶</span>
+                </button>
+                <div class="audio-progress-wrap">
+                  <div class="audio-progress" id="progress3"></div>
+                </div>
+                <span class="audio-time" id="time3">0:00</span>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- LIBROS -->
+        <div class="recursos__block">
+          <h3 class="recursos__block-title">
+            <span class="recursos-icon">◎</span> Lecturas Recomendadas
+          </h3>
+          <div class="libros-grid">
+
+            <div class="libro-card">
+              <div class="libro-card__cover libro-card__cover--1">
+                <span>El poder del ahora</span>
+              </div>
+              <div class="libro-card__info">
+                <h4>El poder del ahora</h4>
+                <p class="libro-autor">Eckhart Tolle</p>
+                <p class="libro-desc">Una guía para la iluminación espiritual que nos invita a vivir en el presente y liberarnos del sufrimiento mental.</p>
+                <span class="libro-tag">Mindfulness</span>
+              </div>
+            </div>
+
+            <div class="libro-card">
+              <div class="libro-card__cover libro-card__cover--2">
+                <span>El cuerpo lleva la cuenta</span>
+              </div>
+              <div class="libro-card__info">
+                <h4>El cuerpo lleva la cuenta</h4>
+                <p class="libro-autor">Bessel van der Kolk</p>
+                <p class="libro-desc">Una obra fundamental sobre cómo el trauma queda grabado en el cuerpo y cómo podemos sanar desde ahí.</p>
+                <span class="libro-tag">Trauma</span>
+              </div>
+            </div>
+
+            <div class="libro-card">
+              <div class="libro-card__cover libro-card__cover--3">
+                <span>La trampa de la felicidad</span>
+              </div>
+              <div class="libro-card__info">
+                <h4>La trampa de la felicidad</h4>
+                <p class="libro-autor">Russ Harris</p>
+                <p class="libro-desc">Introducción a la Terapia de Aceptación y Compromiso (ACT): una nueva forma de relacionarte con tus pensamientos.</p>
+                <span class="libro-tag">ACT · Ansiedad</span>
+              </div>
+            </div>
+
+            <div class="libro-card">
+              <div class="libro-card__cover libro-card__cover--4">
+                <span>Inteligencia emocional</span>
+              </div>
+              <div class="libro-card__info">
+                <h4>Inteligencia emocional</h4>
+                <p class="libro-autor">Daniel Goleman</p>
+                <p class="libro-desc">El clásico que redefinió cómo entendemos las emociones y su impacto en nuestra vida personal y profesional.</p>
+                <span class="libro-tag">Emociones</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- DESCARGABLES -->
+        <div class="recursos__block">
+          <h3 class="recursos__block-title">
+            <span class="recursos-icon">↓</span> Descargables Gratuitos
+          </h3>
+          <div class="descargables-grid">
+            <div class="descargable-card">
+              <div class="descargable-icon">◈</div>
+              <h4>Diario de emociones</h4>
+              <p>Plantilla semanal para registrar y comprender tus estados emocionales.</p>
+              <a href="assets/pdf/diario-emociones.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
+            </div>
+            <div class="descargable-card">
+              <div class="descargable-icon">◉</div>
+              <h4>Técnicas de respiración</h4>
+              <p>Guía práctica con 5 ejercicios de respiración para momentos de ansiedad.</p>
+              <a href="assets/pdf/respiracion.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
+            </div>
+            <div class="descargable-card">
+              <div class="descargable-icon">◇</div>
+              <h4>Rutina de autocuidado</h4>
+              <p>Checklist diaria para incorporar hábitos de salud mental en tu rutina.</p>
+              <a href="assets/pdf/autocuidado.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════ TARIFAS ══════════════ -->
+    <section class="section tarifas" id="tarifas">
+      <div class="container">
+        <span class="section-label section-label--light">Inversión en ti</span>
+        <h2 class="section-title section-title--center section-title--light">Tarifas</h2>
+        <p class="section-subtitle section-subtitle--light">Precios claros, sin letra pequeña. La primera consulta es gratuita y sin compromiso.</p>
+
+        <div class="tarifas__grid">
+
+          <div class="tarifa-card">
+            <div class="tarifa-card__type">Sesión Individual</div>
+            <div class="tarifa-card__price">
+              <span class="price-amount">60</span>
+              <span class="price-unit">€ / sesión</span>
+            </div>
+            <p class="tarifa-card__duration">50 minutos · Online o presencial</p>
+            <ul class="tarifa-card__includes">
+              <li>Evaluación personalizada</li>
+              <li>Plan terapéutico adaptado</li>
+              <li>Material de trabajo entre sesiones</li>
+              <li>Seguimiento por correo</li>
+            </ul>
+            <a href="#contacto" class="btn btn--outline">Reservar</a>
+          </div>
+
+          <div class="tarifa-card tarifa-card--destacada">
+            <div class="tarifa-card__badge">Recomendado</div>
+            <div class="tarifa-card__type">Bono 5 Sesiones</div>
+            <div class="tarifa-card__price">
+              <span class="price-amount">270</span>
+              <span class="price-unit">€ / bono</span>
+            </div>
+            <p class="tarifa-card__duration">Ahorra 30€ · Válido 3 meses</p>
+            <ul class="tarifa-card__includes">
+              <li>Todo lo incluido en sesión individual</li>
+              <li>Descuento por compromiso</li>
+              <li>Flexibilidad en la planificación</li>
+              <li>Acceso a recursos exclusivos</li>
+              <li>Soporte entre sesiones ampliado</li>
+            </ul>
+            <a href="#contacto" class="btn btn--primary">Reservar</a>
+          </div>
+
+          <div class="tarifa-card">
+            <div class="tarifa-card__type">Sesión de Pareja</div>
+            <div class="tarifa-card__price">
+              <span class="price-amount">80</span>
+              <span class="price-unit">€ / sesión</span>
+            </div>
+            <p class="tarifa-card__duration">60 minutos · Online o presencial</p>
+            <ul class="tarifa-card__includes">
+              <li>Evaluación relacional conjunta</li>
+              <li>Técnicas de comunicación efectiva</li>
+              <li>Ejercicios para realizar en pareja</li>
+              <li>Sesiones de seguimiento individuales</li>
+            </ul>
+            <a href="#contacto" class="btn btn--outline">Reservar</a>
+          </div>
+
+        </div>
+
+        <div class="tarifas__nota">
+          <p>* Se ofrece tarifa reducida para desempleados y estudiantes. Consúltame sin compromiso.</p>
+          <p>* Primera consulta orientativa: <strong>gratuita</strong> (30 minutos).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ PROYECCIÓN ══════════════ -->
+    <section class="section proyeccion" id="proyeccion">
+      <div class="container">
+        <span class="section-label">Creciendo contigo</span>
+        <h2 class="section-title">Proyección &amp;<br /><em>Próximos pasos</em></h2>
+        <p class="section-subtitle">Mi consulta no es solo un espacio de escucha; es un proyecto vivo que crece hacia donde tú y la comunidad lo necesitáis.</p>
+
+        <div class="proyeccion__timeline">
+
+          <div class="timeline-item timeline-item--active">
+            <div class="timeline-marker">✦</div>
+            <div class="timeline-content">
+              <span class="timeline-date">Disponible ahora</span>
+              <h3>Consulta individual &amp; de pareja</h3>
+              <p>Sesiones presenciales en [Ciudad] y online para todo el mundo hispanohablante. Agenda abierta con disponibilidad inmediata.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item timeline-item--active">
+            <div class="timeline-marker">✦</div>
+            <div class="timeline-content">
+              <span class="timeline-date">En curso</span>
+              <h3>Podcast mensual</h3>
+              <p>Episodios gratuitos sobre salud mental, emociones y crecimiento personal. Disponibles en esta web y en plataformas de streaming.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item timeline-item--proxima">
+            <div class="timeline-marker">◈</div>
+            <div class="timeline-content">
+              <span class="timeline-date">Próximamente · Otoño 2025</span>
+              <h3>Taller: Gestión emocional para adultos</h3>
+              <p>Un taller intensivo de fin de semana con técnicas basadas en evidencia para manejar el estrés, la ansiedad y las emociones difíciles.</p>
+              <a href="#contacto" class="btn btn--outline btn--sm">Apúntame a la lista de espera</a>
+            </div>
+          </div>
+
+          <div class="timeline-item timeline-item--proxima">
+            <div class="timeline-marker">◈</div>
+            <div class="timeline-content">
+              <span class="timeline-date">Próximamente · 2026</span>
+              <h3>Programa online de 8 semanas</h3>
+              <p>Un programa estructurado de bienestar mental con sesiones grupales en directo, materiales descargables y comunidad privada de apoyo.</p>
+              <a href="#contacto" class="btn btn--outline btn--sm">Notifícame cuando esté listo</a>
+            </div>
+          </div>
+
+          <div class="timeline-item timeline-item--futura">
+            <div class="timeline-marker">◎</div>
+            <div class="timeline-content">
+              <span class="timeline-date">Visión · 2026-2027</span>
+              <h3>Centro de bienestar integral</h3>
+              <p>La ampliación del proyecto hacia un espacio multidisciplinar con otros profesionales de salud: nutrición, fisioterapia y coaching.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Próximos eventos -->
+        <div class="eventos-proximos">
+          <h3 class="eventos-title">Próximos Eventos</h3>
+          <div class="eventos-grid">
+            <div class="evento-card">
+              <div class="evento-card__date">
+                <span class="date-day">15</span>
+                <span class="date-month">Nov</span>
+              </div>
+              <div class="evento-card__info">
+                <h4>Charla gratuita online</h4>
+                <p>«Cómo reducir la ansiedad antes de que nos controle» · Vía Zoom · Plaza limitada</p>
+                <a href="#contacto" class="btn btn--outline btn--sm">Reservar plaza</a>
+              </div>
+            </div>
+            <div class="evento-card">
+              <div class="evento-card__date">
+                <span class="date-day">30</span>
+                <span class="date-month">Nov</span>
+              </div>
+              <div class="evento-card__info">
+                <h4>Taller: Primeros pasos en Mindfulness</h4>
+                <p>Presencial en [Ciudad] · 3 horas · Incluye material y práctica guiada</p>
+                <a href="#contacto" class="btn btn--outline btn--sm">Reservar plaza</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════ CONTACTO ══════════════ -->
+    <section class="section contacto" id="contacto">
+      <div class="container">
+        <div class="contacto__grid">
+          <div class="contacto__info">
+            <span class="section-label section-label--light">Hablemos</span>
+            <h2 class="section-title section-title--light">Da el primer<br /><em>paso hoy</em></h2>
+            <p>No hace falta esperar a estar en el fondo. Si sientes que algo en tu vida puede mejorar, ese es motivo suficiente para buscar apoyo.</p>
+            <div class="contacto__datos">
+              <div class="dato-item">
+                <span class="dato-icon">✉</span>
+                <a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a>
+              </div>
+              <div class="dato-item">
+                <span class="dato-icon">✆</span>
+                <a href="tel:+34600000000">+34 600 000 000</a>
+              </div>
+              <div class="dato-item">
+                <span class="dato-icon">◎</span>
+                <span>[Dirección consulta], [Ciudad]</span>
+              </div>
+            </div>
+            <div class="contacto__redes">
+              <a href="https://instagram.com/tu-usuario" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+              <a href="https://linkedin.com/in/tu-usuario" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+              <a href="https://open.spotify.com/" target="_blank" rel="noopener" aria-label="Podcast en Spotify">Spotify</a>
+            </div>
+          </div>
+
+          <div class="contacto__form-wrap">
+            <form class="contacto__form" id="contactForm" novalidate>
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="¿Cómo te llamas?" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
+              </div>
+              <div class="form-group">
+                <label for="telefono">Teléfono (opcional)</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000" />
+              </div>
+              <div class="form-group">
+                <label for="servicio">¿Qué tipo de terapia te interesa?</label>
+                <select id="servicio" name="servicio">
+                  <option value="">Selecciona una opción</option>
+                  <option value="individual">Terapia Individual</option>
+                  <option value="pareja">Terapia de Pareja</option>
+                  <option value="familiar">Terapia Familiar</option>
+                  <option value="online">Terapia Online</option>
+                  <option value="infantil">Psicología Infantil/Adolescente</option>
+                  <option value="taller">Talleres y Grupos</option>
+                  <option value="otro">Otro / No sé aún</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="mensaje">Cuéntame brevemente qué te trae por aquí</label>
+                <textarea id="mensaje" name="mensaje" rows="4" placeholder="No tienes que contarlo todo ahora. Con una frase es suficiente."></textarea>
+              </div>
+              <div class="form-group form-group--check">
+                <input type="checkbox" id="privacidad" name="privacidad" required />
+                <label for="privacidad">He leído y acepto la <a href="politica-privacidad.html">Política de Privacidad</a></label>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full">Enviar mensaje</button>
+              <p class="form-nota">Respondo en menos de 24h. Toda la información es confidencial.</p>
+            </form>
+            <div class="form-success" id="formSuccess" hidden>
+              <div class="success-icon">✦</div>
+              <h3>¡Mensaje recibido!</h3>
+              <p>Gracias por dar este paso. Te escribiré antes de 24 horas. Cuídate mucho.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <span class="logo-name">[Tu Nombre]</span>
+          <span class="logo-sub">Psicología</span>
+          <p>Acompañando procesos de cambio con calidez y evidencia científica.</p>
+        </div>
+        <div class="footer__links">
+          <h4>Navegación</h4>
+          <a href="#sobre-mi">Sobre mí</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#tarifas">Tarifas</a>
+          <a href="#proyeccion">Proyección</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div class="footer__legal">
+          <h4>Legal</h4>
+          <a href="politica-privacidad.html">Política de Privacidad</a>
+          <a href="aviso-legal.html">Aviso Legal</a>
+          <a href="cookies.html">Política de Cookies</a>
+        </div>
+        <div class="footer__colophon">
+          <p>Colegiada nº [Número]</p>
+          <p>© <span id="year"></span> [Tu Nombre]. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner -->
+  <div class="cookie-banner" id="cookieBanner" hidden>
+    <p>Usamos cookies propias y de terceros para mejorar tu experiencia. <a href="cookies.html">Más información</a>.</p>
+    <div class="cookie-banner__btns">
+      <button class="btn btn--ghost btn--sm" id="cookieReject">Solo esenciales</button>
+      <button class="btn btn--primary btn--sm" id="cookieAccept">Aceptar todas</button>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
