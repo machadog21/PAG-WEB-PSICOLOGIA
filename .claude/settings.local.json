@@ -4,7 +4,23 @@
       "Bash(gh auth:*)",
       "Bash(gh api:*)",
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" auth status)",
-      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo create PAG-WEB-PSICOLOGIA --public --source=. --remote=origin --push)"
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo create PAG-WEB-PSICOLOGIA --public --source=. --remote=origin --push)",
+      "Bash(ffmpeg -version)",
+      "Bash(where ffmpeg:*)",
+      "Read(//c/Program Files/**)",
+      "Read(//c//**)",
+      "Bash(winget --version)",
+      "Bash(winget install:*)",
+      "Bash(cmd /c \"where ffmpeg\")",
+      "Bash(/c/Users/Diego/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffmpeg.exe -y -i d:/psicologia-web/psicologia-web/recursos/__TRACKED_VAR__ -vf scale=1280:-2 -c:v libx264 -crf 28 -preset fast -movflags +faststart -an d:/psicologia-web/psicologia-web/recursos/opt___TRACKED_VAR__)",
+      "Bash(/c/Users/Diego/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffmpeg.exe -y -ss 0 -t 5 -i d:/psicologia-web/psicologia-web/recursos/88207-602915574_medium.mp4 -ss 0 -t 5 -i d:/psicologia-web/psicologia-web/recursos/58580-493659853_medium.mp4 -ss 0 -t 5 -i d:/psicologia-web/psicologia-web/recursos/71122-537102350_medium.mp4 -filter_complex '[0:v][1:v][2:v]concat=n=3:v=1:a=0[v]' -map '[v]' -c:v libx264 -crf 18 -preset slow -movflags +faststart d:/psicologia-web/psicologia-web/recursos/hero-loop.mp4)",
+      "Bash(/c/Users/Diego/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffprobe.exe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate,codec_name d:/psicologia-web/psicologia-web/recursos/__TRACKED_VAR__)",
+      "Bash(/c/Users/Diego/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffmpeg.exe -y -ss 0 -t 5 -i d:/psicologia-web/psicologia-web/recursos/88207-602915574_medium.mp4 -ss 0 -t 5 -i d:/psicologia-web/psicologia-web/recursos/58580-493659853_medium.mp4 -ss 0 -t 5 -i d:/psicologia-web/psicologia-web/recursos/71122-537102350_medium.mp4 -filter_complex ':*)",
+      "Bash(npm --version)",
+      "Bash(cmd /c \"node --version && npm --version\")",
+      "Bash(cmd /c \"npm install\")",
+      "Bash(\"/c/Program Files/nodejs/npm\" install)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)"
     ]
   }
 }

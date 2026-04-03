@@ -4,6 +4,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+
+
+
   /* ── NAVBAR SCROLL ─────────────────────── */
   const navbar = document.getElementById('navbar');
   const handleScroll = () => {
@@ -107,17 +110,28 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.textContent = 'Enviando…';
       btn.disabled = true;
 
-      /* ──────────────────────────────────────
-         INTEGRACIÓN REAL:
-         Sustituye este bloque por tu servicio:
-         - Formspree:  action="https://formspree.io/f/YOUR_ID"  method="POST"
-         - EmailJS:    emailjs.send(...)
-         - Backend propio: fetch('/api/contact', { method:'POST', body: FormData })
-      ────────────────────────────────────── */
-      await new Promise(r => setTimeout(r, 1200)); // simula envío
+      const data = {
+        nombre:   contactForm.nombre.value,
+        email:    contactForm.email.value,
+        telefono: contactForm.telefono.value,
+        servicio: contactForm.servicio.value,
+        mensaje:  contactForm.mensaje.value,
+      };
 
-      contactForm.hidden = true;
-      formSuccess.hidden = false;
+      try {
+        const res = await fetch('/api/contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (!res.ok) throw new Error();
+        contactForm.hidden = true;
+        formSuccess.hidden = false;
+      } catch {
+        btn.textContent = 'Error al enviar. Inténtalo de nuevo.';
+        btn.disabled = false;
+      }
     });
   }
 
