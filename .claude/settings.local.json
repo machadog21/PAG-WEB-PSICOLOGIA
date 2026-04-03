@@ -20,7 +20,12 @@
       "Bash(cmd /c \"node --version && npm --version\")",
       "Bash(cmd /c \"npm install\")",
       "Bash(\"/c/Program Files/nodejs/npm\" install)",
-      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)"
+      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" \"d:/psicologia-web/psicologia-web/backend/server.js\")",
+      "Bash(curl -s \"https://www.googleapis.com/books/v1/volumes?q=El+poder+del+ahora+Eckhart+Tolle&maxResults=1\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['items'][0]['volumeInfo'].get\\('imageLinks',{}\\).get\\('thumbnail','NO FOUND'\\)\\)\")",
+      "WebFetch(domain:www.googleapis.com)",
+      "WebFetch(domain:openlibrary.org)"
     ]
   }
 }
