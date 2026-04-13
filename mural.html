@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mural de Emociones | Psicología</title>
+
+  <!-- Google Fonts: Inter + Syne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:     #0a0a0a;
+      --cream:   #f8f8f8;
+      --parchment: #e5e5e5;
+      --muted:   #666;
+      --clay:    #111;
+      --radius:  10px;
+      --font:    'Inter', system-ui, sans-serif;
+      --display: 'Syne', system-ui, sans-serif;
+      --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .mural-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .mural-header__title {
+      font-family: var(--display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .mural-header__title span {
+      font-weight: 400;
+      opacity: 0.5;
+      font-size: 0.9rem;
+      margin-left: 0.75rem;
+      font-family: var(--font);
+    }
+    .mural-header__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-back {
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      padding: 0.45rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .btn-back:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.45);
+    }
+    .btn-clear-all {
+      font-family: var(--font);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(200,80,80,0.7);
+      border: 1px solid rgba(200,80,80,0.3);
+      background: transparent;
+      padding: 0.45rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-clear-all:hover {
+      color: #f88;
+      border-color: rgba(200,80,80,0.6);
+    }
+
+    /* ── INTRO ── */
+    .mural-intro {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+    }
+    .mural-intro h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    .mural-intro h2 em {
+      font-style: italic;
+      opacity: 0.45;
+    }
+    .mural-intro p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.45);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── GRID ── */
+    .mural-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      padding: 1.5rem 2rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── CARD ── */
+    .mural-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+      animation: cardIn 0.45s ease both;
+    }
+    .mural-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.18);
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .mural-card__img {
+      width: 100%;
+      aspect-ratio: 9/5;
+      object-fit: cover;
+      display: block;
+    }
+    .mural-card__meta {
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .mural-card__prompt {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .mural-card__date {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── EMPTY STATE ── */
+    .mural-empty {
+      text-align: center;
+      padding: 5rem 2rem;
+      color: rgba(255,255,255,0.25);
+    }
+    .mural-empty__icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.3;
+    }
+    .mural-empty h3 {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .mural-empty p {
+      font-size: 0.9rem;
+      max-width: 360px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+    .btn-draw {
+      display: inline-block;
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.7rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .btn-draw:hover {
+      background: rgba(255,255,255,0.18);
+    }
+
+    /* ── COUNT BADGE ── */
+    .mural-count {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      padding: 0 2rem 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── CONFIRM DIALOG ── */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      backdrop-filter: blur(6px);
+    }
+    .confirm-dialog {
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+    }
+    .confirm-dialog h3 {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+    .confirm-dialog p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.5rem;
+      line-height: 1.55;
+    }
+    .confirm-dialog__btns {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .btn-confirm-yes {
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(200,60,60,0.85);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .btn-confirm-yes:hover { background: rgba(220,60,60,1); }
+    .btn-confirm-no {
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.6rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-confirm-no:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="mural-header">
+    <div class="mural-header__title">
+      Mural de Emociones
+      <span id="muralCountLabel"></span>
+    </div>
+    <div class="mural-header__actions">
+      <a href="index.html#emocion" class="btn-back">← Dibujar</a>
+      <button class="btn-clear-all" id="btnClearAll">Limpiar mural</button>
+    </div>
+  </header>
+
+  <!-- INTRO -->
+  <div class="mural-intro">
+    <h2>Cada trazo,<br /><em>una emoción real</em></h2>
+    <p>Un espacio colectivo donde las emociones toman forma. Cada dibujo es una huella auténtica de alguien que se atrevió a expresar lo que sentía.</p>
+  </div>
+
+  <!-- COUNT -->
+  <p class="mural-count" id="muralCount"></p>
+
+  <!-- GRID -->
+  <main id="muralGrid" class="mural-grid"></main>
+
+  <!-- EMPTY STATE (hidden by default) -->
+  <div id="muralEmpty" class="mural-empty" hidden>
+    <div class="mural-empty__icon">◇</div>
+    <h3>El mural está vacío</h3>
+    <p>Todavía no hay emociones en este mural. Sé el primero en añadir la tuya.</p>
+    <a href="index.html#emocion" class="btn-draw">Ir a dibujar</a>
+  </div>
+
+  <script>
+    const MURAL_KEY = 'psico_mural';
+
+    function loadMural() {
+      try {
+        return JSON.parse(localStorage.getItem(MURAL_KEY) || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function render() {
+      const entries = loadMural();
+      const grid    = document.getElementById('muralGrid');
+      const empty   = document.getElementById('muralEmpty');
+      const count   = document.getElementById('muralCount');
+      const label   = document.getElementById('muralCountLabel');
+
+      grid.innerHTML = '';
+
+      if (entries.length === 0) {
+        empty.hidden = false;
+        count.textContent = '';
+        label.textContent = '';
+        return;
+      }
+
+      empty.hidden = true;
+      const n = entries.length;
+      count.textContent = `${n} emoción${n !== 1 ? 'es' : ''} compartida${n !== 1 ? 's' : ''}`;
+      label.textContent = `(${n})`;
+
+      entries.forEach((entry, i) => {
+        const card = document.createElement('article');
+        card.className = 'mural-card';
+        card.style.animationDelay = Math.min(i * 0.04, 0.6) + 's';
+
+        const img = document.createElement('img');
+        img.className = 'mural-card__img';
+        img.src   = entry.dataUrl;
+        img.alt   = entry.prompt || 'Emoción dibujada';
+        img.loading = 'lazy';
+
+        const meta = document.createElement('div');
+        meta.className = 'mural-card__meta';
+        meta.innerHTML = `
+          <p class="mural-card__prompt">"${escapeHtml(entry.prompt || '')}"</p>
+          <p class="mural-card__date">${escapeHtml(entry.date || '')}</p>
+        `;
+
+        card.appendChild(img);
+        card.appendChild(meta);
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    /* ── Limpiar mural ── */
+    let confirmOverlay = null;
+
+    document.getElementById('btnClearAll').addEventListener('click', () => {
+      const entries = loadMural();
+      if (entries.length === 0) return;
+
+      confirmOverlay = document.createElement('div');
+      confirmOverlay.className = 'confirm-overlay';
+      confirmOverlay.innerHTML = `
+        <div class="confirm-dialog">
+          <h3>¿Limpiar el mural?</h3>
+          <p>Se eliminarán todos los dibujos almacenados en este dispositivo. Esta acción no se puede deshacer.</p>
+          <div class="confirm-dialog__btns">
+            <button class="btn-confirm-yes" id="confirmYes">Sí, limpiar</button>
+            <button class="btn-confirm-no" id="confirmNo">Cancelar</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(confirmOverlay);
+
+      document.getElementById('confirmYes').addEventListener('click', () => {
+        localStorage.removeItem(MURAL_KEY);
+        confirmOverlay.remove();
+        confirmOverlay = null;
+        render();
+      });
+      document.getElementById('confirmNo').addEventListener('click', () => {
+        confirmOverlay.remove();
+        confirmOverlay = null;
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>

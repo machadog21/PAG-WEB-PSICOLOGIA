@@ -12,10 +12,10 @@
   <meta property="og:url" content="https://www.tu-dominio.com" />
   <title>[Nombre] | Psicología y Bienestar</title>
 
-  <!-- Google Fonts: Libre Baskerville + complementaria -->
+  <!-- Google Fonts: Inter + Syne -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -34,6 +34,8 @@
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#servicios">Servicios</a>
       <a href="#recursos">Recursos</a>
+      <a href="#emocion">Emoción</a>
+      <a href="mural.html">Mural</a>
       <a href="#tarifas">Tarifas</a>
       <a href="#proyeccion">Proyección</a>
       <a href="#contacto" class="btn-nav">Contacto</a>
@@ -43,13 +45,10 @@
     </button>
   </header>
 
-  <main>
+  <main id="mainScroller">
 
     <!-- ══════════════ HERO ══════════════ -->
     <section class="hero" id="inicio">
-      <video class="hero__video hero__video--active" autoplay muted loop playsinline preload="auto">
-        <source src="recursos/hero-loop.mp4" type="video/mp4" />
-      </video>
       <div class="hero__bg-texture"></div>
       <div class="hero__content">
         <p class="hero__eyebrow">Psicología · Bienestar · Transformación</p>
@@ -128,7 +127,10 @@
         <h2 class="section-title section-title--center">Servicios &amp; Terapias</h2>
         <p class="section-subtitle">¿No sabes si la terapia es para ti? Estas preguntas pueden ayudarte a encontrar la respuesta.</p>
 
-        <div class="servicios__grid">
+        <div class="carousel-wrap" data-carousel="servicios">
+          <button class="carousel-arrow carousel-arrow--prev" aria-label="Ver anteriores">&#8249;</button>
+          <div class="carousel-viewport">
+            <div class="servicios__grid">
 
           <div class="servicio-card">
             <div class="servicio-card__icon">◈</div>
@@ -221,6 +223,10 @@
             <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
           </div>
 
+            </div>
+          </div>
+          <button class="carousel-arrow carousel-arrow--next" aria-label="Ver siguientes">&#8250;</button>
+          <div class="carousel-dots"></div>
         </div>
       </div>
     </section>
@@ -232,10 +238,11 @@
         <h2 class="section-title">Para tu bienestar,<br /><em>sin coste alguno</em></h2>
         <p class="section-subtitle">Materiales que puedes usar hoy mismo para cuidarte un poco más.</p>
 
+        <div class="recursos__cols">
         <!-- PODCASTS -->
         <div class="recursos__block">
           <h3 class="recursos__block-title">
-            <span class="recursos-icon">♪</span> Episodios del Podcast
+            <span class="recursos-icon">♪</span> Podcast
           </h3>
           <div class="podcast-grid" id="podcastGrid">
 
@@ -303,14 +310,16 @@
             </article>
 
           </div>
-        </div>
-
+        </div><!-- /podcasts -->
         <!-- LIBROS -->
         <div class="recursos__block">
           <h3 class="recursos__block-title">
-            <span class="recursos-icon">◎</span> Lecturas Recomendadas
+            <span class="recursos-icon">◎</span> Lecturas
           </h3>
-          <div class="libros-grid">
+          <div class="carousel-wrap" data-carousel="libros">
+            <button class="carousel-arrow carousel-arrow--prev" aria-label="Ver anteriores">&#8249;</button>
+            <div class="carousel-viewport">
+              <div class="libros-grid">
 
             <div class="libro-card">
               <div class="libro-card__cover">
@@ -360,36 +369,97 @@
               </div>
             </div>
 
+              </div>
+            </div>
+            <button class="carousel-arrow carousel-arrow--next" aria-label="Ver siguientes">&#8250;</button>
+            <div class="carousel-dots"></div>
           </div>
-        </div>
-
+        </div><!-- /libros -->
         <!-- DESCARGABLES -->
         <div class="recursos__block">
           <h3 class="recursos__block-title">
-            <span class="recursos-icon">↓</span> Descargables Gratuitos
+            <span class="recursos-icon">↓</span> Descargables
           </h3>
           <div class="descargables-grid">
             <div class="descargable-card">
               <div class="descargable-icon">◈</div>
-              <h4>Diario de emociones</h4>
-              <p>Plantilla semanal para registrar y comprender tus estados emocionales.</p>
+              <div class="descargable-card__body">
+                <h4>Diario de emociones</h4>
+                <p>Plantilla semanal para registrar y comprender tus estados emocionales.</p>
+              </div>
               <a href="assets/pdf/diario-emociones.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
             </div>
             <div class="descargable-card">
               <div class="descargable-icon">◉</div>
-              <h4>Técnicas de respiración</h4>
-              <p>Guía práctica con 5 ejercicios de respiración para momentos de ansiedad.</p>
+              <div class="descargable-card__body">
+                <h4>Técnicas de respiración</h4>
+                <p>Guía práctica con 5 ejercicios de respiración para momentos de ansiedad.</p>
+              </div>
               <a href="assets/pdf/respiracion.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
             </div>
             <div class="descargable-card">
               <div class="descargable-icon">◇</div>
-              <h4>Rutina de autocuidado</h4>
-              <p>Checklist diaria para incorporar hábitos de salud mental en tu rutina.</p>
+              <div class="descargable-card__body">
+                <h4>Rutina de autocuidado</h4>
+                <p>Checklist diaria para incorporar hábitos de salud mental en tu rutina.</p>
+              </div>
               <a href="assets/pdf/autocuidado.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
             </div>
           </div>
-        </div>
+        </div><!-- /descargables -->
+        </div><!-- /recursos__cols -->
 
+      </div>
+    </section>
+
+    <!-- ══════════════ DIBUJA TU EMOCIÓN ══════════════ -->
+    <section class="section emocion" id="emocion">
+      <div class="container">
+        <span class="section-label">Expresión creativa</span>
+        <h2 class="section-title">Dibuja tu<br /><em>emoción</em></h2>
+        <p class="section-subtitle emocion__subtitle">La terapia expresiva nos invita a dar forma a lo que las palabras no alcanzan. Elige un color y dibuja cómo te sientes ahora mismo.</p>
+
+        <div class="emocion__inner">
+
+          <div class="emocion__prompt-row">
+            <p class="emocion__prompt" id="emocionPrompt">Dibuja cómo te sientes en este momento</p>
+            <button class="emocion__prompt-btn" id="promptNext" aria-label="Nueva pregunta">↻ Nueva pregunta</button>
+          </div>
+
+          <div class="emocion__canvas-wrap">
+            <canvas id="emocionCanvas"></canvas>
+            <div class="emocion__canvas-hint" id="emocionHint">Haz clic o toca para comenzar a dibujar</div>
+          </div>
+
+          <div class="emocion__controls">
+
+            <div class="emocion__palette-row">
+              <span class="controls-label">Color · emoción:</span>
+              <div class="emocion__palette" id="emocionPalette"></div>
+            </div>
+
+            <div class="emocion__tools-row">
+              <div class="tool-group">
+                <span class="controls-label">Trazo:</span>
+                <button class="tool-size active" data-size="5" aria-label="Trazo fino">·</button>
+                <button class="tool-size" data-size="12" aria-label="Trazo medio">•</button>
+                <button class="tool-size" data-size="22" aria-label="Trazo grueso">⬤</button>
+              </div>
+              <button class="emocion-tool-btn" id="emocionEraser" aria-label="Activar borrador">◻ Borrador</button>
+              <button class="emocion-tool-btn emocion-tool-btn--danger" id="emocionClear" aria-label="Limpiar lienzo">✕ Limpiar</button>
+              <button class="emocion-tool-btn" id="emocionDownload" aria-label="Descargar dibujo">↓ Guardar imagen</button>
+              <button class="btn btn--primary" id="emocionSave">✦ Añadir al Mural</button>
+            </div>
+
+          </div>
+
+          <div class="emocion__mural-row">
+            <a href="mural.html" class="emocion__mural-link" target="_blank">Ver el Mural de Emociones →</a>
+          </div>
+
+          <div class="emocion__status" id="emocionStatus" hidden></div>
+
+        </div>
       </div>
     </section>
 
@@ -468,6 +538,7 @@
         <h2 class="section-title">Proyección &amp;<br /><em>Próximos pasos</em></h2>
         <p class="section-subtitle">Mi consulta no es solo un espacio de escucha; es un proyecto vivo que crece hacia donde tú y la comunidad lo necesitáis.</p>
 
+        <div class="proyeccion__body">
         <div class="proyeccion__timeline">
 
           <div class="timeline-item timeline-item--active">
@@ -517,7 +588,7 @@
             </div>
           </div>
 
-        </div>
+        </div><!-- /timeline -->
 
         <!-- Próximos eventos -->
         <div class="eventos-proximos">
@@ -546,7 +617,8 @@
               </div>
             </div>
           </div>
-        </div>
+        </div><!-- /eventos-proximos -->
+        </div><!-- /proyeccion__body -->
 
       </div>
     </section>
@@ -628,9 +700,8 @@
       </div>
     </section>
 
-  </main>
-
   <!-- ══════════════ FOOTER ══════════════ -->
+  <div class="slide-footer">
   <footer class="footer">
     <div class="container">
       <div class="footer__grid">
@@ -644,6 +715,8 @@
           <a href="#sobre-mi">Sobre mí</a>
           <a href="#servicios">Servicios</a>
           <a href="#recursos">Recursos</a>
+          <a href="#emocion">Emoción</a>
+          <a href="mural.html">Mural</a>
           <a href="#tarifas">Tarifas</a>
           <a href="#proyeccion">Proyección</a>
           <a href="#contacto">Contacto</a>
@@ -661,6 +734,17 @@
       </div>
     </div>
   </footer>
+  </div>
+
+  </main>
+
+  <!-- Indicador de progreso horizontal -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Flecha hint primer carga -->
+  <div class="page-nav-hint" id="pageNavHint" aria-hidden="true">
+    <span class="hint-arrow">›</span>
+  </div>
 
   <!-- Cookie banner -->
   <div class="cookie-banner" id="cookieBanner" hidden>
@@ -671,6 +755,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/nsfwjs@4.2.0/dist/nsfwjs.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
