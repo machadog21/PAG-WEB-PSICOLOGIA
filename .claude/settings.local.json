@@ -28,7 +28,8 @@
       "WebFetch(domain:openlibrary.org)",
       "Bash(node backend/server.js)",
       "Bash(node -e ':*)",
-      "WebFetch(domain:vicio.com)"
+      "WebFetch(domain:vicio.com)",
+      "Bash(node -c \"c:/Diego Trabajo/Proyectos/PAG-WEB-PSICOLOGIA/js/main.js\")"
     ]
   }
 }

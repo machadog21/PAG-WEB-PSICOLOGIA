@@ -263,7 +263,19 @@ function initHorizontalPageScroll() {
 
     updateProgress();
     updateNavbar();
-    setTimeout(() => { isAnimating = false; }, 850);
+
+    /* Usa scrollend si el navegador lo soporta (más preciso) */
+    if ('onscrollend' in window) {
+      const onEnd = () => {
+        isAnimating = false;
+        scroller.removeEventListener('scrollend', onEnd);
+      };
+      scroller.addEventListener('scrollend', onEnd, { once: true });
+      /* Fallback por si scrollend no dispara */
+      setTimeout(() => { isAnimating = false; }, 600);
+    } else {
+      setTimeout(() => { isAnimating = false; }, 500);
+    }
   }
 
   /* ── Intercept enlaces de anclaje ─────── */
@@ -284,8 +296,7 @@ function initHorizontalPageScroll() {
   });
 
   /* ── Rueda del ratón → horizontal ─────── */
-  let wheelAccum = 0;
-  let wheelTimer;
+  let lastWheelTime = 0;
 
   scroller.addEventListener('wheel', e => {
     /* Si el scroll del contenido interior tiene margen, dejar pasar */
@@ -296,21 +307,23 @@ function initHorizontalPageScroll() {
       const atBottom = panel.scrollTop >= panel.scrollHeight - panel.clientHeight - 4;
 
       if (scrollable) {
-        if (e.deltaY > 0 && !atBottom) return; /* sigue scroll vertical */
+        if (e.deltaY > 0 && !atBottom) return;
         if (e.deltaY < 0 && !atTop)    return;
       }
     }
 
     e.preventDefault();
-    wheelAccum += e.deltaY;
 
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => {
-      if (Math.abs(wheelAccum) > 30) {
-        goTo(currentIdx + (wheelAccum > 0 ? 1 : -1));
-      }
-      wheelAccum = 0;
-    }, 60);
+    /* Respuesta inmediata sin acumular: un gesto = un slide */
+    if (isAnimating) return;
+    const now = Date.now();
+    if (now - lastWheelTime < 120) return; /* throttle suave */
+
+    const delta = e.deltaY || e.deltaX;
+    if (Math.abs(delta) < 8) return;
+
+    lastWheelTime = now;
+    goTo(currentIdx + (delta > 0 ? 1 : -1));
   }, { passive: false });
 
   /* ── Teclado ──────────────────────────── */
@@ -499,7 +512,11 @@ function initEmotionCanvas() {
   let brushSize    = 5;
   let isEraser     = false;
   let hasDrew      = false;
+  let activeSticker = null; /* emoji actual para colocar en el lienzo */
   const colorUsage = {};
+
+  /* Color de fondo dinámico — para que "Limpiar" lo respete */
+  let bgFillStyle = '#f9f7f4';
 
   /* Prompts rotativos */
   const prompts = [
@@ -544,13 +561,26 @@ function initEmotionCanvas() {
   let lastX = 0, lastY = 0;
 
   function startDraw(e) {
-    isDrawing = true;
     const { x, y } = getPos(e);
+
+    /* Si hay un sticker activo, colocarlo en lugar de dibujar */
+    if (activeSticker) {
+      const fontSize = Math.max(36, brushSize * 4);
+      ctx.font = `${fontSize}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(activeSticker, x, y);
+      hasDrew = true;
+      if (hintEl) hintEl.classList.add('hidden');
+      return;
+    }
+
+    isDrawing = true;
     lastX = x; lastY = y;
 
     ctx.beginPath();
     ctx.arc(x, y, brushSize / 2, 0, Math.PI * 2);
-    ctx.fillStyle = isEraser ? '#f9f7f4' : currentColor;
+    ctx.fillStyle = isEraser ? bgFillStyle : currentColor;
     ctx.fill();
 
     if (!isEraser && !hasDrew) {
@@ -568,7 +598,7 @@ function initEmotionCanvas() {
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(x, y);
-    ctx.strokeStyle = isEraser ? '#f9f7f4' : currentColor;
+    ctx.strokeStyle = isEraser ? bgFillStyle : currentColor;
     ctx.lineWidth   = brushSize;
     ctx.lineCap     = 'round';
     ctx.lineJoin    = 'round';
@@ -651,10 +681,14 @@ function initEmotionCanvas() {
 
   /* ── Limpiar ───────────────────────────── */
   document.getElementById('emocionClear')?.addEventListener('click', () => {
-    ctx.fillStyle = '#f9f7f4';
+    bgFillStyle = '#f9f7f4';
+    ctx.fillStyle = bgFillStyle;
     ctx.fillRect(0, 0, W, H);
     Object.keys(colorUsage).forEach(k => delete colorUsage[k]);
     hasDrew = false;
+    activeSticker = null;
+    document.querySelectorAll('.sticker-btn.active').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.bg-btn.active').forEach(b => b.classList.remove('active'));
     if (hintEl) hintEl.classList.remove('hidden');
     const statusEl = document.getElementById('emocionStatus');
     if (statusEl) statusEl.hidden = true;
@@ -730,6 +764,99 @@ function initEmotionCanvas() {
     if (!el) return;
     el.innerHTML = `<p class="status__msg${isError ? ' status__msg--error' : ''}">${msg}</p>`;
     el.hidden = false;
+  }
+
+  /* ── Stickers de emociones ─────────────── */
+  const stickers = ['❤️','✨','🌸','☀️','🌙','☁️','🌊','🍃','🔥','⭐','🦋','🕊️','🌈','💧'];
+  const stickersEl = document.getElementById('stickersRow');
+  if (stickersEl) {
+    stickers.forEach(emoji => {
+      const btn = document.createElement('button');
+      btn.className = 'sticker-btn';
+      btn.type = 'button';
+      btn.textContent = emoji;
+      btn.setAttribute('aria-label', `Sticker ${emoji}`);
+      btn.addEventListener('click', () => {
+        if (activeSticker === emoji) {
+          activeSticker = null;
+          btn.classList.remove('active');
+        } else {
+          activeSticker = emoji;
+          stickersEl.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          /* Desactivar borrador si estaba */
+          isEraser = false;
+          document.getElementById('emocionEraser')?.classList.remove('emocion-tool-btn--active');
+        }
+      });
+      stickersEl.appendChild(btn);
+    });
+  }
+
+  /* ── Fondos de naturaleza (Unsplash) ───── */
+  const backgrounds = [
+    { name: 'Bosque',    url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&q=85' },
+    { name: 'Océano',    url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1600&q=85' },
+    { name: 'Montaña',   url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=85' },
+    { name: 'Atardecer', url: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1600&q=85' },
+    { name: 'Flores',    url: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1600&q=85' },
+    { name: 'Niebla',    url: 'https://images.unsplash.com/photo-1487621167305-5d248087c724?w=1600&q=85' },
+    { name: 'Cielo',     url: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1600&q=85' },
+    { name: 'Hojas',     url: 'https://images.unsplash.com/photo-1507783548227-544c3b8fc065?w=1600&q=85' },
+  ];
+  const bgEl = document.getElementById('backgroundsRow');
+  if (bgEl) {
+    /* Botón de "limpiar fondo" */
+    const clearBtn = document.createElement('button');
+    clearBtn.className = 'bg-btn bg-btn--clear';
+    clearBtn.type = 'button';
+    clearBtn.title = 'Sin fondo';
+    clearBtn.setAttribute('aria-label', 'Sin fondo');
+    clearBtn.addEventListener('click', () => {
+      bgFillStyle = '#f9f7f4';
+      ctx.fillStyle = bgFillStyle;
+      ctx.fillRect(0, 0, W, H);
+      hasDrew = false;
+      if (hintEl) hintEl.classList.remove('hidden');
+      bgEl.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
+      clearBtn.classList.add('active');
+    });
+    bgEl.appendChild(clearBtn);
+
+    backgrounds.forEach(bg => {
+      const btn = document.createElement('button');
+      btn.className = 'bg-btn';
+      btn.type = 'button';
+      btn.title = bg.name;
+      btn.setAttribute('aria-label', `Fondo ${bg.name}`);
+      /* Thumbnail rápido — la imagen completa se carga al hacer click */
+      btn.style.backgroundImage = `url(${bg.url}&w=120)`;
+      btn.addEventListener('click', () => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          /* Cubrir el lienzo manteniendo proporción (object-fit: cover) */
+          const scale = Math.max(W / img.width, H / img.height);
+          const dw = img.width * scale;
+          const dh = img.height * scale;
+          const dx = (W - dw) / 2;
+          const dy = (H - dh) / 2;
+          ctx.drawImage(img, dx, dy, dw, dh);
+          /* Color de fondo medio para que el borrador no haga huecos blancos crudos */
+          bgFillStyle = '#888';
+          hasDrew = true;
+          if (hintEl) hintEl.classList.add('hidden');
+        };
+        img.onerror = () => {
+          showStatus(document.getElementById('emocionStatus'),
+            'No se pudo cargar el fondo. Comprueba tu conexión.', true);
+        };
+        img.src = bg.url;
+        bgEl.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+      bgEl.appendChild(btn);
+    });
   }
 }
 
