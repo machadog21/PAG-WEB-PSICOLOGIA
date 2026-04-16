@@ -29,7 +29,16 @@
       "Bash(node backend/server.js)",
       "Bash(node -e ':*)",
       "WebFetch(domain:vicio.com)",
-      "Bash(node -c \"c:/Diego Trabajo/Proyectos/PAG-WEB-PSICOLOGIA/js/main.js\")"
+      "Bash(node -c \"c:/Diego Trabajo/Proyectos/PAG-WEB-PSICOLOGIA/js/main.js\")",
+      "WebSearch",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "WebFetch(domain:cdnjs.com)",
+      "WebFetch(domain:api.cdnjs.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:unpkg.com)",
+      "WebFetch(domain:app.unpkg.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:unsplash.com)"
     ]
   }
 }

@@ -199,7 +199,67 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── MURAL DE FONDO EN HERO ────────────── */
   initHeroMural();
 
+  /* ── COLOR ALEATORIO DE EMOCIÓN AL CLIQUEAR BOTÓN ── */
+  initButtonEmotionColor();
+
+  /* ── Escala responsive del mockup iPhone (devices.css) ── */
+  initIphoneScale();
+
 });
+
+/* ════════════════════════════════════════════
+   ESCALA DEL IPHONE (devices.css es 428×868 fijo)
+════════════════════════════════════════════ */
+function initIphoneScale() {
+  const wrap = document.querySelector('.iphone-wrap');
+  if (!wrap) return;
+  const apply = () => {
+    const maxH = Math.min(Math.max(window.innerHeight * 0.88, 520), 820);
+    const scale = +(maxH / 868).toFixed(3);
+    wrap.style.setProperty('--iphone-scale', scale);
+  };
+  apply();
+  window.addEventListener('resize', apply);
+}
+
+/* ════════════════════════════════════════════
+   COLOR ALEATORIO AL PULSAR CUALQUIER BOTÓN
+════════════════════════════════════════════ */
+function initButtonEmotionColor() {
+  const emotionColors = [
+    '#e63946', /* pasión */
+    '#f4a261', /* calidez */
+    '#ffbe0b', /* alegría */
+    '#4caf50', /* calma */
+    '#4cc9f0', /* serenidad */
+    '#4361ee', /* tristeza */
+    '#7209b7', /* intuición */
+    '#f72585', /* amor */
+    '#f26c4f', /* clay */
+  ];
+
+  document.addEventListener('click', e => {
+    const target = e.target.closest('button, a');
+    if (!target) return;
+    /* Ignorar botones de color (paleta), stickers, fondos y controles del scroll */
+    if (target.classList.contains('palette-color'))        return;
+    if (target.classList.contains('sticker-btn'))          return;
+    if (target.classList.contains('bg-btn'))               return;
+    if (target.classList.contains('tool-size'))            return;
+    if (target.classList.contains('scroll-progress__dot')) return;
+    if (target.closest('.cookie-banner'))                  return;
+
+    const c = emotionColors[Math.floor(Math.random() * emotionColors.length)];
+    target.style.setProperty('color', c, 'important');
+    target.style.setProperty('transition', 'color 0.3s ease', 'important');
+
+    /* Repintar todos los spans internos (char, logo-name, logo-sub, etc.) */
+    target.querySelectorAll('span').forEach(sp => {
+      sp.style.setProperty('color', c, 'important');
+      sp.style.setProperty('transition', 'color 0.3s ease', 'important');
+    });
+  }, true);
+}
 
 /* ════════════════════════════════════════════
    SCROLL HORIZONTAL DE PÁGINA
@@ -296,7 +356,9 @@ function initHorizontalPageScroll() {
   });
 
   /* ── Rueda del ratón → horizontal ─────── */
-  let lastWheelTime = 0;
+  /* Estrategia: detectar "gesto" completo; cada gesto = un slide */
+  let wheelGestureActive = false;
+  let wheelGestureTimer;
 
   scroller.addEventListener('wheel', e => {
     /* Si el scroll del contenido interior tiene margen, dejar pasar */
@@ -314,15 +376,17 @@ function initHorizontalPageScroll() {
 
     e.preventDefault();
 
-    /* Respuesta inmediata sin acumular: un gesto = un slide */
-    if (isAnimating) return;
-    const now = Date.now();
-    if (now - lastWheelTime < 120) return; /* throttle suave */
-
     const delta = e.deltaY || e.deltaX;
-    if (Math.abs(delta) < 8) return;
+    if (Math.abs(delta) < 5) return;
 
-    lastWheelTime = now;
+    /* Reset el "fin de gesto" con cada evento — la rueda dispara muchos eventos seguidos */
+    clearTimeout(wheelGestureTimer);
+    wheelGestureTimer = setTimeout(() => { wheelGestureActive = false; }, 180);
+
+    /* Solo el primer evento del gesto mueve el slide */
+    if (wheelGestureActive || isAnimating) return;
+    wheelGestureActive = true;
+
     goTo(currentIdx + (delta > 0 ? 1 : -1));
   }, { passive: false });
 
@@ -560,18 +624,26 @@ function initEmotionCanvas() {
 
   let lastX = 0, lastY = 0;
 
+  /* Colocar un sticker en coordenadas dadas del lienzo */
+  function placeSticker(emoji, x, y) {
+    const fontSize = Math.max(48, brushSize * 5);
+    ctx.save();
+    ctx.font = `${fontSize}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","EmojiOne Color","Twemoji Mozilla",sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#000'; /* fallback cuando el emoji no es color */
+    ctx.fillText(emoji, x, y);
+    ctx.restore();
+    hasDrew = true;
+    if (hintEl) hintEl.classList.add('hidden');
+  }
+
   function startDraw(e) {
     const { x, y } = getPos(e);
 
     /* Si hay un sticker activo, colocarlo en lugar de dibujar */
     if (activeSticker) {
-      const fontSize = Math.max(36, brushSize * 4);
-      ctx.font = `${fontSize}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(activeSticker, x, y);
-      hasDrew = true;
-      if (hintEl) hintEl.classList.add('hidden');
+      placeSticker(activeSticker, x, y);
       return;
     }
 
@@ -777,17 +849,18 @@ function initEmotionCanvas() {
       btn.textContent = emoji;
       btn.setAttribute('aria-label', `Sticker ${emoji}`);
       btn.addEventListener('click', () => {
-        if (activeSticker === emoji) {
-          activeSticker = null;
-          btn.classList.remove('active');
-        } else {
-          activeSticker = emoji;
-          stickersEl.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          /* Desactivar borrador si estaba */
-          isEraser = false;
-          document.getElementById('emocionEraser')?.classList.remove('emocion-tool-btn--active');
-        }
+        /* 1) Colocar uno inmediatamente en una posición aleatoria */
+        const marginX = 80, marginY = 60;
+        const x = marginX + Math.random() * (W - marginX * 2);
+        const y = marginY + Math.random() * (H - marginY * 2);
+        placeSticker(emoji, x, y);
+
+        /* 2) Activar el sticker para clicks adicionales en el lienzo */
+        activeSticker = emoji;
+        stickersEl.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        isEraser = false;
+        document.getElementById('emocionEraser')?.classList.remove('emocion-tool-btn--active');
       });
       stickersEl.appendChild(btn);
     });

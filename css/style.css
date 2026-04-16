@@ -165,23 +165,26 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .btn--sm { padding: 0.6rem 1.25rem; font-size: 0.78rem; }
 .btn--full { width: 100%; text-align: center; }
 
-/* ── NAVBAR ─────────────────────────────── */
+/* ── NAVBAR (abajo) ─────────────────────── */
 .navbar {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  bottom: 0; left: 0; right: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.6rem 2rem;
-  background: transparent;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border-top: 1px solid rgba(255,255,255,0.08);
   transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
 }
 .navbar.scrolled {
-  background: rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  box-shadow: none;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(26px) saturate(180%);
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.25);
 }
 
 .navbar__logo a {
@@ -371,7 +374,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero__scroll-indicator {
   position: absolute;
   z-index: 3;
-  bottom: 2rem;
+  bottom: 6rem; /* deja espacio para la navbar inferior */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -402,6 +405,590 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ── SOBRE MÍ ───────────────────────────── */
 .sobre-mi {
   background: var(--color-cream);
+  position: relative;
+  overflow: hidden;
+}
+.sobre-mi > .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* ══════════════════════════════════════════
+   MOCKUP iPHONE (SVG) + WHATSAPP
+══════════════════════════════════════════ */
+.whatsapp-mockup {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.iphone-wrap {
+  --iphone-scale: 0.78;
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  width: calc(428px * var(--iphone-scale));
+  height: calc(868px * var(--iphone-scale));
+  transform: translateY(-50%);
+  filter:
+    drop-shadow(0 40px 60px rgba(0,0,0,0.45))
+    drop-shadow(0 18px 30px rgba(0,0,0,0.22));
+  opacity: 0.97;
+  animation: iphoneFloat 7s ease-in-out infinite;
+}
+@keyframes iphoneFloat {
+  0%, 100% { transform: translateY(-50%) translateY(0); }
+  50%      { transform: translateY(-50%) translateY(-6px); }
+}
+
+/* Escalar el mockup fijo (428×868) al contenedor responsive */
+.iphone-wrap .device.device-iphone-14-pro {
+  transform: scale(var(--iphone-scale));
+  transform-origin: top left;
+}
+
+/* .device-frame en devices.css no tiene position; lo anclamos para la pantalla HTML */
+.iphone-wrap .device-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Contenido de la pantalla (dentro de .device-frame, reemplaza a .device-screen img) */
+.wa-screen {
+  position: absolute;
+  inset: 19px;              /* coincide con el padding de .device-frame en devices.css */
+  border-radius: 49px;      /* mismo radio que la pantalla real */
+  background: #efe6da;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* sin z-index: deja que la Dynamic Island (.device-header/.device-sensors) pinte por encima */
+}
+
+/* ════════════════════════════════════════
+   FIX: devices.css fuerza `display: block` en TODOS los descendientes de .device
+   (regla universal `.device *` en su base). Eso rompe spans, flex e inline-flex
+   de nuestra app de WhatsApp. Revertimos cajas inline y recomponemos layouts.
+════════════════════════════════════════ */
+.device .wa-screen span,
+.device .wa-screen i,
+.device .wa-screen em,
+.device .wa-screen strong {
+  display: inline;
+}
+.device .wa-screen .ios-signal    { display: inline-flex; }
+.device .wa-screen .ios-signal i  { display: block; }
+.device .wa-screen .ios-battery   { display: inline-block; }
+.device .wa-screen .ios-battery > span { display: block; }
+.device .wa-screen .wa-badge      { display: inline-flex; }
+.device .wa-screen .wa-time       { display: inline-flex; }
+.device .wa-screen .wa-name,
+.device .wa-screen .wa-status,
+.device .wa-screen .wa-back-label { display: block; }
+.device .wa-screen .wa-typing > span,
+.device .wa-screen .ios-status-icons > *,
+.device .wa-screen .wa-header__actions > svg { display: inline-block; }
+.device .wa-screen svg            { display: block; }
+.device .wa-screen .wa-chevron    { display: inline-block; }
+
+/* Dynamic Island real (sobre la pantalla, como lo hace iOS) */
+.iphone-island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32%;
+  height: 26px;
+  background: #000;
+  border-radius: 14px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+.iphone-island__camera {
+  width: 7px; height: 7px;
+  background: radial-gradient(circle at 35% 35%, #3a4055 0%, #0a0a14 60%, #000 100%);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(80,80,100,0.4);
+}
+
+/* Home indicator */
+.iphone-home-indicator {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38%;
+  height: 4px;
+  background: rgba(0,0,0,0.85);
+  border-radius: 3px;
+  z-index: 20;
+}
+
+/* ── Status bar iOS (a los lados de la Dynamic Island real de devices.css) ── */
+.ios-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 32px 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #000;
+  font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+  min-height: 54px;
+  flex-shrink: 0;
+  /* Sin z-index: la Dynamic Island (.device-header/.device-sensors) debe pintar encima. */
+}
+.ios-time {
+  font-size: 0.82rem;
+  letter-spacing: -0.02em;
+  margin-left: 4px;
+}
+.ios-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ios-signal {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 11px;
+}
+.ios-signal i {
+  display: block;
+  width: 3px;
+  background: #000;
+  border-radius: 0.5px;
+}
+.ios-signal i:nth-child(1) { height: 4px; }
+.ios-signal i:nth-child(2) { height: 6px; }
+.ios-signal i:nth-child(3) { height: 9px; }
+.ios-signal i:nth-child(4) { height: 11px; }
+.ios-wifi-svg { display: block; }
+.ios-battery {
+  display: inline-block;
+  width: 26px;
+  height: 12px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  position: relative;
+  padding: 1.5px;
+}
+.ios-battery::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 3.5px;
+  width: 1.5px;
+  height: 5px;
+  background: #000;
+  border-radius: 0 1px 1px 0;
+}
+.ios-battery span {
+  display: block;
+  width: 85%;
+  height: 100%;
+  background: #000;
+  border-radius: 1.5px;
+}
+
+/* ── Header WhatsApp iOS REAL ─────────── */
+.wa-header {
+  background: rgba(247,247,247,0.94);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  padding: 0.45rem 0.6rem 0.55rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.4rem;
+  border-bottom: 0.33px solid rgba(0,0,0,0.18);
+  flex-shrink: 0;
+  color: #000;
+}
+.wa-header__left {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.wa-chevron { display: block; }
+.wa-back-label {
+  font-size: 1.02rem;
+  color: #00a884;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.wa-badge {
+  background: #ff3b30;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  margin-left: 2px;
+}
+.wa-header__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  gap: 3px;
+}
+.wa-avatar {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #d4a5c9, #a67ebe);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.wa-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.wa-header__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  margin-top: 3px;
+}
+.wa-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: -0.01em;
+}
+.wa-status {
+  font-size: 0.75rem;
+  color: rgba(0,0,0,0.5);
+  font-weight: 400;
+}
+.wa-status--active {
+  color: #007aff;
+  animation: statusPulse 3.5s ease-in-out infinite;
+}
+@keyframes statusPulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+.wa-header__actions {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+  padding-right: 0.15rem;
+}
+.wa-header__actions svg { display: block; }
+
+/* ── Chat con WhatsApp doodle background REAL ── */
+.wa-chat {
+  flex: 1;
+  padding: 0.7rem 0.55rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  overflow: hidden;
+  background-color: #e5ddd5;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'><g fill='none' stroke='%23a59f93' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'><path d='M16 20c0-4 3-7 7-7h14c4 0 7 3 7 7v8c0 4-3 7-7 7h-9l-5 5v-5h-1c-3-1-6-4-6-7v-8z'/><path d='M21 22h16M21 26h12'/><path d='M68 15l3 5 5 1-4 4 1 5-5-3-5 3 1-5-4-4 5-1z'/><path d='M118 14c-3 0-5 2-5 5 0 4 5 8 5 8s5-4 5-8c0-3-2-5-5-5z'/><circle cx='118' cy='19' r='1.5'/><path d='M152 16h8v6h-8zM156 22v6M150 28h12' /><path d='M32 60c0-2 2-4 4-4h8c2 0 4 2 4 4v2h-16z'/><rect x='34' y='62' width='12' height='10' rx='1'/><path d='M40 67v3'/><path d='M90 55l4 2v10l-4 2-4-2v-10l4-2z'/><path d='M90 57v14'/><path d='M140 65c-4 0-7-3-7-7s3-7 7-7 7 3 7 7-3 7-7 7zm0-3c2 0 4-2 4-4s-2-4-4-4-4 2-4 4 2 4 4 4z'/><path d='M140 58v-3M140 58l2 2'/><path d='M20 100l8-6v12zM30 103h20v-6h-20z'/><path d='M68 95c-3 0-6 3-6 6s3 6 6 6 6-3 6-6-3-6-6-6z'/><path d='M68 98v3l2 2'/><path d='M112 95v14M108 99h8M108 105h8'/><path d='M148 92l2 5 5 1-4 3 1 5-4-3-4 3 1-5-4-3 5-1z'/><path d='M20 140c2-4 8-6 12-6s10 2 12 6c-2 4-8 6-12 6s-10-2-12-6z'/><circle cx='32' cy='140' r='2'/><path d='M72 138v-6h6v6M68 142h14'/><path d='M108 135l5 7-5 7-5-7z'/><circle cx='108' cy='142' r='1.2'/><path d='M150 135c-3 2-5 5-5 8 0 2 2 4 5 4s5-2 5-4c0-3-2-6-5-8z'/></g></svg>");
+  background-size: 180px 180px;
+  background-repeat: repeat;
+  font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+}
+.wa-date {
+  align-self: center;
+  color: rgba(0,0,0,0.42);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  margin: 0.25rem 0 0.4rem;
+}
+.wa-enc {
+  align-self: center;
+  background: #fdf6c8;
+  color: #5a4e1f;
+  font-size: 0.7rem;
+  padding: 6px 11px;
+  border-radius: 8px;
+  margin-bottom: 0.55rem;
+  text-align: center;
+  max-width: 92%;
+  line-height: 1.35;
+}
+
+/* Burbuja de mensaje */
+.wa-msg {
+  opacity: 0;
+  max-width: 80%;
+  padding: 0.55rem 0.85rem 0.85rem;
+  border-radius: 17px;
+  font-size: 0.98rem;
+  line-height: 1.32;
+  color: #000;
+  position: relative;
+  box-shadow: 0 1px 1.5px rgba(0,0,0,0.1);
+  animation: waPop 30s linear infinite;
+  animation-delay: calc(var(--i) * 2.2s);
+}
+
+/* Burbuja con foto adjunta */
+.wa-msg--photo {
+  padding: 4px 4px 0.85rem;
+  max-width: 68%;
+}
+.wa-msg--photo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 13px;
+  display: block;
+  background: #d0d0d0;
+}
+.wa-msg--photo .wa-caption {
+  margin: 0.45rem 0.5rem 0.1rem;
+  font-size: 0.9rem;
+  padding-right: 2.8rem;
+}
+.wa-msg p {
+  margin: 0;
+  padding-right: 2.4rem;
+}
+.wa-msg--in {
+  background: #fff;
+  align-self: flex-start;
+  border-bottom-left-radius: 3px;
+}
+.wa-msg--in::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -5px;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 0 8px 6px;
+  border-color: transparent transparent #fff transparent;
+}
+.wa-msg--out {
+  background: #d9fdd3; /* verde real WhatsApp iOS */
+  align-self: flex-end;
+  border-bottom-right-radius: 3px;
+}
+.wa-msg--out::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: -5px;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 6px 8px 0;
+  border-color: transparent #d9fdd3 transparent transparent;
+}
+.wa-time {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 0.68rem;
+  color: rgba(0,0,0,0.45);
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}
+.wa-read { color: #34b7f1; font-size: 0.85rem; letter-spacing: -0.12em; }
+.wa-msg p { padding-right: 2.8rem; }
+
+/* Animación de mensajes: aparición suave con rebote y permanencia larga */
+@keyframes waPop {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.86); }
+  0.8% { opacity: 1; transform: translateY(-2px) scale(1.04); }
+  2.2% { opacity: 1; transform: translateY(0) scale(1); }
+  92%  { opacity: 1; transform: translateY(0) scale(1); }
+  96%  { opacity: 0; transform: translateY(-4px) scale(0.96); }
+  100% { opacity: 0; }
+}
+
+/* ── Indicador "escribiendo…" (3 puntos) ── */
+.wa-typing {
+  opacity: 0;
+  align-self: flex-start;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 17px;
+  border-bottom-left-radius: 3px;
+  box-shadow: 0 1px 1.5px rgba(0,0,0,0.1);
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  position: relative;
+  animation: waTyping 30s linear infinite;
+  animation-delay: calc(var(--i) * 2.2s);
+}
+.wa-typing::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -6px;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 0 10px 7px;
+  border-color: transparent transparent #fff transparent;
+}
+.wa-typing span {
+  width: 8px; height: 8px;
+  background: #8a8a90;
+  border-radius: 50%;
+  animation: typingBounce 1.3s ease-in-out infinite;
+}
+.wa-typing span:nth-child(2) { animation-delay: 0.15s; }
+.wa-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0);    opacity: 0.35; }
+  30%           { transform: translateY(-3px); opacity: 1; }
+}
+
+/* Ciclo: aparece ~0%, se oculta cuando llega el msg ~7% del ciclo (2.1s dentro de cada 30s) */
+@keyframes waTyping {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.9); }
+  0.5% { opacity: 0.95; transform: translateY(0) scale(1); }
+  6.5% { opacity: 0.95; }
+  7.3% { opacity: 0; transform: translateY(-2px); }
+  100% { opacity: 0; }
+}
+
+/* ── Input bar iOS ────────────────────── */
+.wa-inputbar {
+  background: rgba(247,247,247,0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0.75rem 0.85rem 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-top: 0.5px solid rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+.wa-input-plus {
+  color: #007aff;
+  font-size: 1.7rem;
+  line-height: 1;
+  font-weight: 300;
+  padding: 0 3px;
+}
+.wa-input {
+  flex: 1;
+  background: #fff;
+  border: 0.5px solid rgba(0,0,0,0.18);
+  border-radius: 17px;
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  min-height: 30px;
+}
+.wa-input-placeholder { color: rgba(60,60,67,0.4); }
+.wa-input-sticker { font-size: 1.1rem; opacity: 0.55; }
+.wa-input-mic {
+  color: #007aff;
+  font-size: 1.35rem;
+}
+
+/* ── Notificación push iOS real (con logo WhatsApp) ── */
+.wa-notif-push {
+  position: absolute;
+  top: -94px;
+  left: 5%;
+  right: 5%;
+  z-index: 3;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 11px 12px 12px 12px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border-radius: 18px;
+  box-shadow:
+    0 18px 44px rgba(0,0,0,0.22),
+    0 0 0 0.5px rgba(0,0,0,0.05);
+  font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  pointer-events: none;
+  opacity: 0;
+  animation: iosNotif 30s ease-in-out infinite;
+}
+.wa-notif-push__icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.wa-notif-push__icon svg { display: block; width: 100%; height: 100%; }
+.wa-notif-push__body {
+  flex: 1;
+  min-width: 0;
+}
+.wa-notif-push__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.wa-notif-push__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.wa-notif-push__time {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: rgba(60,60,67,0.6);
+  white-space: nowrap;
+}
+.wa-notif-push__subtitle {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 1px;
+  line-height: 1.2;
+}
+.wa-notif-push__text {
+  font-size: 0.8rem;
+  color: #000;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@keyframes iosNotif {
+  0%, 100% { opacity: 0; transform: translateY(10px); }
+  1%       { opacity: 1; transform: translateY(0); }
+  11%      { opacity: 1; }
+  15%      { opacity: 0; transform: translateY(-8px); }
 }
 .sobre-mi__grid {
   display: grid;
@@ -728,7 +1315,70 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: monospace;
 }
 
-/* Libros */
+/* Libros — lista compacta en columna */
+.libros-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.libro-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.6rem;
+  background: var(--color-cream);
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  text-decoration: none;
+}
+.libro-row:hover {
+  transform: translateX(2px);
+  border-color: var(--color-clay-light);
+  box-shadow: var(--shadow-soft);
+}
+.libro-row__cover {
+  width: 44px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.libro-row__info {
+  flex: 1;
+  min-width: 0;
+}
+.libro-row__info h4 {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-forest);
+  line-height: 1.2;
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.libro-row__autor {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  font-style: italic;
+  margin-bottom: 0.25rem;
+}
+.libro-row .libro-tag {
+  display: inline-block;
+  background: var(--color-sage-pale);
+  color: var(--color-sage);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+/* Libros antiguos (carousel) — se mantienen por retrocompatibilidad */
 .libros-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(130px, 1fr));
@@ -956,6 +1606,49 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: rgba(255,255,255,0.1);
   border-color: var(--color-cream);
 }
+.tarifas__legal {
+  margin-top: 0.75rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 0.6rem;
+}
+.tarifas__legal summary {
+  cursor: pointer;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(248,248,248,0.45);
+  text-align: center;
+  list-style: none;
+  padding: 0.25rem;
+  transition: color var(--transition);
+}
+.tarifas__legal summary::-webkit-details-marker { display: none; }
+.tarifas__legal summary::after {
+  content: ' ▾';
+  opacity: 0.55;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+.tarifas__legal[open] summary::after {
+  transform: rotate(180deg);
+}
+.tarifas__legal summary:hover { color: rgba(248,248,248,0.8); }
+.tarifas__legal-body {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: rgba(248,248,248,0.55);
+  line-height: 1.55;
+  text-align: left;
+  padding: 0 0.5rem;
+  max-height: 18vh;
+  overflow-y: auto;
+}
+.tarifas__legal-body p { margin-bottom: 0.4rem; }
+.tarifas__legal-body strong { color: rgba(248,248,248,0.8); }
+
 .tarifas__nota {
   margin-top: var(--spacing-sm);
   text-align: center;
@@ -970,38 +1663,46 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: var(--color-parchment);
 }
 .proyeccion .section-title { max-width: 500px; }
-/* Timeline + events side-by-side */
+/* Timeline horizontal + eventos debajo */
 .proyeccion__body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-lg);
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: stretch;
 }
 
 .proyeccion__timeline {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
   position: relative;
-  padding-left: 3rem;
+  padding: 2.5rem 0 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.proyeccion__timeline::-webkit-scrollbar { display: none; }
 .proyeccion__timeline::before {
   content: '';
   position: absolute;
-  left: 9px; top: 10px; bottom: 10px;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--color-clay), var(--color-sage), rgba(0,0,0,0.08));
+  top: calc(2.5rem + 10px); left: 1rem; right: 1rem;
+  height: 2px;
+  background: linear-gradient(to right, var(--color-clay), var(--color-sage), rgba(0,0,0,0.08));
 }
 
 .timeline-item {
   position: relative;
-  padding: 0 0 0.9rem 2rem;
+  padding: 2rem 1rem 0;
+  flex: 1 0 220px;
+  min-width: 0;
 }
 .timeline-marker {
   position: absolute;
-  left: -2.55rem;
-  top: 3px;
+  left: 50%;
+  top: -10px;
+  transform: translateX(-50%);
   width: 22px; height: 22px;
   border-radius: 50%;
   display: flex;
@@ -1011,6 +1712,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: var(--color-cream);
   border: 2px solid var(--color-clay);
   color: var(--color-clay);
+  z-index: 2;
 }
 .timeline-item--proxima .timeline-marker {
   border-color: var(--color-sage);
@@ -1040,11 +1742,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .timeline-item--futura .timeline-content h3 { color: var(--color-muted); }
 .timeline-content p {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--color-muted);
-  max-width: 580px;
-  margin-bottom: 0.75rem;
+  max-width: 100%;
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
 }
+.timeline-content { text-align: center; }
+.timeline-content .btn--sm { font-size: 0.7rem; padding: 0.45rem 0.9rem; }
 
 /* Eventos */
 .eventos-proximos { margin-top: var(--spacing-sm); }
@@ -1251,11 +1956,101 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .form-success p { color: var(--color-muted); font-size: 0.95rem; }
 
+/* Mini-footer compacto dentro de contacto (última página) */
+.contacto__footer {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(248,248,248,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+.contacto__footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+}
+.contacto__footer-legal a {
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(248,248,248,0.7);
+  transition: color var(--transition);
+}
+.contacto__footer-legal a:hover { color: var(--color-cream); }
+.contacto__footer-copy {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: rgba(248,248,248,0.45);
+}
+
 /* ── FOOTER ─────────────────────────────── */
 .footer {
   background: var(--color-ink);
   color: rgba(248,248,248,0.6);
-  padding: var(--spacing-xl) 0 var(--spacing-lg);
+  padding: 0 0 var(--spacing-lg);
+}
+
+/* Navbar espejo al pie de la página */
+.footer__navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: var(--spacing-xl);
+}
+.footer__navbar-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.footer__navbar-logo .logo-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-cream);
+}
+.footer__navbar-logo .logo-sub {
+  font-family: var(--font-serif);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.footer__navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.footer__navbar-links a {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+.footer__navbar-links a:hover { color: var(--color-cream); }
+.footer__navbar-links .btn-nav {
+  background: var(--color-clay);
+  color: var(--color-cream);
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.footer__navbar-links .btn-nav:hover {
+  background: var(--color-clay-dark);
 }
 .footer__grid {
   display: grid;
@@ -1361,16 +2156,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .hero__cta { flex-direction: column; align-items: center; }
   .sobre-mi__grid { grid-template-columns: 1fr; }
   .sobre-mi__badge { bottom: 0.5rem; right: 0.5rem; }
+  .whatsapp-mockup { display: none; }
   .servicios__grid { grid-template-columns: 1fr; }
   .recursos__cols { grid-template-columns: 1fr; }
   .podcast-grid { grid-template-columns: 1fr; }
   .libros-grid { grid-template-columns: repeat(2, 1fr); }
   /* descargables-grid is already flex column — no override needed */
   .eventos-grid { grid-template-columns: 1fr; }
+  .proyeccion__timeline { flex-direction: column; padding: 0 0 0 3rem; }
+  .proyeccion__timeline::before { top: 10px; bottom: 10px; left: 9px; right: auto; width: 2px; height: auto; background: linear-gradient(to bottom, var(--color-clay), var(--color-sage), rgba(0,0,0,0.08)); }
+  .timeline-item { padding: 0 0 1rem 2rem; flex: none; }
+  .timeline-marker { left: -2.55rem; top: 3px; transform: none; }
+  .timeline-content { text-align: left; }
   .contacto__grid { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
   .tarifas .section-subtitle--light { margin-left: 0; }
-  .proyeccion__timeline { padding-left: 2rem; }
 }
 
 @media (max-width: 480px) {
@@ -1405,8 +2205,7 @@ html, body {
 #mainScroller::-webkit-scrollbar { display: none; }
 
 /* Cada sección = una diapositiva */
-#mainScroller > section,
-#mainScroller > .slide-footer {
+#mainScroller > section {
   flex: 0 0 100vw;
   width: 100vw;
   min-height: 100dvh;
@@ -1419,19 +2218,17 @@ html, body {
   scrollbar-width: none;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  position: relative; /* needed for ::before scrim */
+  position: relative; /* needed for ::after scrim */
 }
-#mainScroller > section::-webkit-scrollbar,
-#mainScroller > .slide-footer::-webkit-scrollbar { display: none; }
+#mainScroller > section::-webkit-scrollbar { display: none; }
 
-/* Gradient scrim at top of every section — keeps transparent navbar readable */
-#mainScroller > section::before,
-#mainScroller > .slide-footer::before {
+/* Gradient scrim en la zona del navbar inferior para legibilidad */
+#mainScroller > section::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 100px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, transparent 100%);
+  bottom: 0; left: 0; right: 0;
+  height: 110px;
+  background: linear-gradient(to top, rgba(0,0,0,0.32) 0%, transparent 100%);
   z-index: 20;
   pointer-events: none;
 }
@@ -1443,15 +2240,15 @@ html, body {
   max-height: 100dvh;
   overflow: hidden;
 }
-/* Hero already has its own overlay — reduce scrim */
-#mainScroller > section.hero::before {
+/* Hero already has its own overlay — quitar scrim inferior */
+#mainScroller > section.hero::after {
   display: none;
 }
 
 /* La sección .section tiene padding propio - reducirlo para que quepa */
 #mainScroller > section.section:not(.hero) {
-  padding-top: 4rem;
-  padding-bottom: 0.5rem;
+  padding-top: 3rem;
+  padding-bottom: 5.5rem; /* espacio para el navbar inferior */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1487,10 +2284,10 @@ html, body {
   50%       { transform: translateX(6px); }
 }
 
-/* Indicador de progreso */
+/* Indicador de progreso (sobre el navbar inferior) */
 .scroll-progress {
   position: fixed;
-  bottom: 1.25rem;
+  top: 1.25rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 200;
@@ -1517,15 +2314,6 @@ html, body {
 }
 .scroll-progress.on-light .scroll-progress__dot { background: rgba(0,0,0,0.2); }
 .scroll-progress.on-light .scroll-progress__dot.active { background: #111111; }
-
-/* Slide del footer */
-.slide-footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: var(--color-ink);
-  scroll-snap-align: start;
-}
 
 /* Botones primarios en secciones oscuras: blancos */
 .tarifas .btn--primary,
