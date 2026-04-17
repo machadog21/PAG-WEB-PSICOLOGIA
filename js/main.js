@@ -39,6 +39,12 @@
     });
   }
   if (backdrop) backdrop.addEventListener('click', function () { setMenu(false); });
+  // Cierra el menú al salir del panel con el ratón
+  if (sideMenu) {
+    sideMenu.addEventListener('mouseleave', function () {
+      if (menuBtn && menuBtn.classList.contains('is-open')) setMenu(false);
+    });
+  }
   if (sideMenu) {
     sideMenu.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () { setMenu(false); });

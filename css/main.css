@@ -78,7 +78,7 @@ main { position: relative; width: 100%; overflow-x: hidden; background: var(--ma
   z-index: 9999;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 32px;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(6px);
@@ -173,10 +173,13 @@ main { position: relative; width: 100%; overflow-x: hidden; background: var(--ma
 .main-menu-btn:hover span::after,
 .main-menu-btn:hover span { width: 22px; }
 
-/* Estado abierto: las 3 rayas se convierten en una X */
-.main-menu-btn.is-open span { background: transparent; }
-.main-menu-btn.is-open span::before { top: 0; transform: rotate(45deg); width: 22px; }
-.main-menu-btn.is-open span::after  { top: 0; transform: rotate(-45deg); width: 22px; }
+/* Estado abierto: las 3 rayas se mantienen iguales (solo un leve acento) */
+.main-menu-btn.is-open span,
+.main-menu-btn.is-open span::before,
+.main-menu-btn.is-open span::after { width: 22px; }
+.main-menu-btn.is-open span,
+.main-menu-btn.is-open span::before,
+.main-menu-btn.is-open span::after { background: #c85a7a; }
 
 /* ═══════════ SIDEMENU (se despliega de derecha a izquierda) ═══════════ */
 .main-sidemenu {
