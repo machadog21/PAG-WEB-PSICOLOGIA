@@ -165,10 +165,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .btn--sm { padding: 0.6rem 1.25rem; font-size: 0.78rem; }
 .btn--full { width: 100%; text-align: center; }
 
-/* ── NAVBAR (abajo) ─────────────────────── */
+/* ── NAVBAR (arriba) ────────────────────── */
 .navbar {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -177,14 +177,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(22px) saturate(180%);
   -webkit-backdrop-filter: blur(22px) saturate(180%);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
 }
 .navbar.scrolled {
   background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(26px) saturate(180%);
   -webkit-backdrop-filter: blur(26px) saturate(180%);
-  box-shadow: 0 -6px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
 
 .navbar__logo a {
@@ -278,36 +278,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background-color: #060d1a;
   overflow: hidden;
 }
-/* Mural drawings as ghost layer behind overlay */
-.hero__mural-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-.mural-ghost {
-  position: absolute;
-  border-radius: 8px;
-  opacity: 0;
-  mix-blend-mode: normal;
-  transform: rotate(var(--rot, 0deg));
-  user-select: none;
-  animation:
-    muralDraw  var(--draw-dur, 2s) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
-    muralFloat 9s ease-in-out infinite;
-  animation-delay: var(--delay, 0s), calc(var(--delay, 0s) + var(--draw-dur, 2s));
-}
-@keyframes muralDraw {
-  0%   { opacity: 0;    clip-path: inset(0 100% 0 0 round 4px); }
-  12%  { opacity: 0.5; }
-  100% { opacity: 0.6;  clip-path: inset(0 0%   0 0 round 4px); }
-}
-@keyframes muralFloat {
-  0%, 100% { transform: translateY(0px)   rotate(var(--rot, 0deg)); }
-  50%       { transform: translateY(-9px)  rotate(var(--rot, 0deg)); }
-}
-
 .hero__bg-texture {
   position: absolute;
   inset: 0;
@@ -318,6 +288,52 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   z-index: 2;
   pointer-events: none;
 }
+
+/* ═══════════════════════════════════════════
+   PARALLAX: CEREBRO DE FONDO (SITE-WIDE, ligero)
+   GSAP ScrollTrigger anima core + glow sobre este contenedor fijo.
+═══════════════════════════════════════════ */
+.brain-parallax {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%, #0b1428 0%, #060d1a 70%, #03070f 100%);
+}
+.brain-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 90vmin;
+  height: 90vmin;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center,
+    rgba(130, 160, 255, 0.35) 0%,
+    rgba(180, 100, 220, 0.18) 35%,
+    transparent 70%);
+  filter: blur(40px);
+  will-change: transform, opacity;
+}
+.brain-core {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 55vmin;
+  height: 55vmin;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  filter:
+    drop-shadow(0 0 60px rgba(130, 160, 255, 0.45))
+    brightness(1.05) contrast(1.08);
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .brain-core { opacity: 0.55; }
+}
+
 .hero__content {
   position: relative;
   z-index: 3;
@@ -374,7 +390,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero__scroll-indicator {
   position: absolute;
   z-index: 3;
-  bottom: 6rem; /* deja espacio para la navbar inferior */
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -398,8 +414,20 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 /* ── SECTION BASE ───────────────────────── */
+/* Cada sección se comporta como una "ventana": ocupa toda la altura visible
+   con el contenido centrado. Se situá por encima del parallax fijo. */
 .section {
   padding: var(--spacing-lg) 0;
+  scroll-margin-top: 72px; /* evita que el navbar fijo tape el anclaje */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.section > .container {
+  width: 100%;
 }
 
 /* ── SOBRE MÍ ───────────────────────────── */
@@ -2184,136 +2212,37 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 [hidden] { display: none !important; }
 
 /* ═══════════════════════════════════════════
-   SCROLL HORIZONTAL DE PÁGINA
+   SCROLL VERTICAL NATIVO
 ═══════════════════════════════════════════ */
 html, body {
-  overflow: hidden;
-  height: 100%;
-  overscroll-behavior: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+body {
+  /* Deja espacio para el navbar fijo en la parte superior */
+  padding-top: 0;
 }
 
 #mainScroller {
-  display: flex;
-  height: 100dvh;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  overscroll-behavior-x: contain;
-}
-#mainScroller::-webkit-scrollbar { display: none; }
-
-/* Cada sección = una diapositiva */
-#mainScroller > section {
-  flex: 0 0 100vw;
-  width: 100vw;
-  min-height: 100dvh;
-  max-height: 100dvh;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-  position: relative; /* needed for ::after scrim */
-}
-#mainScroller > section::-webkit-scrollbar { display: none; }
-
-/* Gradient scrim en la zona del navbar inferior para legibilidad */
-#mainScroller > section::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 110px;
-  background: linear-gradient(to top, rgba(0,0,0,0.32) 0%, transparent 100%);
-  z-index: 20;
-  pointer-events: none;
+  display: block;
+  position: relative;
+  z-index: 1;
 }
 
-/* Hero ocupa todo el slide sin padding */
+/* El hero ocupa toda la ventana; mantiene el parallax visible detrás */
 #mainScroller > section.hero {
-  padding: 0 !important;
   min-height: 100dvh;
-  max-height: 100dvh;
+  position: relative;
   overflow: hidden;
-}
-/* Hero already has its own overlay — quitar scrim inferior */
-#mainScroller > section.hero::after {
-  display: none;
+  z-index: 1;
+  background: transparent;
 }
 
-/* La sección .section tiene padding propio - reducirlo para que quepa */
+/* Las secciones normales tienen padding propio definido en .section */
 #mainScroller > section.section:not(.hero) {
-  padding-top: 3rem;
-  padding-bottom: 5.5rem; /* espacio para el navbar inferior */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: relative;
 }
-#mainScroller > section.section:not(.hero) > .container {
-  width: 100%;
-}
-
-/* Flecha de navegación horizontal (tip visual) */
-.page-nav-hint {
-  position: fixed;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  pointer-events: none;
-  opacity: 0;
-  animation: hintFadeIn 0.8s ease 1.5s forwards;
-}
-@keyframes hintFadeIn {
-  to { opacity: 1; }
-}
-.hint-arrow {
-  font-size: 1.4rem;
-  color: rgba(255,255,255,0.5);
-  animation: hintBounce 1.4s ease infinite;
-}
-@keyframes hintBounce {
-  0%, 100% { transform: translateX(0); }
-  50%       { transform: translateX(6px); }
-}
-
-/* Indicador de progreso (sobre el navbar inferior) */
-.scroll-progress {
-  position: fixed;
-  top: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 200;
-  display: flex;
-  gap: 7px;
-  align-items: center;
-  pointer-events: none;
-}
-.scroll-progress__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.35);
-  transition: all 0.35s ease;
-  cursor: pointer;
-  pointer-events: all;
-  border: none;
-  padding: 0;
-}
-.scroll-progress__dot.active {
-  background: #ffffff;
-  width: 20px;
-  border-radius: 3px;
-}
-.scroll-progress.on-light .scroll-progress__dot { background: rgba(0,0,0,0.2); }
-.scroll-progress.on-light .scroll-progress__dot.active { background: #111111; }
 
 /* Botones primarios en secciones oscuras: blancos */
 .tarifas .btn--primary,
@@ -2342,9 +2271,8 @@ html, body {
 /* Proyección fondo */
 .proyeccion { background: var(--color-cream); }
 
-/* Responsive: en móvil el scroll horizontal es táctil nativo */
+/* Responsive */
 @media (max-width: 768px) {
-  .page-nav-hint { display: none; }
   #mainScroller > section.section:not(.hero) {
     padding-top: 4rem;
     padding-bottom: 2rem;

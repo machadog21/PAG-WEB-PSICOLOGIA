@@ -3,842 +3,250 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Consulta de psicología online y presencial. Terapia individual, de pareja y familiar. Recursos gratuitos, podcasts y apoyo profesional." />
-  <meta name="keywords" content="psicología, terapia, consulta psicológica, psicólogo, bienestar mental, terapia online" />
-  <meta name="author" content="[Nombre del Psicólogo/a]" />
-  <meta property="og:title" content="[Nombre] | Psicología" />
-  <meta property="og:description" content="Acompaño tu proceso de cambio con calidez y rigor científico." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.tu-dominio.com" />
-  <title>[Nombre] | Psicología y Bienestar</title>
+  <meta name="description" content="Psicología clínica con estética serena. Terapia individual, de pareja y familiar. Primera consulta gratuita." />
+  <title>[Tu Nombre] · Psicología</title>
 
-  <!-- Google Fonts: Inter + Syne -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Fuentes: Playfair Display + Work Sans + Raleway (idénticas al proyecto Main) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Devices.css (mockups de dispositivos reales en CSS puro) -->
-  <link rel="stylesheet" href="https://unpkg.com/devices.css@0.2.0/dist/devices.min.css" />
-
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/main.css" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 </head>
 <body>
 
-  <!-- ══════════════ NAVBAR ══════════════ -->
-  <header class="navbar" id="navbar">
-    <div class="navbar__logo">
-      <a href="#inicio">
-        <span class="logo-name">[Tu Nombre]</span>
-        <span class="logo-sub">Psicología</span>
-      </a>
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <header class="main-nav" id="mainNav">
+    <a href="#inicio" class="main-brand">[TU NOMBRE]</a>
+    <div class="main-nav-actions">
+      <a href="#servicios"   class="main-nav-link">Servicios</a>
+      <a href="#testimonios" class="main-nav-link">Testimonios</a>
+      <a href="#contacto"    class="main-nav-link">Contacto</a>
+      <button class="main-menu-btn" aria-label="Abrir menú"><span></span></button>
     </div>
-    <nav class="navbar__links" id="navLinks">
-      <a href="#sobre-mi">Sobre mí</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#recursos">Recursos</a>
-      <a href="#emocion">Emoción</a>
-      <a href="mural.html">Mural</a>
-      <a href="#tarifas">Tarifas</a>
-      <a href="#proyeccion">Proyección</a>
-      <a href="#contacto" class="btn-nav">Contacto</a>
-    </nav>
-    <button class="navbar__burger" id="burgerBtn" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
   </header>
 
-  <main id="mainScroller">
+  <a href="#" class="main-ribbon" aria-label="Psicóloga colegiada">Col. nº — Psicología Clínica</a>
 
-    <!-- ══════════════ HERO ══════════════ -->
-    <section class="hero" id="inicio">
-      <div class="hero__bg-texture"></div>
-      <div class="hero__content">
-        <p class="hero__eyebrow">Psicología · Bienestar · Transformación</p>
-        <h1 class="hero__title">
-          Cada historia<br />
-          <em>merece ser escuchada</em>
-        </h1>
-        <p class="hero__subtitle">
-          Acompaño tu proceso de cambio con calidez, presencia<br />
-          y rigor científico. Porque sanar es posible.
-        </p>
-        <div class="hero__cta">
-          <a href="#contacto" class="btn btn--primary">Primera consulta gratuita</a>
-          <a href="#sobre-mi" class="btn btn--ghost">Conoce mi enfoque</a>
-        </div>
-      </div>
-      <div class="hero__scroll-indicator">
-        <span>Descubre más</span>
-        <div class="scroll-line"></div>
-      </div>
-    </section>
+  <main>
 
-    <!-- ══════════════ SOBRE MÍ ══════════════ -->
-    <section class="section sobre-mi" id="sobre-mi">
-      <!-- Mockup iPhone 14 Pro (devices.css) con WhatsApp: conversación entre amigas -->
-      <div class="whatsapp-mockup" aria-hidden="true">
-        <div class="iphone-wrap">
-          <!-- Notificación push estilo iOS (WhatsApp) -->
-          <div class="wa-notif-push" aria-hidden="true">
-            <div class="wa-notif-push__icon">
-              <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <rect width="40" height="40" rx="10" fill="#25d366"/>
-                <path fill="#fff" d="M28.5 23.2c-.4-.2-2.3-1.1-2.6-1.3-.3-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3-1.8-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.2-.4.3-.7.1-.3 0-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7h-.7c-.3 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1 0 1.8 1.3 3.5 1.5 3.8.2.2 2.6 4 6.3 5.6.9.4 1.5.6 2.1.8.9.3 1.7.2 2.3.1.7-.1 2.3-.9 2.6-1.9.3-.9.3-1.7.2-1.9-.1-.2-.4-.3-.8-.5z M20 6C12.3 6 6 12.3 6 20c0 2.5.7 4.9 1.9 6.9L6 34l7.3-1.9c2 1.1 4.3 1.7 6.7 1.7 7.7 0 14-6.3 14-14S27.7 6 20 6zm0 25.6c-2.2 0-4.3-.6-6.1-1.7l-.4-.3-4.5 1.2 1.2-4.4-.3-.5c-1.2-1.9-1.8-4-1.8-6.3 0-6.4 5.2-11.6 11.6-11.6 3.1 0 6 1.2 8.2 3.4 2.2 2.2 3.4 5.1 3.4 8.2 0 6.4-5.2 11.6-11.6 11.6z"/>
-              </svg>
-            </div>
-            <div class="wa-notif-push__body">
-              <div class="wa-notif-push__title-row">
-                <span class="wa-notif-push__title">WhatsApp</span>
-                <span class="wa-notif-push__time">ahora</span>
-              </div>
-              <div class="wa-notif-push__subtitle">María 💜</div>
-              <div class="wa-notif-push__text">No estoy bien 😔 Llevo varios días sin dormir…</div>
-            </div>
-          </div>
+    <!-- ═══════════ HERO SCENE (parallax de capas) ═══════════ -->
+    <section class="main-hero" id="inicio">
+      <div class="main-hero__scene" id="heroScene">
+        <span class="main-hero__eyebrow">Psicología · Bienestar · Transformación</span>
 
-          <!-- iPhone 14 Pro real (devices.css) -->
-          <div class="device device-iphone-14-pro">
-            <div class="device-frame">
-              <!-- Contenido pantalla: app de WhatsApp iOS recreada -->
-              <div class="wa-screen">
-                <!-- Status bar -->
-                <div class="ios-statusbar">
-                  <span class="ios-time">9:41</span>
-                  <div class="ios-status-icons">
-                    <span class="ios-signal"><i></i><i></i><i></i><i></i></span>
-                    <svg class="ios-wifi-svg" viewBox="0 0 20 14" width="13" height="10"><path fill="#000" d="M10 0C6.3 0 2.9 1.3 0 3.6l1.4 1.4C3.9 3 6.8 1.9 10 1.9s6.1 1.1 8.6 3.1L20 3.6C17.1 1.3 13.7 0 10 0zm0 3.7c-2.7 0-5.2 1-7.2 2.7L4.2 7.8c1.6-1.4 3.6-2.2 5.8-2.2s4.2.8 5.8 2.2l1.4-1.4C15.2 4.7 12.7 3.7 10 3.7zm0 3.7c-1.7 0-3.3.6-4.5 1.7l1.4 1.4c.9-.8 2-1.2 3.1-1.2s2.2.4 3.1 1.2l1.4-1.4c-1.2-1.1-2.8-1.7-4.5-1.7zM10 11a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg>
-                    <span class="ios-battery"><span></span></span>
-                  </div>
-                </div>
+        <!-- Capas decorativas (parallax) -->
+        <div class="main-layer" data-depth="6"  style="left: 8%;   top: 18%;  width: 30%;"><img src="assets/images/main/hero-tree-1.png" alt=""></div>
+        <div class="main-layer" data-depth="18" style="left: 7.5%; top: 17.5%; width: 30%; mix-blend-mode: screen; opacity: .8;"><img src="assets/images/main/hero-tree-glow.png" alt=""></div>
+        <div class="main-layer" data-depth="10" style="right: -4%; top: 8%;   width: 28%;"><img src="assets/images/main/orb-ball.png" alt=""></div>
+        <div class="main-layer" data-depth="14" style="left: -4%;  bottom: 10%; width: 24%;"><img src="assets/images/main/orb-ball.png" alt=""></div>
+        <div class="main-layer" data-depth="26" style="right: 10%; bottom: 8%;  width: 10%;"><img src="assets/images/main/hero-ball-small.png" alt=""></div>
+        <div class="main-layer" data-depth="20" style="left: 22%;  top: 48%;   width: 18%;"><img src="assets/images/main/squiggle.png" alt=""></div>
 
-                <!-- Header WhatsApp iOS -->
-                <div class="wa-header">
-                  <div class="wa-header__left">
-                    <svg class="wa-chevron" viewBox="0 0 24 44" width="12" height="22" fill="none" stroke="#00a884" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18,4 6,22 18,40"/></svg>
-                    <span class="wa-back-label">Chats</span>
-                    <span class="wa-badge">3</span>
-                  </div>
-                  <div class="wa-header__center">
-                    <div class="wa-avatar">
-                      <img src="https://i.pravatar.cc/120?img=47" alt="María" onerror="this.outerHTML='<span>M</span>'" />
-                    </div>
-                    <div class="wa-header__info">
-                      <span class="wa-name">María 💜</span>
-                      <span class="wa-status wa-status--active">escribiendo…</span>
-                    </div>
-                  </div>
-                  <div class="wa-header__actions">
-                    <svg viewBox="0 0 28 28" width="22" height="22" fill="none" stroke="#00a884" stroke-width="1.8" stroke-linejoin="round"><path d="M4.5 8.5a2 2 0 012-2h10a2 2 0 012 2v11a2 2 0 01-2 2h-10a2 2 0 01-2-2v-11z"/><path d="M18.5 12l5-3v10l-5-3v-4z" fill="#00a884"/></svg>
-                    <svg viewBox="0 0 28 28" width="22" height="22" fill="#00a884"><path d="M22.8 19.3c-1.4 0-2.8-.3-4-.7-.4-.2-.9-.1-1.2.2l-2.5 2.5c-3.2-1.7-5.8-4.3-7.5-7.5l2.5-2.5c.3-.3.4-.8.2-1.2-.4-1.3-.7-2.6-.7-4 0-.6-.5-1.1-1.1-1.1H4.4c-.6 0-1.3.3-1.3 1.1 0 10.7 8.6 19.3 19.3 19.3.8 0 1.1-.7 1.1-1.3v-4.1c0-.6-.5-1.1-1.1-1.1z"/></svg>
-                  </div>
-                </div>
-
-                <!-- Chat -->
-                <div class="wa-chat">
-                  <span class="wa-date">HOY</span>
-                  <span class="wa-enc">🔒 Los mensajes están cifrados de extremo a extremo.</span>
-
-                  <div class="wa-typing wa-typing--in" style="--i:0"><span></span><span></span><span></span></div>
-                  <div class="wa-msg wa-msg--in"  style="--i:1"><p>Hola… ¿estás despierta?</p><span class="wa-time">23:14</span></div>
-
-                  <div class="wa-typing wa-typing--in" style="--i:2"><span></span><span></span><span></span></div>
-                  <div class="wa-msg wa-msg--in"  style="--i:3"><p>No estoy bien 😔</p><span class="wa-time">23:14</span></div>
-
-                  <div class="wa-typing wa-typing--in" style="--i:4"><span></span><span></span><span></span></div>
-                  <div class="wa-msg wa-msg--in wa-msg--photo" style="--i:5">
-                    <img src="https://images.unsplash.com/photo-1499346030926-9a72daac6c63?w=400&q=70" alt="" onerror="this.style.display='none'" />
-                    <p class="wa-caption">Así me he sentido últimamente…</p>
-                    <span class="wa-time">23:15</span>
-                  </div>
-
-                  <div class="wa-msg wa-msg--out" style="--i:6"><p>Aquí estoy, cuéntame ❤️</p><span class="wa-time">23:15 <span class="wa-read">✓✓</span></span></div>
-
-                  <div class="wa-typing wa-typing--in" style="--i:7"><span></span><span></span><span></span></div>
-                  <div class="wa-msg wa-msg--in"  style="--i:8"><p>Llevo días sin dormir, todo me supera</p><span class="wa-time">23:16</span></div>
-
-                  <div class="wa-typing wa-typing--in" style="--i:9"><span></span><span></span><span></span></div>
-                  <div class="wa-msg wa-msg--in"  style="--i:10"><p>No sé cómo salir de esto…</p><span class="wa-time">23:16</span></div>
-
-                  <div class="wa-msg wa-msg--out" style="--i:11"><p>Quizá sea el momento de pedir ayuda profesional 🤍</p><span class="wa-time">23:17 <span class="wa-read">✓✓</span></span></div>
-                </div>
-
-                <!-- Input bar iOS -->
-                <div class="wa-inputbar">
-                  <span class="wa-input-plus">＋</span>
-                  <div class="wa-input">
-                    <span class="wa-input-placeholder">Mensaje</span>
-                    <span class="wa-input-sticker">😊</span>
-                  </div>
-                  <span class="wa-input-mic">🎙</span>
-                </div>
-              </div>
-            </div>
-            <div class="device-stripe"></div>
-            <div class="device-header"></div>
-            <div class="device-sensors"></div>
-            <div class="device-btns"></div>
-            <div class="device-power"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="sobre-mi__grid">
-          <div class="sobre-mi__image-col">
-            <div class="sobre-mi__photo-frame">
-              <div class="photo-placeholder">
-                <!-- Sustituye por <img src="assets/images/foto-perfil.jpg" alt="[Tu nombre]" /> -->
-                <div class="photo-initials">[Foto]</div>
-              </div>
-              <div class="sobre-mi__badge">
-                <span class="badge-num">+8</span>
-                <span class="badge-txt">años de<br/>experiencia</span>
-              </div>
-            </div>
-          </div>
-          <div class="sobre-mi__text-col">
-            <span class="section-label">Sobre mí</span>
-            <h2 class="section-title">Soy [Tu Nombre],<br /><em>psicóloga clínica</em></h2>
-            <p class="sobre-mi__lead">
-              Me gradué en Psicología por la Universidad de [Universidad] y me especialicé en Terapia Cognitivo-Conductual y Mindfulness. Desde entonces, he acompañado a cientos de personas en procesos de ansiedad, depresión, duelo y autoconocimiento.
-            </p>
-            <p>
-              Creo en una psicología cercana, basada en la evidencia y sin etiquetas. Mi objetivo es que salgas de cada sesión con herramientas reales para tu vida cotidiana.
-            </p>
-            <div class="sobre-mi__formacion">
-              <div class="formacion-item">
-                <span class="formacion-icon">✦</span>
-                <span>Colegiada nº [Número colegio]</span>
-              </div>
-              <div class="formacion-item">
-                <span class="formacion-icon">✦</span>
-                <span>Máster en Psicología Clínica y de la Salud</span>
-              </div>
-              <div class="formacion-item">
-                <span class="formacion-icon">✦</span>
-                <span>Especialista en Terapia de Aceptación y Compromiso (ACT)</span>
-              </div>
-              <div class="formacion-item">
-                <span class="formacion-icon">✦</span>
-                <span>Formación continua en Trauma y EMDR</span>
-              </div>
-            </div>
-            <a href="#contacto" class="btn btn--primary">Reserva tu cita</a>
-          </div>
+        <div class="main-hero__title">
+          <h1>cada historia<br><em>merece ser escuchada</em></h1>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════ SERVICIOS ══════════════ -->
-    <section class="section servicios" id="servicios">
-      <div class="container">
-        <span class="section-label section-label--light">Lo que ofrezco</span>
-        <h2 class="section-title section-title--center">Servicios &amp; Terapias</h2>
-        <p class="section-subtitle">¿No sabes si la terapia es para ti? Estas preguntas pueden ayudarte a encontrar la respuesta.</p>
+    <!-- ═══════════ INTRO HEADLINE ═══════════ -->
+    <section class="main-intro">
+      <img class="main-intro__orb animate-float-soft" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true" style="left:2%; top:30%; width:18%; max-width:280px; position:absolute;">
+      <img class="main-intro__squiggle" src="assets/images/main/squiggle.png" alt="" aria-hidden="true">
+      <img class="main-intro__orb animate-float" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true" style="right:-4%; bottom:-8%; width:24%; max-width:380px; position:absolute;">
 
-        <div class="carousel-wrap" data-carousel="servicios">
-          <button class="carousel-arrow carousel-arrow--prev" aria-label="Ver anteriores">&#8249;</button>
-          <div class="carousel-viewport">
-            <div class="servicios__grid">
+      <h2 class="main-intro__text main-reveal">
+        Acompaño tu proceso de cambio con <em>calidez</em>, presencia y rigor científico. Porque sanar es posible.
+      </h2>
+    </section>
 
-          <div class="servicio-card">
-            <div class="servicio-card__icon">◈</div>
-            <h3>Terapia Individual</h3>
-            <p class="servicio-card__desc">Un espacio seguro y confidencial para explorar tus emociones, pensamientos y patrones de conducta.</p>
-            <div class="servicio-card__questions">
-              <p class="questions-label">¿Te identificas con alguna de estas situaciones?</p>
-              <ul>
-                <li>¿Sientes ansiedad o estrés que te impide vivir con normalidad?</li>
-                <li>¿Hay pensamientos que no puedes "apagar"?</li>
-                <li>¿Te cuesta gestionar tus emociones o relaciones?</li>
-              </ul>
-            </div>
-            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
-          </div>
+    <!-- ═══════════ QUÉ HAGO (What we do) ═══════════ -->
+    <section class="main-services" id="servicios">
+      <h2 class="main-services__heading main-reveal">Lo que <em>hago</em></h2>
+      <div class="main-tags main-reveal">
+        <span>Ansiedad</span>
+        <span>Depresión</span>
+        <span>Duelo</span>
+        <span>Pareja</span>
+        <span>Autoestima</span>
+        <span>Trauma</span>
+        <span>Mindfulness</span>
+        <span>ACT</span>
+        <span>EMDR</span>
+      </div>
 
-          <div class="servicio-card servicio-card--featured">
-            <div class="servicio-card__badge">Más solicitado</div>
-            <div class="servicio-card__icon">◇</div>
-            <h3>Terapia de Pareja</h3>
-            <p class="servicio-card__desc">Mejora la comunicación, gestiona conflictos y vuelve a conectar con tu pareja desde un lugar más honesto.</p>
-            <div class="servicio-card__questions">
-              <p class="questions-label">¿Te resulta familiar esto?</p>
-              <ul>
-                <li>¿Sientes que hablamos pero no nos entendemos?</li>
-                <li>¿Los mismos conflictos se repiten una y otra vez?</li>
-                <li>¿Ha habido una infidelidad o ruptura de confianza?</li>
-              </ul>
-            </div>
-            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
-          </div>
-
-          <div class="servicio-card">
-            <div class="servicio-card__icon">◉</div>
-            <h3>Terapia Familiar</h3>
-            <p class="servicio-card__desc">Trabajo con el sistema familiar para mejorar la dinámica, los vínculos y la comunicación entre sus miembros.</p>
-            <div class="servicio-card__questions">
-              <p class="questions-label">Quizás reconoces esto:</p>
-              <ul>
-                <li>¿Hay tensión constante en casa que nadie sabe cómo resolver?</li>
-                <li>¿Algún miembro de la familia está pasando un momento difícil?</li>
-                <li>¿Las discusiones son el pan de cada día?</li>
-              </ul>
-            </div>
-            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
-          </div>
-
-          <div class="servicio-card">
-            <div class="servicio-card__icon">◎</div>
-            <h3>Terapia Online</h3>
-            <p class="servicio-card__desc">La misma calidad terapéutica desde donde estés. Sesiones por videollamada, seguras y sin desplazamientos.</p>
-            <div class="servicio-card__questions">
-              <p class="questions-label">La terapia online es para ti si…</p>
-              <ul>
-                <li>¿Vives fuera de España o en una ciudad diferente?</li>
-                <li>¿Tu agenda no te permite desplazarte fácilmente?</li>
-                <li>¿Te sientes más cómodo/a desde casa?</li>
-              </ul>
-            </div>
-            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
-          </div>
-
-          <div class="servicio-card">
-            <div class="servicio-card__icon">◈</div>
-            <h3>Psicología Infantil y Adolescente</h3>
-            <p class="servicio-card__desc">Atención especializada para niños y jóvenes en etapas de desarrollo, adaptada a su edad y necesidades.</p>
-            <div class="servicio-card__questions">
-              <p class="questions-label">¿Has observado en tu hijo/a…?</p>
-              <ul>
-                <li>¿Cambios de humor, retraimiento o problemas en el colegio?</li>
-                <li>¿Miedos intensos, rabietas o dificultades de atención?</li>
-                <li>¿Una situación de acoso escolar o transición difícil?</li>
-              </ul>
-            </div>
-            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
-          </div>
-
-          <div class="servicio-card">
-            <div class="servicio-card__icon">✦</div>
-            <h3>Talleres &amp; Grupos</h3>
-            <p class="servicio-card__desc">Espacios colectivos de aprendizaje y crecimiento personal sobre gestión emocional, mindfulness y autoestima.</p>
-            <div class="servicio-card__questions">
-              <p class="questions-label">Ideal si…</p>
-              <ul>
-                <li>¿Quieres trabajar en ti mismo/a en un entorno grupal y seguro?</li>
-                <li>¿Buscas herramientas prácticas a un coste más accesible?</li>
-                <li>¿Te gusta compartir experiencias con otras personas?</li>
-              </ul>
-            </div>
-            <a href="#contacto" class="servicio-card__cta">Quiero saber más →</a>
-          </div>
-
-            </div>
-          </div>
-          <button class="carousel-arrow carousel-arrow--next" aria-label="Ver siguientes">&#8250;</button>
-          <div class="carousel-dots"></div>
+      <div class="main-services__list">
+        <div class="main-service-row main-reveal">
+          <h3 class="main-service-row__title">Terapia <em>individual</em></h3>
+          <p class="main-service-row__copy">Un espacio seguro y confidencial para explorar tus emociones, pensamientos y patrones de conducta. Sesiones de 50 minutos, online o presenciales en [Ciudad].</p>
+        </div>
+        <div class="main-service-row main-reveal">
+          <h3 class="main-service-row__title">Terapia de <em>pareja</em></h3>
+          <p class="main-service-row__copy">Mejora la comunicación, gestiona conflictos y vuelve a conectar desde un lugar más honesto. Herramientas prácticas para volver a entenderos.</p>
+        </div>
+        <div class="main-service-row main-reveal">
+          <h3 class="main-service-row__title">Terapia <em>familiar</em></h3>
+          <p class="main-service-row__copy">Trabajo con el sistema familiar para mejorar dinámicas, vínculos y comunicación. Ideal cuando los mismos conflictos se repiten una y otra vez.</p>
+        </div>
+        <div class="main-service-row main-reveal">
+          <h3 class="main-service-row__title">Terapia <em>online</em></h3>
+          <p class="main-service-row__copy">La misma calidad terapéutica desde donde estés. Videollamada cifrada, horarios flexibles y sin desplazamientos.</p>
+        </div>
+        <div class="main-service-row main-reveal">
+          <h3 class="main-service-row__title">Infantil y <em>adolescente</em></h3>
+          <p class="main-service-row__copy">Atención especializada para niños y jóvenes en etapas de desarrollo, adaptada a su edad, con recursos lúdicos y acompañamiento familiar.</p>
+        </div>
+        <div class="main-service-row main-reveal">
+          <h3 class="main-service-row__title">Talleres y <em>grupos</em></h3>
+          <p class="main-service-row__copy">Espacios colectivos de aprendizaje sobre gestión emocional, mindfulness y autoestima. Coste accesible, comunidad real.</p>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════ RECURSOS ══════════════ -->
-    <section class="section recursos" id="recursos">
-      <div class="container">
-        <span class="section-label">Recursos gratuitos</span>
-        <h2 class="section-title">Para tu bienestar,<br /><em>sin coste alguno</em></h2>
-        <p class="section-subtitle">Materiales que puedes usar hoy mismo para cuidarte un poco más.</p>
+    <!-- ═══════════ TESTIMONIOS (Our Work) ═══════════ -->
+    <section class="main-testimonials" id="testimonios">
+      <h2 class="main-testimonials__heading main-reveal">Lo que dicen<br><em>quienes confiaron</em></h2>
 
-        <div class="recursos__cols">
-        <!-- PODCASTS -->
-        <div class="recursos__block">
-          <h3 class="recursos__block-title">
-            <span class="recursos-icon">♪</span> Podcast
-          </h3>
-          <div class="podcast-grid" id="podcastGrid">
+      <div class="main-testimonials__grid">
+        <article class="main-test-card main-reveal">
+          <p class="main-test-card__quote">«Llegué sin saber qué me pasaba. Salí con herramientas reales y, sobre todo, con una relación más amable conmigo misma.»</p>
+          <p class="main-test-card__author">Laura · 34 años · Ansiedad</p>
+        </article>
+        <article class="main-test-card main-reveal">
+          <p class="main-test-card__quote">«Como pareja llevábamos años atascados. En pocas sesiones aprendimos a hablar distinto. Ha sido un antes y un después.»</p>
+          <p class="main-test-card__author">David y Marta · Terapia de pareja</p>
+        </article>
+        <article class="main-test-card main-reveal">
+          <p class="main-test-card__quote">«El duelo parecía un pozo sin salida. Acompañarme en ese camino fue el regalo más humano que he recibido.»</p>
+          <p class="main-test-card__author">Carmen · 52 años · Duelo</p>
+        </article>
+        <article class="main-test-card main-reveal">
+          <p class="main-test-card__quote">«La terapia online funcionó mejor de lo que imaginé. Cercana, rigurosa y con seguimiento entre sesiones.»</p>
+          <p class="main-test-card__author">Andrés · 28 años · Terapia online</p>
+        </article>
+      </div>
+    </section>
 
-            <article class="podcast-card">
-              <div class="podcast-card__header">
-                <div class="podcast-card__num">01</div>
-                <div class="podcast-card__meta">
-                  <h4>Cómo gestionar la ansiedad en el día a día</h4>
-                  <span class="podcast-duration">18 min</span>
-                </div>
-              </div>
-              <p class="podcast-card__desc">Herramientas sencillas y efectivas para reducir la activación ansiosa cuando más lo necesitas.</p>
-              <div class="audio-player">
-                <audio id="audio1" src="assets/audio/episodio-01.mp3" preload="metadata"></audio>
-                <button class="audio-play-btn" data-audio="audio1" aria-label="Reproducir episodio 1">
-                  <span class="play-icon">▶</span>
-                </button>
-                <div class="audio-progress-wrap">
-                  <div class="audio-progress" id="progress1"></div>
-                </div>
-                <span class="audio-time" id="time1">0:00</span>
-              </div>
-            </article>
+    <!-- ═══════════ COLABORADORES (Clients) ═══════════ -->
+    <section class="main-clients">
+      <div class="main-clients__header">
+        <h2 class="main-clients__heading main-reveal">Colaboro <em>con</em></h2>
+        <p class="main-clients__copy main-reveal">Formo parte de una red de profesionales y organizaciones que comparten una visión común: la salud mental como derecho y prioridad.</p>
+      </div>
 
-            <article class="podcast-card">
-              <div class="podcast-card__header">
-                <div class="podcast-card__num">02</div>
-                <div class="podcast-card__meta">
-                  <h4>Autoestima: el viaje hacia quererse</h4>
-                  <span class="podcast-duration">22 min</span>
-                </div>
-              </div>
-              <p class="podcast-card__desc">Exploramos las raíces de la autoestima y cómo construir una relación más amable contigo mismo/a.</p>
-              <div class="audio-player">
-                <audio id="audio2" src="assets/audio/episodio-02.mp3" preload="metadata"></audio>
-                <button class="audio-play-btn" data-audio="audio2" aria-label="Reproducir episodio 2">
-                  <span class="play-icon">▶</span>
-                </button>
-                <div class="audio-progress-wrap">
-                  <div class="audio-progress" id="progress2"></div>
-                </div>
-                <span class="audio-time" id="time2">0:00</span>
-              </div>
-            </article>
+      <div class="main-marquee">
+        <div class="main-marquee__track" style="--speed: 45s">
+          <span class="main-marquee__item">Colegio Oficial de Psicología</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Hospital [Ciudad]</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Asoc. Española de Mindfulness</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Instituto EMDR España</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Red de Terapia ACT</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Fundación Salud Mental</span><span class="main-marquee__dot"></span>
+          <!-- duplicado para loop continuo -->
+          <span class="main-marquee__item">Colegio Oficial de Psicología</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Hospital [Ciudad]</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Asoc. Española de Mindfulness</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Instituto EMDR España</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Red de Terapia ACT</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Fundación Salud Mental</span><span class="main-marquee__dot"></span>
+        </div>
+      </div>
 
-            <article class="podcast-card">
-              <div class="podcast-card__header">
-                <div class="podcast-card__num">03</div>
-                <div class="podcast-card__meta">
-                  <h4>Duelo: atravesar la pérdida con presencia</h4>
-                  <span class="podcast-duration">25 min</span>
-                </div>
-              </div>
-              <p class="podcast-card__desc">Una guía compasiva para transitar el dolor de la pérdida, sin atajos pero con acompañamiento.</p>
-              <div class="audio-player">
-                <audio id="audio3" src="assets/audio/episodio-03.mp3" preload="metadata"></audio>
-                <button class="audio-play-btn" data-audio="audio3" aria-label="Reproducir episodio 3">
-                  <span class="play-icon">▶</span>
-                </button>
-                <div class="audio-progress-wrap">
-                  <div class="audio-progress" id="progress3"></div>
-                </div>
-                <span class="audio-time" id="time3">0:00</span>
-              </div>
-            </article>
+      <div class="main-marquee main-marquee--rev">
+        <div class="main-marquee__track" style="--speed: 55s">
+          <span class="main-marquee__item">Universidad [Universidad]</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Club Deportivo [Ciudad]</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Centro Educativo Montessori</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Podcast «Mente en Calma»</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Revista Psicología Hoy</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Ayuntamiento de [Ciudad]</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Universidad [Universidad]</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Club Deportivo [Ciudad]</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Centro Educativo Montessori</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Podcast «Mente en Calma»</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Revista Psicología Hoy</span><span class="main-marquee__dot"></span>
+          <span class="main-marquee__item">Ayuntamiento de [Ciudad]</span><span class="main-marquee__dot"></span>
+        </div>
+      </div>
+    </section>
 
+    <!-- ═══════════ CONSULTA (Contact Map) ═══════════ -->
+    <section class="main-contact" id="contacto">
+      <div class="main-contact__inner">
+        <h2 class="main-contact__heading main-reveal">Mi <em>consulta</em></h2>
+        <p class="main-contact__sub main-reveal">me encantará escucharte</p>
+
+        <div class="main-contact__grid">
+          <div class="main-contact__col main-reveal">
+            <h4>Escríbeme</h4>
+            <a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a>
           </div>
-        </div><!-- /podcasts -->
-        <!-- LIBROS -->
-        <div class="recursos__block">
-          <h3 class="recursos__block-title">
-            <span class="recursos-icon">◎</span> Lecturas
-          </h3>
-          <div class="libros-list">
-            <a href="#" class="libro-row">
-              <img class="libro-row__cover" src="https://covers.openlibrary.org/b/id/12335770-M.jpg" alt="El poder del ahora" />
-              <div class="libro-row__info">
-                <h4>El poder del ahora</h4>
-                <p class="libro-row__autor">Eckhart Tolle</p>
-                <span class="libro-tag">Mindfulness</span>
-              </div>
-            </a>
-            <a href="#" class="libro-row">
-              <img class="libro-row__cover" src="https://covers.openlibrary.org/b/id/8315367-M.jpg" alt="El cuerpo lleva la cuenta" />
-              <div class="libro-row__info">
-                <h4>El cuerpo lleva la cuenta</h4>
-                <p class="libro-row__autor">Bessel van der Kolk</p>
-                <span class="libro-tag">Trauma</span>
-              </div>
-            </a>
-            <a href="#" class="libro-row">
-              <img class="libro-row__cover" src="https://covers.openlibrary.org/b/id/12198330-M.jpg" alt="La trampa de la felicidad" />
-              <div class="libro-row__info">
-                <h4>La trampa de la felicidad</h4>
-                <p class="libro-row__autor">Russ Harris</p>
-                <span class="libro-tag">ACT · Ansiedad</span>
-              </div>
-            </a>
-            <a href="#" class="libro-row">
-              <img class="libro-row__cover" src="https://covers.openlibrary.org/b/id/1359485-M.jpg" alt="Inteligencia emocional" />
-              <div class="libro-row__info">
-                <h4>Inteligencia emocional</h4>
-                <p class="libro-row__autor">Daniel Goleman</p>
-                <span class="libro-tag">Emociones</span>
-              </div>
+          <div class="main-contact__col main-reveal">
+            <h4>Visítame</h4>
+            <a href="https://maps.google.com" target="_blank" rel="noopener">
+              [Dirección consulta]<br>[Ciudad]
             </a>
           </div>
-        </div><!-- /libros -->
-        <!-- DESCARGABLES -->
-        <div class="recursos__block">
-          <h3 class="recursos__block-title">
-            <span class="recursos-icon">↓</span> Descargables
-          </h3>
-          <div class="descargables-grid">
-            <div class="descargable-card">
-              <div class="descargable-icon">◈</div>
-              <div class="descargable-card__body">
-                <h4>Diario de emociones</h4>
-                <p>Plantilla semanal para registrar y comprender tus estados emocionales.</p>
-              </div>
-              <a href="assets/pdf/diario-emociones.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
-            </div>
-            <div class="descargable-card">
-              <div class="descargable-icon">◉</div>
-              <div class="descargable-card__body">
-                <h4>Técnicas de respiración</h4>
-                <p>Guía práctica con 5 ejercicios de respiración para momentos de ansiedad.</p>
-              </div>
-              <a href="assets/pdf/respiracion.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
-            </div>
-            <div class="descargable-card">
-              <div class="descargable-icon">◇</div>
-              <div class="descargable-card__body">
-                <h4>Rutina de autocuidado</h4>
-                <p>Checklist diaria para incorporar hábitos de salud mental en tu rutina.</p>
-              </div>
-              <a href="assets/pdf/autocuidado.pdf" download class="btn btn--outline btn--sm">Descargar PDF</a>
-            </div>
+          <div class="main-contact__col main-reveal">
+            <h4>Llámame</h4>
+            <a href="tel:+34600000000">+34 600 000 000</a>
           </div>
-        </div><!-- /descargables -->
-        </div><!-- /recursos__cols -->
-
-      </div>
-    </section>
-
-    <!-- ══════════════ DIBUJA TU EMOCIÓN ══════════════ -->
-    <section class="section emocion" id="emocion">
-      <div class="container">
-        <span class="section-label">Expresión creativa</span>
-        <h2 class="section-title">Dibuja tu<br /><em>emoción</em></h2>
-        <p class="section-subtitle emocion__subtitle">La terapia expresiva nos invita a dar forma a lo que las palabras no alcanzan. Elige un color y dibuja cómo te sientes ahora mismo.</p>
-
-        <div class="emocion__inner">
-
-          <div class="emocion__prompt-row">
-            <p class="emocion__prompt" id="emocionPrompt">Dibuja cómo te sientes en este momento</p>
-            <button class="emocion__prompt-btn" id="promptNext" aria-label="Nueva pregunta">↻ Nueva pregunta</button>
-          </div>
-
-          <div class="emocion__canvas-wrap">
-            <canvas id="emocionCanvas"></canvas>
-            <div class="emocion__canvas-hint" id="emocionHint">Haz clic o toca para comenzar a dibujar</div>
-          </div>
-
-          <div class="emocion__controls">
-
-            <div class="emocion__palette-row">
-              <span class="controls-label">Color · emoción:</span>
-              <div class="emocion__palette" id="emocionPalette"></div>
-            </div>
-
-            <div class="emocion__tools-row">
-              <div class="tool-group">
-                <span class="controls-label">Trazo:</span>
-                <button class="tool-size active" data-size="5" aria-label="Trazo fino">·</button>
-                <button class="tool-size" data-size="12" aria-label="Trazo medio">•</button>
-                <button class="tool-size" data-size="22" aria-label="Trazo grueso">⬤</button>
-              </div>
-              <button class="emocion-tool-btn" id="emocionEraser" aria-label="Activar borrador">◻ Borrador</button>
-              <button class="emocion-tool-btn emocion-tool-btn--danger" id="emocionClear" aria-label="Limpiar lienzo">✕ Limpiar</button>
-              <button class="emocion-tool-btn" id="emocionDownload" aria-label="Descargar dibujo">↓ Guardar imagen</button>
-              <button class="btn btn--primary" id="emocionSave">✦ Añadir al Mural</button>
-            </div>
-
-            <div class="emocion__extras-row">
-              <div class="emocion__stickers">
-                <span class="controls-label">Stickers:</span>
-                <div class="stickers-row" id="stickersRow"></div>
-              </div>
-              <div class="emocion__backgrounds">
-                <span class="controls-label">Fondo:</span>
-                <div class="backgrounds-row" id="backgroundsRow"></div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="emocion__mural-row">
-            <a href="mural.html" class="emocion__mural-link" target="_blank">Ver el Mural de Emociones →</a>
-          </div>
-
-          <div class="emocion__status" id="emocionStatus" hidden></div>
-
         </div>
       </div>
     </section>
 
-    <!-- ══════════════ TARIFAS ══════════════ -->
-    <section class="section tarifas" id="tarifas">
-      <div class="container">
-        <span class="section-label section-label--light">Inversión en ti</span>
-        <h2 class="section-title section-title--center section-title--light">Tarifas</h2>
-        <p class="section-subtitle section-subtitle--light">Precios claros, sin letra pequeña. La primera consulta es gratuita y sin compromiso.</p>
+    <!-- ═══════════ RESERVA TU CITA (Work With Us Big) ═══════════ -->
+    <section class="main-cta-big">
+      <img class="main-cta-big__orb main-cta-big__orb--a" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true">
+      <img class="main-cta-big__orb main-cta-big__orb--b" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true">
+      <img class="main-cta-big__orb main-cta-big__orb--c" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true">
+      <img class="main-cta-big__squiggle" src="assets/images/main/squiggle.png" alt="" aria-hidden="true">
 
-        <div class="tarifas__grid">
+      <a href="mailto:hola@tu-dominio.com?subject=Primera%20consulta" class="main-cta-big__link main-reveal">
+        <span>reserva</span>
+        <span>tu</span>
+        <span>cita</span>
+      </a>
+    </section>
 
-          <div class="tarifa-card">
-            <div class="tarifa-card__type">Sesión Individual</div>
-            <div class="tarifa-card__price">
-              <span class="price-amount">60</span>
-              <span class="price-unit">€ / sesión</span>
-            </div>
-            <p class="tarifa-card__duration">50 minutos · Online o presencial</p>
-            <ul class="tarifa-card__includes">
-              <li>Evaluación personalizada</li>
-              <li>Plan terapéutico adaptado</li>
-              <li>Material de trabajo entre sesiones</li>
-              <li>Seguimiento por correo</li>
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="main-footer">
+      <div class="main-footer__inner">
+        <p class="main-footer__hero">¿Listo para dar el primer paso?</p>
+
+        <div class="main-footer__grid">
+          <div>
+            <h5>Escríbeme</h5>
+            <a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a>
+          </div>
+          <div>
+            <h5>Consulta</h5>
+            <a href="https://maps.google.com" target="_blank" rel="noopener">
+              [Dirección]<br>[Ciudad]
+            </a>
+          </div>
+          <div>
+            <h5>Sígueme</h5>
+            <ul>
+              <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+              <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+              <li><a href="https://open.spotify.com" target="_blank" rel="noopener">Podcast</a></li>
             </ul>
-            <a href="#contacto" class="btn btn--outline">Reservar</a>
           </div>
-
-          <div class="tarifa-card tarifa-card--destacada">
-            <div class="tarifa-card__badge">Recomendado</div>
-            <div class="tarifa-card__type">Bono 5 Sesiones</div>
-            <div class="tarifa-card__price">
-              <span class="price-amount">270</span>
-              <span class="price-unit">€ / bono</span>
-            </div>
-            <p class="tarifa-card__duration">Ahorra 30€ · Válido 3 meses</p>
-            <ul class="tarifa-card__includes">
-              <li>Todo lo incluido en sesión individual</li>
-              <li>Descuento por compromiso</li>
-              <li>Flexibilidad en la planificación</li>
-              <li>Acceso a recursos exclusivos</li>
-              <li>Soporte entre sesiones ampliado</li>
-            </ul>
-            <a href="#contacto" class="btn btn--primary">Reservar</a>
-          </div>
-
-          <div class="tarifa-card">
-            <div class="tarifa-card__type">Sesión de Pareja</div>
-            <div class="tarifa-card__price">
-              <span class="price-amount">80</span>
-              <span class="price-unit">€ / sesión</span>
-            </div>
-            <p class="tarifa-card__duration">60 minutos · Online o presencial</p>
-            <ul class="tarifa-card__includes">
-              <li>Evaluación relacional conjunta</li>
-              <li>Técnicas de comunicación efectiva</li>
-              <li>Ejercicios para realizar en pareja</li>
-              <li>Sesiones de seguimiento individuales</li>
-            </ul>
-            <a href="#contacto" class="btn btn--outline">Reservar</a>
-          </div>
-
         </div>
 
-        <div class="tarifas__nota">
-          <p>* Se ofrece tarifa reducida para desempleados y estudiantes. Consúltame sin compromiso.</p>
-          <p>* Primera consulta orientativa: <strong>gratuita</strong> (30 minutos).</p>
-        </div>
-
-        <details class="tarifas__legal">
-          <summary>Aviso legal</summary>
-          <div class="tarifas__legal-body">
-            <p><strong>Titular:</strong> [Nombre completo] · NIF [Número] · Col. nº [Número]</p>
-            <p><strong>Objeto:</strong> Informar sobre servicios de psicología y ofrecer recursos divulgativos de acceso libre. Los recursos (podcast, libros, descargables) no sustituyen la atención psicológica profesional individualizada.</p>
-            <p><strong>Propiedad intelectual:</strong> Todos los contenidos son propiedad del titular. Queda prohibida su reproducción sin autorización.</p>
-            <p><strong>Legislación:</strong> Aviso legal regido por la legislación española (LSSICE art. 10, Ley 34/2002).</p>
-            <p><strong>Contacto:</strong> hola@tu-dominio.com</p>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <!-- ══════════════ PROYECCIÓN ══════════════ -->
-    <section class="section proyeccion" id="proyeccion">
-      <div class="container">
-        <span class="section-label">Creciendo contigo</span>
-        <h2 class="section-title">Proyección &amp;<br /><em>Próximos pasos</em></h2>
-        <p class="section-subtitle">Mi consulta no es solo un espacio de escucha; es un proyecto vivo que crece hacia donde tú y la comunidad lo necesitáis.</p>
-
-        <div class="proyeccion__body">
-        <div class="proyeccion__timeline">
-
-          <div class="timeline-item timeline-item--active">
-            <div class="timeline-marker">✦</div>
-            <div class="timeline-content">
-              <span class="timeline-date">Disponible ahora</span>
-              <h3>Consulta individual &amp; de pareja</h3>
-              <p>Sesiones presenciales en [Ciudad] y online para todo el mundo hispanohablante. Agenda abierta con disponibilidad inmediata.</p>
-            </div>
-          </div>
-
-          <div class="timeline-item timeline-item--active">
-            <div class="timeline-marker">✦</div>
-            <div class="timeline-content">
-              <span class="timeline-date">En curso</span>
-              <h3>Podcast mensual</h3>
-              <p>Episodios gratuitos sobre salud mental, emociones y crecimiento personal. Disponibles en esta web y en plataformas de streaming.</p>
-            </div>
-          </div>
-
-          <div class="timeline-item timeline-item--proxima">
-            <div class="timeline-marker">◈</div>
-            <div class="timeline-content">
-              <span class="timeline-date">Próximamente · Otoño 2025</span>
-              <h3>Taller: Gestión emocional para adultos</h3>
-              <p>Un taller intensivo de fin de semana con técnicas basadas en evidencia para manejar el estrés, la ansiedad y las emociones difíciles.</p>
-              <a href="#contacto" class="btn btn--outline btn--sm">Apúntame a la lista de espera</a>
-            </div>
-          </div>
-
-          <div class="timeline-item timeline-item--proxima">
-            <div class="timeline-marker">◈</div>
-            <div class="timeline-content">
-              <span class="timeline-date">Próximamente · 2026</span>
-              <h3>Programa online de 8 semanas</h3>
-              <p>Un programa estructurado de bienestar mental con sesiones grupales en directo, materiales descargables y comunidad privada de apoyo.</p>
-              <a href="#contacto" class="btn btn--outline btn--sm">Notifícame cuando esté listo</a>
-            </div>
-          </div>
-
-          <div class="timeline-item timeline-item--futura">
-            <div class="timeline-marker">◎</div>
-            <div class="timeline-content">
-              <span class="timeline-date">Visión · 2026-2027</span>
-              <h3>Centro de bienestar integral</h3>
-              <p>La ampliación del proyecto hacia un espacio multidisciplinar con otros profesionales de salud: nutrición, fisioterapia y coaching.</p>
-            </div>
-          </div>
-
-        </div><!-- /timeline -->
-
-        <!-- Próximos eventos -->
-        <div class="eventos-proximos">
-          <h3 class="eventos-title">Próximos Eventos</h3>
-          <div class="eventos-grid">
-            <div class="evento-card">
-              <div class="evento-card__date">
-                <span class="date-day">15</span>
-                <span class="date-month">Nov</span>
-              </div>
-              <div class="evento-card__info">
-                <h4>Charla gratuita online</h4>
-                <p>«Cómo reducir la ansiedad antes de que nos controle» · Vía Zoom · Plaza limitada</p>
-                <a href="#contacto" class="btn btn--outline btn--sm">Reservar plaza</a>
-              </div>
-            </div>
-            <div class="evento-card">
-              <div class="evento-card__date">
-                <span class="date-day">30</span>
-                <span class="date-month">Nov</span>
-              </div>
-              <div class="evento-card__info">
-                <h4>Taller: Primeros pasos en Mindfulness</h4>
-                <p>Presencial en [Ciudad] · 3 horas · Incluye material y práctica guiada</p>
-                <a href="#contacto" class="btn btn--outline btn--sm">Reservar plaza</a>
-              </div>
-            </div>
-          </div>
-        </div><!-- /eventos-proximos -->
-        </div><!-- /proyeccion__body -->
-
-      </div>
-    </section>
-
-    <!-- ══════════════ CONTACTO ══════════════ -->
-    <section class="section contacto" id="contacto">
-      <div class="container">
-        <div class="contacto__grid">
-          <div class="contacto__info">
-            <span class="section-label section-label--light">Hablemos</span>
-            <h2 class="section-title section-title--light">Da el primer<br /><em>paso hoy</em></h2>
-            <p>No hace falta esperar a estar en el fondo. Si sientes que algo en tu vida puede mejorar, ese es motivo suficiente para buscar apoyo.</p>
-            <div class="contacto__datos">
-              <div class="dato-item">
-                <span class="dato-icon">✉</span>
-                <a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a>
-              </div>
-              <div class="dato-item">
-                <span class="dato-icon">✆</span>
-                <a href="tel:+34600000000">+34 600 000 000</a>
-              </div>
-              <div class="dato-item">
-                <span class="dato-icon">◎</span>
-                <span>[Dirección consulta], [Ciudad]</span>
-              </div>
-            </div>
-            <div class="contacto__redes">
-              <a href="https://instagram.com/tu-usuario" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
-              <a href="https://linkedin.com/in/tu-usuario" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-              <a href="https://open.spotify.com/" target="_blank" rel="noopener" aria-label="Podcast en Spotify">Spotify</a>
-            </div>
-          </div>
-
-          <div class="contacto__form-wrap">
-            <form class="contacto__form" id="contactForm" novalidate>
-              <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" placeholder="¿Cómo te llamas?" required />
-              </div>
-              <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
-              </div>
-              <div class="form-group">
-                <label for="telefono">Teléfono (opcional)</label>
-                <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000" />
-              </div>
-              <div class="form-group">
-                <label for="servicio">¿Qué tipo de terapia te interesa?</label>
-                <select id="servicio" name="servicio">
-                  <option value="">Selecciona una opción</option>
-                  <option value="individual">Terapia Individual</option>
-                  <option value="pareja">Terapia de Pareja</option>
-                  <option value="familiar">Terapia Familiar</option>
-                  <option value="online">Terapia Online</option>
-                  <option value="infantil">Psicología Infantil/Adolescente</option>
-                  <option value="taller">Talleres y Grupos</option>
-                  <option value="otro">Otro / No sé aún</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="mensaje">Cuéntame brevemente qué te trae por aquí</label>
-                <textarea id="mensaje" name="mensaje" rows="4" placeholder="No tienes que contarlo todo ahora. Con una frase es suficiente."></textarea>
-              </div>
-              <div class="form-group form-group--check">
-                <input type="checkbox" id="privacidad" name="privacidad" required />
-                <label for="privacidad">He leído y acepto la <a href="politica-privacidad.html">Política de Privacidad</a></label>
-              </div>
-              <button type="submit" class="btn btn--primary btn--full">Enviar mensaje</button>
-              <p class="form-nota">Respondo en menos de 24h. Toda la información es confidencial.</p>
-            </form>
-            <div class="form-success" id="formSuccess" hidden>
-              <div class="success-icon">✦</div>
-              <h3>¡Mensaje recibido!</h3>
-              <p>Gracias por dar este paso. Te escribiré antes de 24 horas. Cuídate mucho.</p>
-            </div>
-        </div>
-
-        <!-- Mini-footer compacto dentro de contacto — última página -->
-        <div class="contacto__footer">
-          <div class="contacto__footer-legal">
-            <a href="politica-privacidad.html">Política de Privacidad</a>
-            <a href="aviso-legal.html">Aviso Legal</a>
-            <a href="cookies.html">Política de Cookies</a>
-          </div>
-          <p class="contacto__footer-copy">
-            Colegiada nº [Número] · © <span id="year"></span> [Tu Nombre]. Todos los derechos reservados.
-          </p>
+        <div class="main-footer__legal">
+          <a href="politica-privacidad.html">Política de privacidad</a>
+          <a href="aviso-legal.html">Aviso legal</a>
+          <a href="cookies.html">Cookies</a>
+          <span>© <span id="mainYear"></span> [Tu Nombre]. Col. nº —.</span>
         </div>
       </div>
-    </section>
+    </footer>
 
   </main>
 
-  <!-- Indicador de progreso horizontal -->
-  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
-  <!-- Flecha hint primer carga -->
-  <div class="page-nav-hint" id="pageNavHint" aria-hidden="true">
-    <span class="hint-arrow">›</span>
-  </div>
-
-  <!-- Cookie banner -->
-  <div class="cookie-banner" id="cookieBanner" hidden>
-    <p>Usamos cookies propias y de terceros para mejorar tu experiencia. <a href="cookies.html">Más información</a>.</p>
-    <div class="cookie-banner__btns">
-      <button class="btn btn--ghost btn--sm" id="cookieReject">Solo esenciales</button>
-      <button class="btn btn--primary btn--sm" id="cookieAccept">Aceptar todas</button>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/nsfwjs@4.2.0/dist/nsfwjs.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

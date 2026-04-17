@@ -38,7 +38,10 @@
       "WebFetch(domain:unpkg.com)",
       "WebFetch(domain:app.unpkg.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:unsplash.com)"
+      "WebFetch(domain:unsplash.com)",
+      "WebFetch(domain:images.unsplash.com)",
+      "WebFetch(domain:youtube.com)",
+      "WebFetch(domain:www.youtube.com)"
     ]
   }
 }
