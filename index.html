@@ -20,12 +20,19 @@
   <header class="main-nav" id="mainNav">
     <a href="#inicio" class="main-brand">[TU NOMBRE]</a>
     <div class="main-nav-actions">
-      <a href="#servicios"   class="main-nav-link">Servicios</a>
-      <a href="#testimonios" class="main-nav-link">Testimonios</a>
-      <a href="#contacto"    class="main-nav-link">Contacto</a>
-      <button class="main-menu-btn" aria-label="Abrir menú"><span></span></button>
+      <button class="main-menu-btn" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainMenu"><span></span></button>
     </div>
   </header>
+
+  <!-- Panel lateral que se despliega de derecha a izquierda -->
+  <nav class="main-sidemenu" id="mainMenu" aria-hidden="true">
+    <a href="#servicios"   class="main-nav-link">Servicios</a>
+    <a href="#tarifas"     class="main-nav-link">Tarifas</a>
+    <a href="#equipo"      class="main-nav-link">Equipo</a>
+    <a href="#testimonios" class="main-nav-link">Testimonios</a>
+    <a href="#contacto"    class="main-nav-link">Contacto</a>
+  </nav>
+  <div class="main-sidemenu__backdrop" id="menuBackdrop" hidden></div>
 
   <a href="#" class="main-ribbon" aria-label="Psicóloga colegiada">Col. nº — Psicología Clínica</a>
 
@@ -74,33 +81,171 @@
         <span>Mindfulness</span>
         <span>ACT</span>
         <span>EMDR</span>
+        <span>Coaching</span>
+        <span>Liderazgo</span>
+        <span>Finanzas</span>
       </div>
 
       <div class="main-services__list">
-        <div class="main-service-row main-reveal">
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
           <h3 class="main-service-row__title">Terapia <em>individual</em></h3>
           <p class="main-service-row__copy">Un espacio seguro y confidencial para explorar tus emociones, pensamientos y patrones de conducta. Sesiones de 50 minutos, online o presenciales en [Ciudad].</p>
-        </div>
-        <div class="main-service-row main-reveal">
+        </button>
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
           <h3 class="main-service-row__title">Terapia de <em>pareja</em></h3>
           <p class="main-service-row__copy">Mejora la comunicación, gestiona conflictos y vuelve a conectar desde un lugar más honesto. Herramientas prácticas para volver a entenderos.</p>
-        </div>
-        <div class="main-service-row main-reveal">
+        </button>
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
           <h3 class="main-service-row__title">Terapia <em>familiar</em></h3>
           <p class="main-service-row__copy">Trabajo con el sistema familiar para mejorar dinámicas, vínculos y comunicación. Ideal cuando los mismos conflictos se repiten una y otra vez.</p>
-        </div>
-        <div class="main-service-row main-reveal">
+        </button>
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
           <h3 class="main-service-row__title">Terapia <em>online</em></h3>
           <p class="main-service-row__copy">La misma calidad terapéutica desde donde estés. Videollamada cifrada, horarios flexibles y sin desplazamientos.</p>
-        </div>
-        <div class="main-service-row main-reveal">
+        </button>
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
           <h3 class="main-service-row__title">Infantil y <em>adolescente</em></h3>
           <p class="main-service-row__copy">Atención especializada para niños y jóvenes en etapas de desarrollo, adaptada a su edad, con recursos lúdicos y acompañamiento familiar.</p>
-        </div>
-        <div class="main-service-row main-reveal">
+        </button>
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
           <h3 class="main-service-row__title">Talleres y <em>grupos</em></h3>
           <p class="main-service-row__copy">Espacios colectivos de aprendizaje sobre gestión emocional, mindfulness y autoestima. Coste accesible, comunidad real.</p>
+        </button>
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
+          <h3 class="main-service-row__title">Coaching y <em>liderazgo</em></h3>
+          <p class="main-service-row__copy">Acompañamiento a profesionales y equipos para desarrollar habilidades de liderazgo, toma de decisiones y gestión emocional en entornos de alta exigencia.</p>
+        </button>
+        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
+          <h3 class="main-service-row__title">Asesoramiento <em>financiero</em></h3>
+          <p class="main-service-row__copy">Psicología del dinero: identifica creencias limitantes, mejora tu relación con los recursos y toma decisiones financieras alineadas con tus valores.</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- ═══════════ TARIFAS ═══════════ -->
+    <section class="main-pricing" id="tarifas">
+      <div class="main-pricing__header">
+        <h2 class="main-pricing__heading main-reveal">Mis <em>tarifas</em></h2>
+        <p class="main-pricing__sub main-reveal">sin letra pequeña · elige el formato que mejor se adapta a ti</p>
+
+        <!-- Toggle dinámico: sesión individual vs. bono -->
+        <div class="main-pricing__toggle main-reveal" role="tablist">
+          <button class="is-active" data-plan="sesion" role="tab" aria-selected="true">Por sesión</button>
+          <button data-plan="bono" role="tab" aria-selected="false">Bono 5 sesiones</button>
+          <span class="main-pricing__toggle-pill" aria-hidden="true"></span>
         </div>
+      </div>
+
+      <div class="main-pricing__grid">
+        <article class="main-price-card main-reveal">
+          <header>
+            <span class="main-price-card__tag">Individual</span>
+            <h3>Terapia personal</h3>
+          </header>
+          <div class="main-price-card__amount">
+            <span class="main-price-card__value" data-sesion="60" data-bono="270">60</span>
+            <span class="main-price-card__currency">€</span>
+            <span class="main-price-card__period" data-sesion="por sesión · 50 min" data-bono="bono 5 sesiones">por sesión · 50 min</span>
+          </div>
+          <ul>
+            <li>Sesiones 50 minutos</li>
+            <li>Online o presencial</li>
+            <li>Seguimiento entre sesiones</li>
+          </ul>
+          <a href="#contacto" class="main-price-card__cta">Reservar</a>
+        </article>
+
+        <article class="main-price-card main-price-card--featured main-reveal">
+          <span class="main-price-card__badge">Más elegido</span>
+          <header>
+            <span class="main-price-card__tag">Pareja</span>
+            <h3>Terapia de pareja</h3>
+          </header>
+          <div class="main-price-card__amount">
+            <span class="main-price-card__value" data-sesion="85" data-bono="385">85</span>
+            <span class="main-price-card__currency">€</span>
+            <span class="main-price-card__period" data-sesion="por sesión · 75 min" data-bono="bono 5 sesiones">por sesión · 75 min</span>
+          </div>
+          <ul>
+            <li>Sesiones 75 minutos</li>
+            <li>Ambos miembros</li>
+            <li>Plan personalizado</li>
+            <li>Sesión inicial gratuita</li>
+          </ul>
+          <a href="#contacto" class="main-price-card__cta">Reservar</a>
+        </article>
+
+        <article class="main-price-card main-reveal">
+          <header>
+            <span class="main-price-card__tag">Coaching</span>
+            <h3>Coaching profesional</h3>
+          </header>
+          <div class="main-price-card__amount">
+            <span class="main-price-card__value" data-sesion="95" data-bono="430">95</span>
+            <span class="main-price-card__currency">€</span>
+            <span class="main-price-card__period" data-sesion="por sesión · 60 min" data-bono="bono 5 sesiones">por sesión · 60 min</span>
+          </div>
+          <ul>
+            <li>Liderazgo y decisiones</li>
+            <li>Plan de objetivos</li>
+            <li>Mentoría entre sesiones</li>
+          </ul>
+          <a href="#contacto" class="main-price-card__cta">Reservar</a>
+        </article>
+      </div>
+
+      <p class="main-pricing__note main-reveal">*Primera consulta de 20 minutos sin coste para conocernos. Facturación profesional disponible.</p>
+    </section>
+
+    <!-- ═══════════ EQUIPO / SOBRE MÍ ═══════════ -->
+    <section class="main-team" id="equipo">
+      <div class="main-team__header">
+        <h2 class="main-team__heading main-reveal">Quién está<br><em>detrás</em></h2>
+        <p class="main-team__sub main-reveal">un equipo pequeño, con formación continuada y una vocación: acompañarte con rigor y calidez.</p>
+      </div>
+
+      <div class="main-team__grid">
+        <article class="main-team-card main-reveal">
+          <div class="main-team-card__photo">
+            <img src="" alt="" data-placeholder="psicóloga principal" />
+          </div>
+          <div class="main-team-card__meta">
+            <span class="main-team-card__role">Psicóloga · Fundadora</span>
+            <h3 class="main-team-card__name">[Tu Nombre]</h3>
+            <p class="main-team-card__bio">Psicóloga clínica col. nº —. Especializada en ansiedad, trauma y procesos de duelo. Formación en EMDR y ACT. Acompaño a adultos y parejas con una mirada integradora.</p>
+            <ul class="main-team-card__tags">
+              <li>EMDR</li><li>ACT</li><li>Mindfulness</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="main-team-card main-reveal">
+          <div class="main-team-card__photo">
+            <img src="" alt="" data-placeholder="terapeuta infantil" />
+          </div>
+          <div class="main-team-card__meta">
+            <span class="main-team-card__role">Psicóloga infantil</span>
+            <h3 class="main-team-card__name">[Nombre]</h3>
+            <p class="main-team-card__bio">Trabajo con niños y adolescentes desde el juego, la narrativa y la regulación emocional. Colaboración con familias y centros escolares.</p>
+            <ul class="main-team-card__tags">
+              <li>Juego terapéutico</li><li>Familia</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="main-team-card main-reveal">
+          <div class="main-team-card__photo">
+            <img src="" alt="" data-placeholder="coach profesional" />
+          </div>
+          <div class="main-team-card__meta">
+            <span class="main-team-card__role">Coach · Liderazgo</span>
+            <h3 class="main-team-card__name">[Nombre]</h3>
+            <p class="main-team-card__bio">Acompaño a profesionales y equipos en procesos de transformación, liderazgo consciente y toma de decisiones bajo presión.</p>
+            <ul class="main-team-card__tags">
+              <li>Liderazgo</li><li>Equipos</li><li>Finanzas</li>
+            </ul>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -203,11 +348,74 @@
       <img class="main-cta-big__orb main-cta-big__orb--c" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true">
       <img class="main-cta-big__squiggle" src="assets/images/main/squiggle.png" alt="" aria-hidden="true">
 
-      <a href="mailto:hola@tu-dominio.com?subject=Primera%20consulta" class="main-cta-big__link main-reveal">
+      <a href="#form" class="main-cta-big__link main-reveal">
         <span>reserva</span>
         <span>tu</span>
         <span>cita</span>
       </a>
+    </section>
+
+    <!-- ═══════════ FORMULARIO DE CONTACTO ═══════════ -->
+    <section class="main-form" id="form">
+      <div class="main-form__wrap">
+        <div class="main-form__left main-reveal">
+          <h2 class="main-form__heading">cuéntame<br><em>en qué puedo ayudarte</em></h2>
+          <p class="main-form__copy">Respondo personalmente en menos de 24 horas. Tu consulta es totalmente confidencial.</p>
+          <ul class="main-form__perks">
+            <li>Primera llamada de 20 minutos gratuita</li>
+            <li>Respuesta directa, sin intermediarios</li>
+            <li>Confidencialidad y secreto profesional</li>
+          </ul>
+        </div>
+
+        <form class="main-form__card main-reveal" id="contactForm" novalidate>
+          <div class="main-form__row">
+            <label>
+              <span>Nombre</span>
+              <input type="text" name="nombre" required autocomplete="name" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+          </div>
+          <div class="main-form__row">
+            <label>
+              <span>Teléfono <small>(opcional)</small></span>
+              <input type="tel" name="telefono" autocomplete="tel" />
+            </label>
+            <label>
+              <span>Servicio</span>
+              <select name="servicio" required>
+                <option value="" disabled selected>Elige una opción</option>
+                <option>Terapia individual</option>
+                <option>Terapia de pareja</option>
+                <option>Terapia familiar</option>
+                <option>Terapia online</option>
+                <option>Infantil y adolescente</option>
+                <option>Coaching y liderazgo</option>
+                <option>Asesoramiento financiero</option>
+                <option>Otro</option>
+              </select>
+            </label>
+          </div>
+          <label class="main-form__full">
+            <span>Mensaje</span>
+            <textarea name="mensaje" rows="5" placeholder="Cuéntame brevemente qué buscas…"></textarea>
+          </label>
+          <label class="main-form__check">
+            <input type="checkbox" required />
+            <span>He leído y acepto la <a href="politica-privacidad.html">política de privacidad</a>.</span>
+          </label>
+
+          <button type="submit" class="main-form__submit">
+            <span>Enviar</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+
+          <p class="main-form__success" hidden>Gracias. Te responderé en menos de 24 h.</p>
+        </form>
+      </div>
     </section>
 
     <!-- ═══════════ FOOTER ═══════════ -->

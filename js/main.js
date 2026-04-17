@@ -11,6 +11,43 @@
   var y = document.getElementById('mainYear');
   if (y) y.textContent = new Date().getFullYear();
 
+  // Sidemenu toggle (hamburguesa → panel lateral derecha→izquierda)
+  var menuBtn = document.getElementById('menuToggle');
+  var sideMenu = document.getElementById('mainMenu');
+  var backdrop = document.getElementById('menuBackdrop');
+  function setMenu(open) {
+    if (!menuBtn || !sideMenu) return;
+    menuBtn.classList.toggle('is-open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    sideMenu.classList.toggle('is-open', open);
+    sideMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (backdrop) {
+      if (open) {
+        backdrop.hidden = false;
+        requestAnimationFrame(function () { backdrop.classList.add('is-open'); });
+      } else {
+        backdrop.classList.remove('is-open');
+        setTimeout(function () { backdrop.hidden = true; }, 500);
+      }
+    }
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () {
+      setMenu(!menuBtn.classList.contains('is-open'));
+    });
+  }
+  if (backdrop) backdrop.addEventListener('click', function () { setMenu(false); });
+  if (sideMenu) {
+    sideMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { setMenu(false); });
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menuBtn && menuBtn.classList.contains('is-open')) setMenu(false);
+  });
+
   // Navbar scroll state
   var nav = document.getElementById('mainNav');
   function onScroll() {
@@ -54,5 +91,68 @@
     reveals.forEach(function (el) { io.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  // Servicios: click en fila → activa el texto de la derecha (el hover hace el stretch)
+  document.querySelectorAll('.main-service-row').forEach(function (row) {
+    row.addEventListener('click', function () {
+      var isActive = row.classList.toggle('is-active');
+      row.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    });
+  });
+
+  // Tarifas: toggle dinámico sesión ↔ bono (cambia precio y periodo)
+  var priceToggle = document.querySelector('.main-pricing__toggle');
+  if (priceToggle) {
+    var btns = priceToggle.querySelectorAll('button[data-plan]');
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var plan = btn.getAttribute('data-plan');
+        btns.forEach(function (b) {
+          var active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-selected', active);
+        });
+        priceToggle.setAttribute('data-plan', plan);
+
+        document.querySelectorAll('.main-price-card__value').forEach(function (el) {
+          var v = el.getAttribute('data-' + plan);
+          if (v) {
+            el.style.opacity = '0';
+            setTimeout(function () { el.textContent = v; el.style.opacity = '1'; }, 180);
+          }
+        });
+        document.querySelectorAll('.main-price-card__period').forEach(function (el) {
+          var v = el.getAttribute('data-' + plan);
+          if (v) {
+            el.style.opacity = '0';
+            setTimeout(function () { el.textContent = v; el.style.opacity = '1'; }, 180);
+          }
+        });
+      });
+    });
+  }
+
+  // Formulario de contacto: submit stub (sin backend, muestra el mensaje de éxito)
+  var form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      var btn = form.querySelector('.main-form__submit');
+      var success = form.querySelector('.main-form__success');
+      btn.disabled = true;
+      btn.querySelector('span').textContent = 'Enviando…';
+
+      // Pequeño retardo para simular envío — sustituir por fetch a endpoint real
+      setTimeout(function () {
+        form.querySelectorAll('input, select, textarea, button').forEach(function (el) { el.disabled = true; });
+        if (success) success.hidden = false;
+        btn.querySelector('span').textContent = 'Enviado';
+      }, 700);
+    });
   }
 })();
