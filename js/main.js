@@ -63,26 +63,46 @@
   // Parallax: capas del hero (con scroll + ratón) y capas ambient fijas (solo ratón)
   var layers = document.querySelectorAll('.main-layer');
   if (layers.length) {
-    var mx = 0, my = 0, sy = 0, raf = 0;
+    var heroLayers = [], fixedLayers = [], depthCache = [];
+    layers.forEach(function (n) {
+      var d = Number(n.getAttribute('data-depth') || 10);
+      depthCache.push(d);
+      if (n.classList.contains('main-layer--fixed')) fixedLayers.push({ n: n, d: d });
+      else heroLayers.push({ n: n, d: d });
+    });
+    var mx = 0, my = 0, sy = 0, raf = 0, lastHeroOpacity = 1, lastAmbientOpacity = 0;
     function tick() {
       raf = 0;
       var vh = window.innerHeight || 800;
-      // Fade del hero: comienza a los 20% de viewport y termina a los 70% para esconderse antes del 2º grupo
-      var heroFade = Math.max(0, Math.min(1, (sy - vh * 0.2) / (vh * 0.5)));
+      var heroFade = (sy - vh * 0.2) / (vh * 0.5);
+      if (heroFade < 0) heroFade = 0; else if (heroFade > 1) heroFade = 1;
       var heroOpacity = 1 - heroFade;
-      var ambientFade = Math.max(0, Math.min(1, (sy - vh * 0.6) / (vh * 0.4)));
-      layers.forEach(function (n) {
-        var d = Number(n.getAttribute('data-depth') || 10);
-        var isFixed = n.classList.contains('main-layer--fixed');
-        var tx = -mx * d * (isFixed ? 1.2 : 1);
-        var ty = -my * d * (isFixed ? 1.2 : 1) + sy * (d * (isFixed ? 0.02 : 0.012));
-        n.style.transform = 'translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0)';
-        if (isFixed) {
-          n.style.opacity = (0.55 * ambientFade).toFixed(3);
-        } else {
-          n.style.opacity = heroOpacity.toFixed(3);
+      var ambientFade = (sy - vh * 0.6) / (vh * 0.4);
+      if (ambientFade < 0) ambientFade = 0; else if (ambientFade > 1) ambientFade = 1;
+      var ambientOpacity = 0.55 * ambientFade;
+
+      // Hero layers: saltar si ya están ocultas y no cambia la opacidad
+      if (heroOpacity > 0.001 || lastHeroOpacity > 0.001) {
+        for (var i = 0; i < heroLayers.length; i++) {
+          var hl = heroLayers[i];
+          var tx1 = -mx * hl.d;
+          var ty1 = -my * hl.d - sy * hl.d * 0.012;
+          var st = hl.n.style;
+          st.transform = 'translate3d(' + tx1.toFixed(1) + 'px,' + ty1.toFixed(1) + 'px,0)';
+          st.opacity = heroOpacity.toFixed(3);
         }
-      });
+      }
+      // Fixed ambient layers
+      for (var j = 0; j < fixedLayers.length; j++) {
+        var fl = fixedLayers[j];
+        var tx2 = -mx * fl.d * 1.2;
+        var ty2 = -my * fl.d * 1.2 - sy * fl.d * 0.02;
+        var st2 = fl.n.style;
+        st2.transform = 'translate3d(' + tx2.toFixed(1) + 'px,' + ty2.toFixed(1) + 'px,0)';
+        st2.opacity = ambientOpacity.toFixed(3);
+      }
+      lastHeroOpacity = heroOpacity;
+      lastAmbientOpacity = ambientOpacity;
     }
     function schedule() { if (!raf) raf = requestAnimationFrame(tick); }
     window.addEventListener('mousemove', function (e) {
@@ -120,42 +140,96 @@
     var rows = Array.prototype.slice.call(track.children);
     var rowCount = rows.length;
     var carouselRaf = 0;
+    var cachedRowHeight = 0;
+    var cachedVh = 0;
+    var currentIdx = -1;
+    function measure() {
+      cachedVh = window.innerHeight || 800;
+      cachedRowHeight = rows[0].offsetHeight || (cachedVh * 0.32);
+    }
     function updateCarousel() {
       carouselRaf = 0;
       var rect = stage.getBoundingClientRect();
-      var vh = window.innerHeight || 800;
+      var vh = cachedVh;
+      // Salir temprano si el stage está fuera del viewport
+      if (rect.bottom < -vh || rect.top > vh * 2) return;
       var travelable = rect.height - vh;
       if (travelable <= 0) return;
       var progress = -rect.top / travelable;
-      progress = Math.max(0, Math.min(1, progress));
+      if (progress < 0) progress = 0; else if (progress > 1) progress = 1;
 
-      // Niika style escalonado: la activa ocupa el centro a tamaño pleno,
-      // las vecinas se encogen y se retiran hacia la derecha cuanto más lejos estén
-      var rowHeight = rows[0].offsetHeight || (vh * 0.45);
+      var rowHeight = cachedRowHeight;
       var pos = progress * (rowCount - 1);
       var translateY = (vh / 2) - (rowHeight / 2) - (pos * rowHeight);
       track.style.transform = 'translate3d(0,' + translateY.toFixed(1) + 'px,0)';
 
       var idx = Math.round(pos);
       if (idx < 0) idx = 0;
-      if (idx > rowCount - 1) idx = rowCount - 1;
+      else if (idx > rowCount - 1) idx = rowCount - 1;
 
       for (var i = 0; i < rowCount; i++) {
-        var dist = Math.abs(i - pos);
-        var scale = Math.max(0.45, 1 - dist * 0.22);
-        var tx = Math.min(48, dist * 18); // vw — se esconden hacia la derecha
-        var opacity = Math.max(0.15, 1 - dist * 0.32);
-        rows[i].style.transform = 'translate3d(' + tx.toFixed(1) + 'vw,0,0) scale(' + scale.toFixed(3) + ')';
-        rows[i].style.opacity = opacity.toFixed(3);
-        rows[i].classList.toggle('is-current', i === idx);
+        var dist = i - pos;
+        if (dist < 0) dist = -dist;
+        var scale = 1 - dist * 0.22;
+        if (scale < 0.45) scale = 0.45;
+        var tx = dist * 18;
+        if (tx > 48) tx = 48;
+        var opacity = 1 - dist * 0.32;
+        if (opacity < 0.15) opacity = 0.15;
+        var s = rows[i].style;
+        s.transform = 'translate3d(' + tx.toFixed(1) + 'vw,0,0) scale(' + scale.toFixed(3) + ')';
+        s.opacity = opacity.toFixed(3);
+      }
+      if (idx !== currentIdx) {
+        if (currentIdx >= 0) rows[currentIdx].classList.remove('is-current');
+        rows[idx].classList.add('is-current');
+        currentIdx = idx;
       }
     }
     function scheduleCarousel() {
       if (!carouselRaf) carouselRaf = requestAnimationFrame(updateCarousel);
     }
     window.addEventListener('scroll', scheduleCarousel, { passive: true });
-    window.addEventListener('resize', scheduleCarousel);
+    window.addEventListener('resize', function () { measure(); scheduleCarousel(); });
+    measure();
     updateCarousel();
+  }
+
+  // Cerebro parallax en terapias: flota con ratón + sine, fade al entrar/salir
+  var brain = document.querySelector('.main-services__brain');
+  var brainImg = brain ? brain.querySelector('img') : null;
+  var servicesSection = document.getElementById('servicios');
+  if (brain && brainImg && servicesSection) {
+    var bmx = 0, bmy = 0, brainRaf = 0, brainActive = false;
+    function brainTick() {
+      brainRaf = 0;
+      var rect = servicesSection.getBoundingClientRect();
+      var vh = window.innerHeight || 800;
+      var visible = rect.bottom > 0 && rect.top < vh;
+      if (visible !== brainActive) {
+        brain.classList.toggle('is-active', visible);
+        brainActive = visible;
+      }
+      if (visible) {
+        var t = performance.now() * 0.0006;
+        var floatY = Math.sin(t) * 14;
+        var floatX = Math.cos(t * 0.7) * 10;
+        var rot = Math.sin(t * 0.8) * 3;
+        var tx = bmx * 26 + floatX;
+        var ty = bmy * 18 + floatY;
+        brainImg.style.transform =
+          'translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0) rotate(' + rot.toFixed(2) + 'deg)';
+        brainRaf = requestAnimationFrame(brainTick);
+      }
+    }
+    function scheduleBrain() { if (!brainRaf) brainRaf = requestAnimationFrame(brainTick); }
+    window.addEventListener('mousemove', function (e) {
+      bmx = (e.clientX / window.innerWidth  - 0.5) * 2;
+      bmy = (e.clientY / window.innerHeight - 0.5) * 2;
+      scheduleBrain();
+    });
+    window.addEventListener('scroll', scheduleBrain, { passive: true });
+    scheduleBrain();
   }
 
   // Servicios: click en fila → activa el texto de la derecha
