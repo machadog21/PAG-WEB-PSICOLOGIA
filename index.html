@@ -9,7 +9,7 @@
   <!-- Fuentes: Playfair Display + Work Sans + Raleway (idénticas al proyecto Main) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500&family=Raleway:wght@400;500&family=Outfit:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/main.css" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -23,8 +23,22 @@
     </div>
   </header>
 
-  <!-- Panel lateral que se despliega de derecha a izquierda -->
+  <!-- Canvas 3D: sillón flotando de fondo con parallax -->
+  <canvas id="mainScene3d" aria-hidden="true"></canvas>
+
+  <!-- Capas decorativas fijas (parallax ambiental, acompañan todo el scroll) -->
+  <div class="main-ambient" aria-hidden="true">
+    <div class="main-layer main-layer--fixed" data-depth="14" style="left:2%;  top:32%;  width:14%; max-width:260px;"><img src="assets/images/main/orb-ball.png" alt=""></div>
+    <div class="main-layer main-layer--fixed" data-depth="22" style="right:2%; bottom:10%; width:16%; max-width:300px;"><img src="assets/images/main/orb-ball.png" alt=""></div>
+    <div class="main-layer main-layer--fixed" data-depth="8"  style="right:18%; top:18%; width:9%;  max-width:160px;"><img src="assets/images/main/hero-ball-small.png" alt=""></div>
+    <div class="main-layer main-layer--fixed" data-depth="18" style="left:24%;  bottom:18%; width:12%; max-width:220px;"><img src="assets/images/main/squiggle.png" alt=""></div>
+  </div>
+
+  <!-- Panel que se despliega a pantalla completa -->
   <nav class="main-sidemenu" id="mainMenu" aria-hidden="true">
+    <button type="button" class="main-sidemenu__close" id="menuClose" aria-label="Cerrar menú">
+      <span></span><span></span>
+    </button>
     <a href="#servicios"   class="main-nav-link">Servicios</a>
     <a href="#tarifas"     class="main-nav-link">Tarifas</a>
     <a href="#equipo"      class="main-nav-link">Equipo</a>
@@ -57,11 +71,7 @@
     </section>
 
     <!-- ═══════════ INTRO HEADLINE ═══════════ -->
-    <section class="main-intro">
-      <img class="main-intro__orb animate-float-soft" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true" style="left:2%; top:30%; width:18%; max-width:280px; position:absolute;">
-      <img class="main-intro__squiggle" src="assets/images/main/squiggle.png" alt="" aria-hidden="true">
-      <img class="main-intro__orb animate-float" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true" style="right:-4%; bottom:-8%; width:24%; max-width:380px; position:absolute;">
-
+    <section class="main-intro" id="introScene">
       <h2 class="main-intro__text main-reveal">
         Acompaño tu proceso de cambio con <em>calidez</em>, presencia y rigor científico. Porque sanar es posible.
       </h2>
@@ -85,39 +95,43 @@
         <span>Finanzas</span>
       </div>
 
-      <div class="main-services__list">
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Terapia <em>individual</em></h3>
-          <p class="main-service-row__copy">Un espacio seguro y confidencial para explorar tus emociones, pensamientos y patrones de conducta. Sesiones de 50 minutos, online o presenciales en [Ciudad].</p>
-        </button>
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Terapia de <em>pareja</em></h3>
-          <p class="main-service-row__copy">Mejora la comunicación, gestiona conflictos y vuelve a conectar desde un lugar más honesto. Herramientas prácticas para volver a entenderos.</p>
-        </button>
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Terapia <em>familiar</em></h3>
-          <p class="main-service-row__copy">Trabajo con el sistema familiar para mejorar dinámicas, vínculos y comunicación. Ideal cuando los mismos conflictos se repiten una y otra vez.</p>
-        </button>
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Terapia <em>online</em></h3>
-          <p class="main-service-row__copy">La misma calidad terapéutica desde donde estés. Videollamada cifrada, horarios flexibles y sin desplazamientos.</p>
-        </button>
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Infantil y <em>adolescente</em></h3>
-          <p class="main-service-row__copy">Atención especializada para niños y jóvenes en etapas de desarrollo, adaptada a su edad, con recursos lúdicos y acompañamiento familiar.</p>
-        </button>
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Talleres y <em>grupos</em></h3>
-          <p class="main-service-row__copy">Espacios colectivos de aprendizaje sobre gestión emocional, mindfulness y autoestima. Coste accesible, comunidad real.</p>
-        </button>
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Coaching y <em>liderazgo</em></h3>
-          <p class="main-service-row__copy">Acompañamiento a profesionales y equipos para desarrollar habilidades de liderazgo, toma de decisiones y gestión emocional en entornos de alta exigencia.</p>
-        </button>
-        <button type="button" class="main-service-row main-reveal" aria-expanded="false">
-          <h3 class="main-service-row__title">Asesoramiento <em>financiero</em></h3>
-          <p class="main-service-row__copy">Psicología del dinero: identifica creencias limitantes, mejora tu relación con los recursos y toma decisiones financieras alineadas con tus valores.</p>
-        </button>
+      <div class="main-services__stage" id="servicesStage">
+      <div class="main-services__viewport">
+        <div class="main-services__list" id="servicesTrack">
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="01">Terapia <em>individual</em></h3>
+            <p class="main-service-row__copy">Un espacio seguro y confidencial para explorar tus emociones, pensamientos y patrones de conducta. Sesiones de 50 minutos, online o presenciales en [Ciudad].</p>
+          </button>
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="02">Terapia de <em>pareja</em></h3>
+            <p class="main-service-row__copy">Mejora la comunicación, gestiona conflictos y vuelve a conectar desde un lugar más honesto. Herramientas prácticas para volver a entenderos.</p>
+          </button>
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="03">Terapia <em>familiar</em></h3>
+            <p class="main-service-row__copy">Trabajo con el sistema familiar para mejorar dinámicas, vínculos y comunicación. Ideal cuando los mismos conflictos se repiten una y otra vez.</p>
+          </button>
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="04">Terapia <em>online</em></h3>
+            <p class="main-service-row__copy">La misma calidad terapéutica desde donde estés. Videollamada cifrada, horarios flexibles y sin desplazamientos.</p>
+          </button>
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="05">Infantil y <em>adolescente</em></h3>
+            <p class="main-service-row__copy">Atención especializada para niños y jóvenes en etapas de desarrollo, adaptada a su edad, con recursos lúdicos y acompañamiento familiar.</p>
+          </button>
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="06">Talleres y <em>grupos</em></h3>
+            <p class="main-service-row__copy">Espacios colectivos de aprendizaje sobre gestión emocional, mindfulness y autoestima. Coste accesible, comunidad real.</p>
+          </button>
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="07">Coaching y <em>liderazgo</em></h3>
+            <p class="main-service-row__copy">Acompañamiento a profesionales y equipos para desarrollar habilidades de liderazgo, toma de decisiones y gestión emocional en entornos de alta exigencia.</p>
+          </button>
+          <button type="button" class="main-service-row" aria-expanded="false">
+            <h3 class="main-service-row__title" data-num="08">Asesoramiento <em>financiero</em></h3>
+            <p class="main-service-row__copy">Psicología del dinero: identifica creencias limitantes, mejora tu relación con los recursos y toma decisiones financieras alineadas con tus valores.</p>
+          </button>
+        </div>
+      </div>
       </div>
     </section>
 
@@ -455,5 +469,14 @@
   </main>
 
   <script src="js/main.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.161.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.161.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="js/scene3d.js"></script>
 </body>
 </html>
