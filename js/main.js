@@ -195,43 +195,6 @@
     updateCarousel();
   }
 
-  // Cerebro parallax en terapias: flota con ratón + sine, fade al entrar/salir
-  var brain = document.querySelector('.main-services__brain');
-  var brainImg = brain ? brain.querySelector('img') : null;
-  var servicesSection = document.getElementById('servicios');
-  if (brain && brainImg && servicesSection) {
-    var bmx = 0, bmy = 0, brainRaf = 0, brainActive = false;
-    function brainTick() {
-      brainRaf = 0;
-      var rect = servicesSection.getBoundingClientRect();
-      var vh = window.innerHeight || 800;
-      var visible = rect.bottom > 0 && rect.top < vh;
-      if (visible !== brainActive) {
-        brain.classList.toggle('is-active', visible);
-        brainActive = visible;
-      }
-      if (visible) {
-        var t = performance.now() * 0.0006;
-        var floatY = Math.sin(t) * 14;
-        var floatX = Math.cos(t * 0.7) * 10;
-        var rot = Math.sin(t * 0.8) * 3;
-        var tx = bmx * 26 + floatX;
-        var ty = bmy * 18 + floatY;
-        brainImg.style.transform =
-          'translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0) rotate(' + rot.toFixed(2) + 'deg)';
-        brainRaf = requestAnimationFrame(brainTick);
-      }
-    }
-    function scheduleBrain() { if (!brainRaf) brainRaf = requestAnimationFrame(brainTick); }
-    window.addEventListener('mousemove', function (e) {
-      bmx = (e.clientX / window.innerWidth  - 0.5) * 2;
-      bmy = (e.clientY / window.innerHeight - 0.5) * 2;
-      scheduleBrain();
-    });
-    window.addEventListener('scroll', scheduleBrain, { passive: true });
-    scheduleBrain();
-  }
-
   // Servicios: click en fila → activa el texto de la derecha
   document.querySelectorAll('.main-service-row').forEach(function (row) {
     row.addEventListener('click', function () {
