@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500&family=Raleway:wght@400;500&family=Outfit:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 </head>
 <body>
@@ -220,7 +221,7 @@
       <div class="main-team__grid">
         <article class="main-team-card main-reveal">
           <div class="main-team-card__photo">
-            <img src="" alt="" data-placeholder="psicóloga principal" />
+            <img src="assets/imagenes%20aesthetic/ventana.jpg" alt="" data-placeholder="psicóloga principal" />
           </div>
           <div class="main-team-card__meta">
             <span class="main-team-card__role">Psicóloga · Fundadora</span>
@@ -234,7 +235,7 @@
 
         <article class="main-team-card main-reveal">
           <div class="main-team-card__photo">
-            <img src="" alt="" data-placeholder="terapeuta infantil" />
+            <img src="assets/imagenes%20aesthetic/pato.jpg" alt="" data-placeholder="terapeuta infantil" />
           </div>
           <div class="main-team-card__meta">
             <span class="main-team-card__role">Psicóloga infantil</span>
@@ -248,7 +249,7 @@
 
         <article class="main-team-card main-reveal">
           <div class="main-team-card__photo">
-            <img src="" alt="" data-placeholder="coach profesional" />
+            <img src="assets/imagenes%20aesthetic/monte.jpg" alt="" data-placeholder="coach profesional" />
           </div>
           <div class="main-team-card__meta">
             <span class="main-team-card__role">Coach · Liderazgo</span>
@@ -343,7 +344,7 @@
           <div class="main-contact__col main-reveal">
             <h4>Visítame</h4>
             <a href="https://maps.google.com" target="_blank" rel="noopener">
-              [Dirección consulta]<br>[Ciudad]
+              [Dirección consulta]<br>León
             </a>
           </div>
           <div class="main-contact__col main-reveal">
@@ -351,15 +352,32 @@
             <a href="tel:+34600000000">+34 600 000 000</a>
           </div>
         </div>
+
+        <div class="main-contact__map-wrap main-reveal">
+          <div class="main-contact__map" id="contactMap"></div>
+          <div class="main-contact__map-tint" aria-hidden="true"></div>
+          <div class="main-contact__map-pin" aria-hidden="true">
+            <svg width="44" height="56" viewBox="-22 -44 44 56">
+              <circle cx="0" cy="-22" r="26" fill="#c85a7a" opacity=".2">
+                <animate attributeName="r" values="14;34;14" dur="2.4s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values=".36;0;.36" dur="2.4s" repeatCount="indefinite"/>
+              </circle>
+              <path d="M 0 -40 C -12 -40, -20 -32, -20 -22 C -20 -10, -10 -2, 0 10 C 10 -2, 20 -10, 20 -22 C 20 -32, 12 -40, 0 -40 Z" fill="#c85a7a"/>
+              <circle cx="0" cy="-22" r="6" fill="#fff"/>
+            </svg>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ═══════════ RESERVA TU CITA (Work With Us Big) ═══════════ -->
     <section class="main-cta-big">
-      <img class="main-cta-big__orb main-cta-big__orb--a" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true">
-      <img class="main-cta-big__orb main-cta-big__orb--b" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true">
-      <img class="main-cta-big__orb main-cta-big__orb--c" src="assets/images/main/orb-ball.png" alt="" aria-hidden="true">
-      <img class="main-cta-big__squiggle" src="assets/images/main/squiggle.png" alt="" aria-hidden="true">
+      <div class="main-mural" id="ctaMural" aria-hidden="true">
+        <div class="main-mural__card main-mural__card--casa"     data-depth="10" style="background-image:url('assets/imagenes%20aesthetic/casa.jpg')"></div>
+        <div class="main-mural__card main-mural__card--pajaros"  data-depth="14" style="background-image:url('assets/imagenes%20aesthetic/pajaros.jpg')"></div>
+        <div class="main-mural__card main-mural__card--cortinas" data-depth="18" style="background-image:url('assets/imagenes%20aesthetic/cortinas.jpg')"></div>
+        <div class="main-mural__card main-mural__card--ventana"  data-depth="12" style="background-image:url('assets/imagenes%20aesthetic/ventana.jpg')"></div>
+      </div>
 
       <a href="#form" class="main-cta-big__link main-reveal">
         <span>reserva</span>
@@ -468,6 +486,7 @@
 
   </main>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="js/main.js"></script>
   <script type="importmap">
     {

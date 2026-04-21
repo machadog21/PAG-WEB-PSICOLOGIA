@@ -5,8 +5,8 @@
 
 /* Tokens */
 :root {
-  --main-pink: #ffd1dc;
-  --main-pink-soft: #ffe6ee;
+  --main-pink: #eaccad;
+  --main-pink-soft: #eaccad;
   --main-ink: #2d2a2a;
   --main-ink-soft: #4a4646;
   --main-cream: #fff7f2;
@@ -294,7 +294,7 @@ main { position: relative; width: 100%; background: var(--main-pink); }
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: url('../assets/images/main/hero-bg.jpg') center/cover;
+  background: var(--main-pink);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -526,7 +526,7 @@ main { position: relative; width: 100%; background: var(--main-pink); }
 .main-service-row__title {
   font-family: 'Outfit', system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(56px, 10vw, 160px);
+  font-size: clamp(36px, 7vw, 112px);
   line-height: 1;
   letter-spacing: -0.03em;
   color: rgba(45, 42, 42, 0.22);
@@ -845,6 +845,45 @@ main { position: relative; width: 100%; background: var(--main-pink); }
   .main-contact__grid { grid-template-columns: 1fr; gap: 24px; }
 }
 
+/* Mapa ortofoto B/N de la consulta */
+.main-contact__map-wrap {
+  position: relative;
+  width: min(100%, 1100px);
+  margin: 56px auto 0;
+  aspect-ratio: 16 / 9;
+  max-height: 520px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #1a1a1a;
+  box-shadow: 0 28px 80px -20px rgba(45, 42, 42, 0.22);
+}
+.main-contact__map {
+  position: absolute;
+  inset: 0;
+  filter: grayscale(1) contrast(1.08) brightness(.95);
+  z-index: 1;
+}
+.main-contact__map-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.28) 100%);
+  z-index: 450;
+}
+.main-contact__map-pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.55));
+  z-index: 500;
+}
+.main-contact__map .leaflet-control-attribution { display: none; }
+@media (max-width: 720px) {
+  .main-contact__map-wrap { aspect-ratio: 4 / 5; margin-top: 40px; border-radius: 20px; }
+}
+
 /* ═══════════════════ RESERVA TU CITA (Work With Us Big) ═══════════════════ */
 .main-cta-big {
   position: relative;
@@ -855,16 +894,6 @@ main { position: relative; width: 100%; background: var(--main-pink); }
   align-items: center;
   justify-content: center;
 }
-.main-cta-big__orb {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-  z-index: 49;
-}
-.main-cta-big__orb--a { left: -6%;  top: 10%;    width: 38%; max-width: 640px; animation: main-float 9s ease-in-out infinite; }
-.main-cta-big__orb--b { right: -10%; bottom: -20%; width: 48%; max-width: 880px; animation: main-float-soft 12s ease-in-out infinite; }
-.main-cta-big__orb--c { right: 20%; top: 10%;    width: 12%; max-width: 180px; animation: main-float 7s ease-in-out infinite; z-index: 50; }
-.main-cta-big__squiggle { position: absolute; left: 30%; top: 40%; width: 28%; max-width: 440px; z-index: 300; pointer-events: none; }
 .main-cta-big__link {
   position: relative;
   z-index: 50;
@@ -880,6 +909,85 @@ main { position: relative; width: 100%; background: var(--main-pink); }
 }
 .main-cta-big__link:hover { transform: scale(1.02); }
 .main-cta-big__link span { display: block; }
+
+/* Mural de fotografías (cards con parallax + balanceo) */
+.main-mural {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+.main-mural__card {
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform;
+  box-shadow:
+    0 1px 0 rgba(255, 240, 220, 0.3) inset,
+    0 0 0 1px rgba(45, 42, 42, 0.12),
+    0 18px 40px -10px rgba(200, 90, 122, 0.25),
+    0 40px 80px -20px rgba(45, 42, 42, 0.28);
+  transition: transform .7s cubic-bezier(.2,.7,.2,1), box-shadow .5s, z-index 0s .3s;
+}
+.main-mural__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,245,225,.10) 0%, transparent 30%, transparent 70%, rgba(0,0,0,.08) 100%),
+    radial-gradient(120% 90% at 50% 50%, transparent 60%, rgba(0,0,0,.12) 100%);
+  mix-blend-mode: overlay;
+}
+.main-mural__card::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 2px;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 245, 225, 0.20);
+}
+.main-mural__card--casa     { left: 2%;  top: 8%;    width: 22%; height: 54%; transform: rotate(-2.2deg); z-index: 4; }
+.main-mural__card--cortinas { left: 14%; bottom: 6%; width: 16%; height: 42%; transform: rotate(1.4deg);  z-index: 6; }
+.main-mural__card--pajaros  { right: 3%; top: 6%;    width: 22%; height: 46%; transform: rotate(2.8deg);  z-index: 5; }
+.main-mural__card--ventana  { right: 6%; bottom: 4%; width: 20%; height: 40%; transform: rotate(-1.8deg); z-index: 7; }
+
+.main-mural__card:hover {
+  transform: rotate(0deg) translateY(-10px) scale(1.03) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 240, 220, 0.35) inset,
+    0 0 0 1px rgba(45, 42, 42, 0.18),
+    0 30px 60px -10px rgba(200, 90, 122, 0.35),
+    0 60px 120px -30px rgba(45, 42, 42, 0.4);
+  z-index: 20;
+  transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s, z-index 0s;
+}
+
+@keyframes main-mural-sway-a {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -4px; }
+}
+@keyframes main-mural-sway-b {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -6px; }
+}
+.main-mural__card--casa     { animation: main-mural-sway-a 7s ease-in-out infinite; }
+.main-mural__card--cortinas { animation: main-mural-sway-b 9s ease-in-out infinite; animation-delay: -2s; }
+.main-mural__card--pajaros  { animation: main-mural-sway-a 8s ease-in-out infinite; animation-delay: -4s; }
+.main-mural__card--ventana  { animation: main-mural-sway-b 6.5s ease-in-out infinite; animation-delay: -1s; }
+.main-mural__card:hover { animation-play-state: paused; }
+
+@media (max-width: 760px) {
+  .main-mural__card--casa     { left: 1%;  top: 4%;    width: 32%; height: 28%; }
+  .main-mural__card--cortinas { left: 6%;  bottom: 4%; width: 26%; height: 24%; }
+  .main-mural__card--pajaros  { right: 2%; top: 4%;    width: 32%; height: 26%; }
+  .main-mural__card--ventana  { right: 4%; bottom: 6%; width: 28%; height: 22%; }
+}
 
 /* ═══════════════════ FOOTER ═══════════════════ */
 .main-footer {
@@ -1231,16 +1339,49 @@ main { position: relative; width: 100%; background: var(--main-pink); }
   aspect-ratio: 4 / 5;
   background: linear-gradient(160deg, var(--main-pink) 0%, var(--main-pink-soft) 100%);
   overflow: hidden;
+  --photo-parallax: 0px;
 }
 .main-team-card__photo img {
   position: absolute;
-  inset: 0;
+  inset: -10% 0;
   width: 100%;
-  height: 100%;
+  height: 120%;
   object-fit: cover;
-  transition: transform .8s ease;
+  transform: translate3d(0, var(--photo-parallax), 0) scale(1.3);
+  transition:
+    transform 1.8s cubic-bezier(.2, .7, .2, 1),
+    filter .9s ease;
+  filter: saturate(0.75) contrast(0.95);
+  will-change: transform;
 }
-.main-team-card:hover .main-team-card__photo img { transform: scale(1.05); }
+/* Máscara niika: cortina que cubre la foto y se retira hacia arriba */
+.main-team-card__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--main-cream);
+  transform: translateY(0);
+  transition: transform 1.6s cubic-bezier(.77, 0, .175, 1);
+  z-index: 2;
+  pointer-events: none;
+}
+/* Revela al hacerse visible la card (usa el observer main-reveal existente) */
+.main-team-card.is-visible .main-team-card__photo::after {
+  transform: translateY(-101%);
+}
+.main-team-card.is-visible .main-team-card__photo img {
+  transform: translate3d(0, var(--photo-parallax), 0) scale(1);
+}
+.main-team-card:hover .main-team-card__photo img {
+  transform: translate3d(0, var(--photo-parallax), 0) scale(1.08);
+  filter: saturate(1.1) contrast(1);
+}
+.main-team-card__photo-paint {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
 .main-team-card__photo img:not([src]),
 .main-team-card__photo img[src=""] { opacity: 0; }
 .main-team-card__meta { padding: 32px 30px 36px; display: flex; flex-direction: column; gap: 10px; }
