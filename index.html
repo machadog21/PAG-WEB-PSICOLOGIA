@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500&family=Raleway:wght@400;500&family=Outfit:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 </head>
 <body>
@@ -221,7 +220,8 @@
       <div class="main-team__grid">
         <article class="main-team-card main-reveal">
           <div class="main-team-card__photo">
-            <img src="assets/imagenes%20aesthetic/ventana.jpg" alt="" data-placeholder="psicóloga principal" />
+            <img class="main-team-card__photo-base" src="assets/imagenes%20aesthetic/ventana.jpg" alt="" data-placeholder="psicóloga principal" />
+            <img class="main-team-card__photo-hover" src="assets/imagenes%20aesthetic/cortinas.jpg" alt="" aria-hidden="true" />
           </div>
           <div class="main-team-card__meta">
             <span class="main-team-card__role">Psicóloga · Fundadora</span>
@@ -235,7 +235,8 @@
 
         <article class="main-team-card main-reveal">
           <div class="main-team-card__photo">
-            <img src="assets/imagenes%20aesthetic/pato.jpg" alt="" data-placeholder="terapeuta infantil" />
+            <img class="main-team-card__photo-base" src="assets/imagenes%20aesthetic/pato.jpg" alt="" data-placeholder="terapeuta infantil" />
+            <img class="main-team-card__photo-hover" src="assets/imagenes%20aesthetic/agua.jpg" alt="" aria-hidden="true" />
           </div>
           <div class="main-team-card__meta">
             <span class="main-team-card__role">Psicóloga infantil</span>
@@ -249,7 +250,8 @@
 
         <article class="main-team-card main-reveal">
           <div class="main-team-card__photo">
-            <img src="assets/imagenes%20aesthetic/monte.jpg" alt="" data-placeholder="coach profesional" />
+            <img class="main-team-card__photo-base" src="assets/imagenes%20aesthetic/monte.jpg" alt="" data-placeholder="coach profesional" />
+            <img class="main-team-card__photo-hover" src="assets/imagenes%20aesthetic/tronco.jpg" alt="" aria-hidden="true" />
           </div>
           <div class="main-team-card__meta">
             <span class="main-team-card__role">Coach · Liderazgo</span>
@@ -267,23 +269,42 @@
     <section class="main-testimonials" id="testimonios">
       <h2 class="main-testimonials__heading main-reveal">Lo que dicen<br><em>quienes confiaron</em></h2>
 
-      <div class="main-testimonials__grid">
-        <article class="main-test-card main-reveal">
-          <p class="main-test-card__quote">«Llegué sin saber qué me pasaba. Salí con herramientas reales y, sobre todo, con una relación más amable conmigo misma.»</p>
-          <p class="main-test-card__author">Laura · 34 años · Ansiedad</p>
-        </article>
-        <article class="main-test-card main-reveal">
-          <p class="main-test-card__quote">«Como pareja llevábamos años atascados. En pocas sesiones aprendimos a hablar distinto. Ha sido un antes y un después.»</p>
-          <p class="main-test-card__author">David y Marta · Terapia de pareja</p>
-        </article>
-        <article class="main-test-card main-reveal">
-          <p class="main-test-card__quote">«El duelo parecía un pozo sin salida. Acompañarme en ese camino fue el regalo más humano que he recibido.»</p>
-          <p class="main-test-card__author">Carmen · 52 años · Duelo</p>
-        </article>
-        <article class="main-test-card main-reveal">
-          <p class="main-test-card__quote">«La terapia online funcionó mejor de lo que imaginé. Cercana, rigurosa y con seguimiento entre sesiones.»</p>
-          <p class="main-test-card__author">Andrés · 28 años · Terapia online</p>
-        </article>
+      <div class="main-testimonials__rail">
+        <div class="main-testimonials__track">
+          <article class="main-test-card">
+            <p class="main-test-card__quote">«Llegué sin saber qué me pasaba. Salí con herramientas reales y, sobre todo, con una relación más amable conmigo misma.»</p>
+            <p class="main-test-card__author">Laura · 34 años · Ansiedad</p>
+          </article>
+          <article class="main-test-card">
+            <p class="main-test-card__quote">«Como pareja llevábamos años atascados. En pocas sesiones aprendimos a hablar distinto. Ha sido un antes y un después.»</p>
+            <p class="main-test-card__author">David y Marta · Terapia de pareja</p>
+          </article>
+          <article class="main-test-card">
+            <p class="main-test-card__quote">«El duelo parecía un pozo sin salida. Acompañarme en ese camino fue el regalo más humano que he recibido.»</p>
+            <p class="main-test-card__author">Carmen · 52 años · Duelo</p>
+          </article>
+          <article class="main-test-card">
+            <p class="main-test-card__quote">«La terapia online funcionó mejor de lo que imaginé. Cercana, rigurosa y con seguimiento entre sesiones.»</p>
+            <p class="main-test-card__author">Andrés · 28 años · Terapia online</p>
+          </article>
+          <!-- duplicado para loop continuo -->
+          <article class="main-test-card" aria-hidden="true">
+            <p class="main-test-card__quote">«Llegué sin saber qué me pasaba. Salí con herramientas reales y, sobre todo, con una relación más amable conmigo misma.»</p>
+            <p class="main-test-card__author">Laura · 34 años · Ansiedad</p>
+          </article>
+          <article class="main-test-card" aria-hidden="true">
+            <p class="main-test-card__quote">«Como pareja llevábamos años atascados. En pocas sesiones aprendimos a hablar distinto. Ha sido un antes y un después.»</p>
+            <p class="main-test-card__author">David y Marta · Terapia de pareja</p>
+          </article>
+          <article class="main-test-card" aria-hidden="true">
+            <p class="main-test-card__quote">«El duelo parecía un pozo sin salida. Acompañarme en ese camino fue el regalo más humano que he recibido.»</p>
+            <p class="main-test-card__author">Carmen · 52 años · Duelo</p>
+          </article>
+          <article class="main-test-card" aria-hidden="true">
+            <p class="main-test-card__quote">«La terapia online funcionó mejor de lo que imaginé. Cercana, rigurosa y con seguimiento entre sesiones.»</p>
+            <p class="main-test-card__author">Andrés · 28 años · Terapia online</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -330,41 +351,49 @@
       </div>
     </section>
 
-    <!-- ═══════════ CONSULTA (Contact Map) ═══════════ -->
+    <!-- ═══════════ CONSULTA (foto del despacho con hotspots interactivos) ═══════════ -->
     <section class="main-contact" id="contacto">
-      <div class="main-contact__inner">
+      <div class="main-contact__title">
         <h2 class="main-contact__heading main-reveal">Mi <em>consulta</em></h2>
-        <p class="main-contact__sub main-reveal">me encantará escucharte</p>
+        <p class="main-contact__sub main-reveal">me encantará escucharte · toca cada punto</p>
+      </div>
 
-        <div class="main-contact__grid">
-          <div class="main-contact__col main-reveal">
-            <h4>Escríbeme</h4>
-            <a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a>
-          </div>
-          <div class="main-contact__col main-reveal">
+      <div class="main-contact__scene main-reveal">
+        <!-- Hotspot pared (sobre el cuadro blanco) → Visítame -->
+        <div class="main-contact__spot main-contact__spot--wall">
+          <button type="button" class="main-contact__spot-pill" aria-expanded="false" aria-label="Visítame">
+            <span class="main-contact__spot-mark" aria-hidden="true"></span>
+            <span>Visítame</span>
+          </button>
+          <div class="main-contact__spot-card" role="region">
             <h4>Visítame</h4>
             <a href="https://maps.google.com" target="_blank" rel="noopener">
               [Dirección consulta]<br>León
             </a>
           </div>
-          <div class="main-contact__col main-reveal">
+        </div>
+
+        <!-- Hotspot mesa → Llámame -->
+        <div class="main-contact__spot main-contact__spot--desk">
+          <button type="button" class="main-contact__spot-pill" aria-expanded="false" aria-label="Llámame">
+            <span class="main-contact__spot-mark" aria-hidden="true"></span>
+            <span>Llámame</span>
+          </button>
+          <div class="main-contact__spot-card" role="region">
             <h4>Llámame</h4>
             <a href="tel:+34600000000">+34 600 000 000</a>
           </div>
         </div>
 
-        <div class="main-contact__map-wrap main-reveal">
-          <div class="main-contact__map" id="contactMap"></div>
-          <div class="main-contact__map-tint" aria-hidden="true"></div>
-          <div class="main-contact__map-pin" aria-hidden="true">
-            <svg width="44" height="56" viewBox="-22 -44 44 56">
-              <circle cx="0" cy="-22" r="26" fill="#c85a7a" opacity=".2">
-                <animate attributeName="r" values="14;34;14" dur="2.4s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values=".36;0;.36" dur="2.4s" repeatCount="indefinite"/>
-              </circle>
-              <path d="M 0 -40 C -12 -40, -20 -32, -20 -22 C -20 -10, -10 -2, 0 10 C 10 -2, 20 -10, 20 -22 C 20 -32, 12 -40, 0 -40 Z" fill="#c85a7a"/>
-              <circle cx="0" cy="-22" r="6" fill="#fff"/>
-            </svg>
+        <!-- Hotspot armario/estantería → Escríbeme -->
+        <div class="main-contact__spot main-contact__spot--shelf">
+          <button type="button" class="main-contact__spot-pill" aria-expanded="false" aria-label="Escríbeme">
+            <span class="main-contact__spot-mark" aria-hidden="true"></span>
+            <span>Escríbeme</span>
+          </button>
+          <div class="main-contact__spot-card" role="region">
+            <h4>Escríbeme</h4>
+            <a href="mailto:hola@tu-dominio.com">hola@tu-dominio.com</a>
           </div>
         </div>
       </div>
@@ -486,7 +515,6 @@
 
   </main>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="js/main.js"></script>
   <script type="importmap">
     {

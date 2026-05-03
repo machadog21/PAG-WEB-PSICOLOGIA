@@ -153,88 +153,72 @@
     });
   }
 
-  // Parallax interno + efecto pintura/acuarela sobre las fotos del equipo
+  // Parallax interno + efecto liquify/melt (SVG feTurbulence + feDisplacementMap) sobre las fotos del equipo
   var photos = document.querySelectorAll('.main-team-card__photo');
   if (photos.length) {
-    photos.forEach(function (photo) {
-      var img = photo.querySelector('img');
-      if (!img) return;
-      var canvas = document.createElement('canvas');
-      canvas.className = 'main-team-card__photo-paint';
-      photo.appendChild(canvas);
-      var ctx = canvas.getContext('2d');
-      var offscreen = document.createElement('canvas');
-      var offCtx = offscreen.getContext('2d');
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var w = 0, h = 0, ready = false, raf = 0, lastMove = 0;
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var liquifySvg = document.createElementNS(svgNS, 'svg');
+    liquifySvg.setAttribute('aria-hidden', 'true');
+    liquifySvg.setAttribute('class', 'main-team-liquify-defs');
+    var defs = document.createElementNS(svgNS, 'defs');
+    liquifySvg.appendChild(defs);
+    document.body.appendChild(liquifySvg);
 
-      function renderMelted() {
-        if (!img.naturalWidth) return false;
-        offCtx.setTransform(1, 0, 0, 1, 0, 0);
-        offCtx.clearRect(0, 0, offscreen.width, offscreen.height);
-        offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        offCtx.save();
-        offCtx.filter = 'blur(18px) saturate(0.55) contrast(0.85)';
-        var iw = img.naturalWidth, ih = img.naturalHeight;
-        var scale = Math.max(w / iw, h / ih) * 1.18;
-        var dw = iw * scale, dh = ih * scale;
-        offCtx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
-        offCtx.restore();
-        return true;
-      }
-      function paintFullMelted() {
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.globalAlpha = 1;
-        ctx.clearRect(0, 0, w, h);
-        ctx.drawImage(offscreen, 0, 0, w, h);
-      }
-      function resize() {
-        var r = photo.getBoundingClientRect();
-        if (!r.width || !r.height) return;
-        w = r.width; h = r.height;
-        var cw = Math.round(w * dpr), ch = Math.round(h * dpr);
-        canvas.width = cw; canvas.height = ch;
-        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-        offscreen.width = cw; offscreen.height = ch;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        if (renderMelted()) { paintFullMelted(); ready = true; }
-      }
-      function erode(x, y) {
-        if (!ready) return;
-        ctx.globalCompositeOperation = 'destination-out';
-        var radius = Math.max(42, Math.min(w, h) * 0.24);
-        var g = ctx.createRadialGradient(x, y, 0, x, y, radius);
-        g.addColorStop(0, 'rgba(0,0,0,0.55)');
-        g.addColorStop(0.7, 'rgba(0,0,0,0.15)');
-        g.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
-        lastMove = Date.now();
-        scheduleRefill();
-      }
-      function refillTick() {
-        raf = 0;
-        var since = Date.now() - lastMove;
-        if (since > 200) {
-          ctx.globalCompositeOperation = 'source-over';
-          ctx.globalAlpha = 0.035;
-          ctx.drawImage(offscreen, 0, 0, w, h);
-          ctx.globalAlpha = 1;
-        }
-        if (since < 4000) raf = requestAnimationFrame(refillTick);
-      }
-      function scheduleRefill() { if (!raf) raf = requestAnimationFrame(refillTick); }
+    var liquifyStates = [];
+    photos.forEach(function (photo, idx) {
+      var imgs = photo.querySelectorAll('img');
+      if (!imgs.length) return;
+      var filterId = 'teamLiquify' + idx;
+      var filter = document.createElementNS(svgNS, 'filter');
+      filter.setAttribute('id', filterId);
+      filter.setAttribute('x', '-20%');
+      filter.setAttribute('y', '-20%');
+      filter.setAttribute('width', '140%');
+      filter.setAttribute('height', '140%');
+      filter.setAttribute('color-interpolation-filters', 'sRGB');
+      var turb = document.createElementNS(svgNS, 'feTurbulence');
+      turb.setAttribute('type', 'fractalNoise');
+      turb.setAttribute('baseFrequency', '0.012 0.020');
+      turb.setAttribute('numOctaves', '2');
+      turb.setAttribute('seed', String(idx * 3 + 1));
+      turb.setAttribute('result', 'turb');
+      var disp = document.createElementNS(svgNS, 'feDisplacementMap');
+      disp.setAttribute('in', 'SourceGraphic');
+      disp.setAttribute('in2', 'turb');
+      disp.setAttribute('scale', '0');
+      disp.setAttribute('xChannelSelector', 'R');
+      disp.setAttribute('yChannelSelector', 'G');
+      filter.appendChild(turb);
+      filter.appendChild(disp);
+      defs.appendChild(filter);
 
-      if (img.complete && img.naturalWidth) resize();
-      else img.addEventListener('load', resize);
-      photo.addEventListener('mousemove', function (e) {
-        var r = photo.getBoundingClientRect();
-        erode(e.clientX - r.left, e.clientY - r.top);
-      });
-      photo.addEventListener('mouseleave', function () { scheduleRefill(); });
-      window.addEventListener('resize', resize);
+      for (var k = 0; k < imgs.length; k++) {
+        imgs[k].style.filter = 'url(#' + filterId + ')';
+      }
+
+      var state = { turb: turb, disp: disp, current: 0, target: 0, seed: idx };
+      liquifyStates.push(state);
+
+      photo.addEventListener('mouseenter', function () { state.target = 40; });
+      photo.addEventListener('mouseleave', function () { state.target = 0; });
     });
+
+    if (!prefersReduced && liquifyStates.length) {
+      var liquifyT0 = performance.now();
+      (function tickLiquify(now) {
+        var t = (now - liquifyT0) / 1000;
+        for (var i = 0; i < liquifyStates.length; i++) {
+          var s = liquifyStates[i];
+          s.current += (s.target - s.current) * 0.08;
+          s.disp.setAttribute('scale', s.current.toFixed(2));
+          var fx = 0.010 + 0.006 * Math.sin(t * 0.55 + s.seed);
+          var fy = 0.018 + 0.008 * Math.sin(t * 0.42 + s.seed * 1.3);
+          s.turb.setAttribute('baseFrequency', fx.toFixed(4) + ' ' + fy.toFixed(4));
+        }
+        requestAnimationFrame(tickLiquify);
+      })(liquifyT0);
+    }
 
     var photosArr = Array.prototype.slice.call(photos);
     var photoRaf = 0;
@@ -256,30 +240,30 @@
     photoTick();
   }
 
-  // Mapa ortofoto de la consulta (Leaflet + Esri World Imagery)
-  var mapEl = document.getElementById('contactMap');
-  if (mapEl && window.L) {
-    var consultaMap = window.L.map(mapEl, {
-      center: [42.5987, -5.5671],
-      zoom: 15,
-      zoomControl: false,
-      attributionControl: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      dragging: false,
-      touchZoom: false,
-      boxZoom: false,
-      keyboard: false,
-      tap: false,
+  // Hotspots de "Mi consulta": click → despliega/colapsa la tarjeta de cada punto
+  var spotPills = document.querySelectorAll('.main-contact__spot-pill');
+  if (spotPills.length) {
+    spotPills.forEach(function (pill) {
+      pill.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = pill.getAttribute('aria-expanded') === 'true';
+        // cerrar los demás para mostrar solo uno a la vez
+        spotPills.forEach(function (other) {
+          if (other !== pill) other.setAttribute('aria-expanded', 'false');
+        });
+        pill.setAttribute('aria-expanded', open ? 'false' : 'true');
+      });
     });
-    window.L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-      attribution: 'Tiles © Esri',
-    }).addTo(consultaMap);
-    if ('ResizeObserver' in window) {
-      var mapRo = new ResizeObserver(function () { consultaMap.invalidateSize(); });
-      mapRo.observe(mapEl);
-    }
+    // Click fuera o tecla Escape → cerrar todos
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.main-contact__spot')) return;
+      spotPills.forEach(function (p) { p.setAttribute('aria-expanded', 'false'); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        spotPills.forEach(function (p) { p.setAttribute('aria-expanded', 'false'); });
+      }
+    });
   }
 
   // Scroll reveal
@@ -298,51 +282,53 @@
     reveals.forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  // Terapias: todas visibles; el resaltado (.is-current) baja a medida que scrolleas
+  // Terapias: pista vertical sticky; entrada alternada desde los laterales y crecimiento al centro
   var track = document.getElementById('servicesTrack');
   var stage = document.getElementById('servicesStage');
   if (track && stage) {
     var rows = Array.prototype.slice.call(track.children);
     var rowCount = rows.length;
-    var carouselRaf = 0;
     var cachedRowHeight = 0;
     var cachedVh = 0;
     var currentIdx = -1;
+    var targetProgress = 0;
+    var renderedProgress = 0;
+    var loopRaf = 0;
     function measure() {
       cachedVh = window.innerHeight || 800;
       cachedRowHeight = rows[0].offsetHeight || (cachedVh * 0.32);
     }
-    function updateCarousel() {
-      carouselRaf = 0;
+    function computeTargetProgress() {
       var rect = stage.getBoundingClientRect();
-      var vh = cachedVh;
-      // Salir temprano si el stage está fuera del viewport
-      if (rect.bottom < -vh || rect.top > vh * 2) return;
-      var travelable = rect.height - vh;
-      if (travelable <= 0) return;
-      var progress = -rect.top / travelable;
-      if (progress < 0) progress = 0; else if (progress > 1) progress = 1;
-
+      var travelable = rect.height - cachedVh;
+      if (travelable <= 0) return 0;
+      var p = -rect.top / travelable;
+      if (p < 0) p = 0; else if (p > 1) p = 1;
+      return p;
+    }
+    function paint(progress) {
       var rowHeight = cachedRowHeight;
       var pos = progress * (rowCount - 1);
-      var translateY = (vh / 2) - (rowHeight / 2) - (pos * rowHeight);
-      track.style.transform = 'translate3d(0,' + translateY.toFixed(1) + 'px,0)';
+      var translateY = (cachedVh / 2) - (rowHeight / 2) - (pos * rowHeight);
+      track.style.transform = 'translate3d(0,' + translateY.toFixed(2) + 'px,0)';
 
       var idx = Math.round(pos);
-      if (idx < 0) idx = 0;
-      else if (idx > rowCount - 1) idx = rowCount - 1;
+      if (idx < 0) idx = 0; else if (idx > rowCount - 1) idx = rowCount - 1;
 
       for (var i = 0; i < rowCount; i++) {
-        var dist = i - pos;
-        if (dist < 0) dist = -dist;
-        var scale = 1 - dist * 0.22;
-        if (scale < 0.45) scale = 0.45;
-        var tx = dist * 18;
-        if (tx > 48) tx = 48;
-        var opacity = 1 - dist * 0.32;
-        if (opacity < 0.15) opacity = 0.15;
+        var signed = i - pos;
+        var dist = signed < 0 ? -signed : signed;
+        // Crecimiento al centro: 1.12 en foco, hasta 0.5 en los extremos
+        var scale = 1.12 - dist * 0.32;
+        if (scale < 0.5) scale = 0.5;
+        // Entrada alternada desde los laterales: filas pares por la izquierda, impares por la derecha
+        var dir = (i % 2 === 0) ? -1 : 1;
+        var tx = dir * dist * dist * 14;
+        if (tx > 90) tx = 90; else if (tx < -90) tx = -90;
+        var opacity = 1 - dist * 0.34;
+        if (opacity < 0.08) opacity = 0.08;
         var s = rows[i].style;
-        s.transform = 'translate3d(' + tx.toFixed(1) + 'vw,0,0) scale(' + scale.toFixed(3) + ')';
+        s.transform = 'translate3d(' + tx.toFixed(2) + 'vw,0,0) scale(' + scale.toFixed(3) + ')';
         s.opacity = opacity.toFixed(3);
       }
       if (idx !== currentIdx) {
@@ -351,13 +337,37 @@
         currentIdx = idx;
       }
     }
-    function scheduleCarousel() {
-      if (!carouselRaf) carouselRaf = requestAnimationFrame(updateCarousel);
+    function loop() {
+      var diff = targetProgress - renderedProgress;
+      var absDiff = diff < 0 ? -diff : diff;
+      if (absDiff < 0.0004) {
+        renderedProgress = targetProgress;
+        paint(renderedProgress);
+        loopRaf = 0;
+        return;
+      }
+      // Factor de suavizado: cuanto más bajo, más fluido (y con más arrastre)
+      renderedProgress += diff * 0.14;
+      paint(renderedProgress);
+      loopRaf = requestAnimationFrame(loop);
     }
-    window.addEventListener('scroll', scheduleCarousel, { passive: true });
-    window.addEventListener('resize', function () { measure(); scheduleCarousel(); });
+    function scheduleLoop() {
+      var rect = stage.getBoundingClientRect();
+      // No animar si el stage está fuera del viewport (ahorrar trabajo)
+      if (rect.bottom < -cachedVh * 0.5 || rect.top > cachedVh * 1.5) {
+        targetProgress = computeTargetProgress();
+        renderedProgress = targetProgress;
+        return;
+      }
+      targetProgress = computeTargetProgress();
+      if (!loopRaf) loopRaf = requestAnimationFrame(loop);
+    }
+    window.addEventListener('scroll', scheduleLoop, { passive: true });
+    window.addEventListener('resize', function () { measure(); scheduleLoop(); });
     measure();
-    updateCarousel();
+    targetProgress = computeTargetProgress();
+    renderedProgress = targetProgress;
+    paint(renderedProgress);
   }
 
   // Servicios: click en fila → activa el texto de la derecha
